@@ -26,7 +26,16 @@ const KEYS = {
   pitch: 'voiceCopilot.pitch',
   speechText: 'voiceCopilot.speechText',
   translationEnabled: 'voiceCopilot.translationEnabled',
+  stylePreset: 'voiceCopilot.stylePreset',
 };
+
+// Speaking Style (speaking-style spec.md §4, plan.md §4.1) — only these four values are
+// ever valid; anything else read back from localStorage (unset, corrupted, or a stale
+// value from a since-removed preset) falls back to 'natural'. Mirrors the server-side
+// allowlist in server/routes/translate.js's normalizeStylePreset() (same four values, same
+// 'natural' fallback) so a corrupted/tampered localStorage value can never reach app.js's
+// reactive state or the translate request as anything but one of the four known presets.
+const VALID_STYLE_PRESETS = new Set(['natural', 'professional', 'concise', 'my-style']);
 
 function safeGet(key) {
   try {
@@ -54,6 +63,7 @@ function safeSet(key, value) {
  *   pitch: number | null,
  *   speechText: string,
  *   translationEnabled: boolean,
+ *   stylePreset: 'natural' | 'professional' | 'concise' | 'my-style',
  * }}
  */
 export function loadPersistedPreferences() {
@@ -63,6 +73,7 @@ export function loadPersistedPreferences() {
   const speed = speedRaw !== null ? parseFloat(speedRaw) : NaN;
   const volume = volumeRaw !== null ? parseFloat(volumeRaw) : NaN;
   const pitch = pitchRaw !== null ? parseFloat(pitchRaw) : NaN;
+  const stylePresetRaw = safeGet(KEYS.stylePreset);
   return {
     selectedVoiceProfileId: safeGet(KEYS.selectedVoiceProfileId),
     speed: Number.isFinite(speed) ? speed : null,
@@ -70,6 +81,7 @@ export function loadPersistedPreferences() {
     pitch: Number.isFinite(pitch) ? pitch : null,
     speechText: safeGet(KEYS.speechText) || '',
     translationEnabled: safeGet(KEYS.translationEnabled) === 'true',
+    stylePreset: VALID_STYLE_PRESETS.has(stylePresetRaw) ? stylePresetRaw : 'natural',
   };
 }
 
@@ -95,4 +107,8 @@ export function persistSpeechText(text) {
 
 export function persistTranslationEnabled(enabled) {
   safeSet(KEYS.translationEnabled, String(enabled));
+}
+
+export function persistStylePreset(preset) {
+  safeSet(KEYS.stylePreset, preset);
 }

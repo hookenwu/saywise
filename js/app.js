@@ -34,12 +34,14 @@ import {
   setPlaybackError,
   setTranslationEnabled,
   setTranslatedText,
+  setStylePreset,
 } from './state.js';
 import { loadConfiguration, formatLanguageCapability } from './voice-profiles.js';
 import { StreamingTTSClient } from './tts-client.js';
 import { StreamingAudioPlayer } from './streaming-audio-player.js';
 import { streamTranslation, extractCompletedSentences, TranslationError } from './translation-client.js';
 import { updateTranslationAvailability } from './settings-client.js';
+import { loadMyStyleProfile } from './speaking-style.js';
 import {
   loadPersistedPreferences,
   persistSelectedVoiceProfileId,
@@ -48,6 +50,7 @@ import {
   persistPitch,
   persistSpeechText,
   persistTranslationEnabled,
+  persistStylePreset,
 } from './persistence.js';
 
 const speechTextEl = document.getElementById('speech-text');
@@ -69,6 +72,8 @@ const generationErrorTextEl = document.getElementById('generation-error-text');
 const generationErrorRetryBtn = document.getElementById('generation-error-retry');
 const playbackErrorEl = document.getElementById('playback-error');
 const translationToggleEl = document.getElementById('translation-toggle');
+const stylePresetEl = document.getElementById('style-preset-select');
+const stylePresetRowEl = document.getElementById('style-preset-row');
 const translatedTextPanelEl = document.getElementById('translated-text-panel');
 const translatedTextDisplayEl = document.getElementById('translated-text-display');
 
@@ -219,6 +224,11 @@ function render(state) {
   // shift for the common Direct-Speak case (spec.md §11).
   translatedTextPanelEl.hidden = !(state.translationEnabled && state.translatedText.length > 0);
   translatedTextDisplayEl.textContent = state.translatedText;
+
+  // Speaking Style row (speaking-style spec.md §6.2/§8, plan.md §6.2): hidden — not merely
+  // disabled — when translation is off, since Style has zero effect on Direct Speak. Same
+  // hidden-when-irrelevant pattern as the Translated Text panel above.
+  stylePresetRowEl.hidden = !state.translationEnabled;
 
   // T7.4 — TTS connection/generation/timeout failures all funnel through
   // generationError (plan §18's three rows share the same recovery
@@ -503,9 +513,17 @@ async function handleTranslatedSpeak() {
 
     let sentenceBuffer = '';
     let translatedSoFar = '';
+    // Speaking Style (speaking-style spec.md §4, plan.md §4.5): stylePreset always
+    // accompanies the request; myStyle is only loaded (and only meaningful server-side)
+    // when stylePreset === 'my-style' — no change to the streaming/staleness-guard/
+    // cleanup control flow below, this is purely a request-body addition to a call site
+    // that already exists.
+    const myStyle = state.stylePreset === 'my-style' ? loadMyStyleProfile() : undefined;
     for await (const { content } of streamTranslation(text, {
       signal: translationAbort.signal,
       serverBaseUrl,
+      stylePreset: state.stylePreset,
+      myStyle,
     })) {
       if (currentPlayer !== player) return; // staleness guard, same pattern as Direct Speak
 
@@ -635,6 +653,11 @@ translationToggleEl.addEventListener('change', () => {
   persistTranslationEnabled(translationToggleEl.checked);
 });
 
+stylePresetEl.addEventListener('change', () => {
+  setStylePreset(stylePresetEl.value);
+  persistStylePreset(stylePresetEl.value);
+});
+
 // T7.3 — restore the persisted Speech Text draft immediately on load,
 // independent of configuration loading (which can fail or take a moment).
 const persisted = loadPersistedPreferences();
@@ -646,6 +669,11 @@ if (persisted.speechText) {
 // false (spec.md §9.1), same persistence pattern as speed/volume.
 translationToggleEl.checked = persisted.translationEnabled;
 setTranslationEnabled(persisted.translationEnabled);
+
+// Speaking Style (plan.md §6.2) — restore the same way; default 'natural' (spec.md §11),
+// already allowlist-normalized by loadPersistedPreferences() (persistence.js).
+stylePresetEl.value = persisted.stylePreset;
+setStylePreset(persisted.stylePreset);
 
 subscribe(render);
 render(getState());

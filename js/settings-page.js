@@ -20,9 +20,18 @@
  * own state directly on change (app.js) — there's nothing for Settings to duplicate. The
  * Translation/LLM Provider Credential is a server-held deployment secret configured via the
  * server's GEMINI_API_KEY env var, not something a Settings form collects or displays.
+ *
+ * Speaking Style (speaking-style spec.md §4/§10, plan.md §6.1): the preset selector and the
+ * four My Style fields are populated from what's actually saved (loadPersistedPreferences()'s
+ * stylePreset + loadMyStyleProfile(), both localStorage-only, no file fallback — there is no
+ * file-based default for this data, unlike Voice Profile, so "empty on first load" is simply
+ * correct here) and saved via persistStylePreset()/saveMyStyleProfile() alongside the
+ * existing saveLocalConfiguration() call.
  */
 
 import { getSavedConfiguration, saveLocalConfiguration } from './voice-profiles.js';
+import { loadPersistedPreferences, persistStylePreset } from './persistence.js';
+import { loadMyStyleProfile, saveMyStyleProfile } from './speaking-style.js';
 
 const ttsStatusEl = document.getElementById('settings-tts-status');
 const ttsAppIdEl = document.getElementById('settings-tts-app-id');
@@ -36,6 +45,12 @@ const voiceLangZhEl = document.getElementById('settings-voice-lang-zh');
 const voiceSpeedEl = document.getElementById('settings-voice-speed');
 const voiceVolumeEl = document.getElementById('settings-voice-volume');
 const voicePitchEl = document.getElementById('settings-voice-pitch');
+
+const stylePresetEl = document.getElementById('settings-style-preset');
+const mystylePreferencesEl = document.getElementById('settings-mystyle-preferences');
+const mystylePreferredEl = document.getElementById('settings-mystyle-preferred');
+const mystyleAvoidedEl = document.getElementById('settings-mystyle-avoided');
+const mystyleExamplesEl = document.getElementById('settings-mystyle-examples');
 
 const saveBtn = document.getElementById('settings-save-btn');
 
@@ -64,6 +79,13 @@ function populate() {
   voiceSpeedEl.value = profile?.speed ?? '';
   voiceVolumeEl.value = profile?.volume ?? '';
   voicePitchEl.value = profile?.pitch ?? '';
+
+  stylePresetEl.value = loadPersistedPreferences().stylePreset;
+  const myStyle = loadMyStyleProfile();
+  mystylePreferencesEl.value = myStyle.speakingPreferences;
+  mystylePreferredEl.value = myStyle.preferredPhrases;
+  mystyleAvoidedEl.value = myStyle.avoidedPhrases;
+  mystyleExamplesEl.value = myStyle.exampleSentences;
 }
 
 populate();
@@ -98,6 +120,14 @@ saveBtn.addEventListener('click', () => {
   ];
 
   saveLocalConfiguration(providerConfiguration, voiceProfiles);
+
+  persistStylePreset(stylePresetEl.value);
+  saveMyStyleProfile({
+    speakingPreferences: mystylePreferencesEl.value,
+    preferredPhrases: mystylePreferredEl.value,
+    avoidedPhrases: mystyleAvoidedEl.value,
+    exampleSentences: mystyleExamplesEl.value,
+  });
 
   // Back to the workspace so it re-runs its normal startup path (loadConfiguration(), TTS
   // client construction, etc.) and picks up the newly saved values — simpler and more

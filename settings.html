@@ -46,6 +46,25 @@
           <input id="settings-voice-pitch" class="settings-input settings-input-narrow" type="number" min="-12" max="12" step="1" placeholder="0" />
         </fieldset>
 
+        <fieldset class="settings-group settings-group-style">
+          <legend>Speaking Style</legend>
+          <label for="settings-style-preset">Preset</label>
+          <select id="settings-style-preset" class="settings-input">
+            <option value="natural">Natural Conversation</option>
+            <option value="professional">Professional</option>
+            <option value="concise">Concise</option>
+            <option value="my-style">My Style</option>
+          </select>
+          <label for="settings-mystyle-preferences">My Style — speaking preferences</label>
+          <textarea id="settings-mystyle-preferences" class="settings-input settings-textarea" rows="3" placeholder="e.g. Use relatively short sentences. State the conclusion first, then explain the reason."></textarea>
+          <label for="settings-mystyle-preferred">My Style — preferred phrases</label>
+          <textarea id="settings-mystyle-preferred" class="settings-input settings-textarea" rows="3" placeholder="One per line, e.g. Right, so... / From our side..."></textarea>
+          <label for="settings-mystyle-avoided">My Style — phrases to avoid</label>
+          <textarea id="settings-mystyle-avoided" class="settings-input settings-textarea" rows="3" placeholder="One per line, e.g. Absolutely! / Certainly!"></textarea>
+          <label for="settings-mystyle-examples">My Style — example sentences</label>
+          <textarea id="settings-mystyle-examples" class="settings-input settings-textarea" rows="3" placeholder="One per line — example sentences that represent how you naturally speak."></textarea>
+        </fieldset>
+
         <div class="settings-actions">
           <a class="btn btn-ghost" href="index.html">Cancel</a>
           <button id="settings-save-btn" class="btn btn-primary" type="button">Save</button>

@@ -83,17 +83,25 @@ async function* sseFrames(body) {
 
 /**
  * @param {string} chineseText
- * @param {{ signal?: AbortSignal, serverBaseUrl?: string }} [options]
+ * @param {{ signal?: AbortSignal, serverBaseUrl?: string, stylePreset?: string, myStyle?: object }} [options]
+ *   stylePreset/myStyle (speaking-style spec.md §4, plan.md §4.5) are optional — the server
+ *   defaults stylePreset to 'natural' when omitted (server/routes/translate.js). Included
+ *   here only as an addition to the request body; this function's SSE-consumption/
+ *   sentence-chunking logic (extractCompletedSentences() below) is otherwise unchanged —
+ *   Style only affects the *content* Gemini streams back, not how it's split into sentences.
  * @yields {{ content: string }}
  * @throws {TranslationError} on any fetch failure, non-OK response, or server-reported error frame
  */
-export async function* streamTranslation(chineseText, { signal, serverBaseUrl = '' } = {}) {
+export async function* streamTranslation(
+  chineseText,
+  { signal, serverBaseUrl = '', stylePreset, myStyle } = {}
+) {
   let res;
   try {
     res = await fetch(`${serverBaseUrl}/api/translate-stream`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: chineseText }),
+      body: JSON.stringify({ text: chineseText, stylePreset, myStyle }),
       signal,
     });
   } catch (err) {

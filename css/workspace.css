@@ -149,6 +149,22 @@ body {
   cursor: pointer;
 }
 
+.style-preset-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.style-preset-select {
+  padding: 6px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--color-text);
+  background: var(--color-panel-bg);
+}
+
 .panel-speak {
   display: flex;
   justify-content: center;
@@ -293,6 +309,20 @@ body {
 
 .settings-input-narrow {
   max-width: 90px;
+}
+
+.settings-textarea {
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+.settings-group-style {
+  grid-template-columns: 1fr;
+}
+
+.settings-group-style label {
+  margin-top: 4px;
 }
 
 .settings-checkbox-row {

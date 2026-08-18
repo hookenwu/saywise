@@ -36,6 +36,11 @@ const state = {
   // true for that round. Read-only display data, never fed back into speechText
   // (spec.md §9.4) — not persisted (plan.md §11).
   translatedText: '',
+
+  // Speaking Style (speaking-style spec.md §4, plan.md §4.1/§7) — default 'natural',
+  // persisted the same way as translationEnabled. Only ever consumed inside
+  // handleTranslatedSpeak() (js/app.js) — has zero effect on Direct Speak.
+  stylePreset: 'natural',
 };
 
 const listeners = new Set();
@@ -111,5 +116,10 @@ export function setTranslationEnabled(enabled) {
 
 export function setTranslatedText(text) {
   state.translatedText = text;
+  notify();
+}
+
+export function setStylePreset(preset) {
+  state.stylePreset = preset;
   notify();
 }
