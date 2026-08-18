@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice Copilot — User Guide</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="css/workspace.css" />
+</head>
+<body>
+  <div class="workspace">
+    <header class="workspace-header">
+      <h1>Voice Copilot — User Guide</h1>
+      <a id="back-btn" class="btn btn-ghost" href="index.html">&larr; Back to Workspace</a>
+    </header>
+
+    <main class="workspace-main">
+
+      <section class="panel guide-content">
+        <h2>Quick Start</h2>
+        <p class="guide-subtitle">第一次使用，建议按以下顺序完成配置并开始 Speak。</p>
+        <ol>
+          <li>打开 <strong>Settings</strong>，填写 Voice / TTS Provider（App ID / Access Token）和 Voice Profile（Speaker ID、语言能力）。这是使用 Speak 的必要前提。</li>
+          <li>如果你习惯用中文打草稿、但希望说出英文，打开主页上的 <strong>Chinese &rarr; English</strong> 开关；如果已经准备好最终英文文本，跳过这一步即可。</li>
+          <li>开启 Chinese &rarr; English 后，可以在 Settings 中配置 <strong>Speaking Style</strong>（尤其是 My Style），让生成的英文更接近你自己的说话方式。</li>
+          <li>回到主页，在 <strong>Speech Text</strong> 里输入或粘贴内容，选择 <strong>Voice</strong>，按需微调 <strong>Speed / Volume / Pitch</strong>。</li>
+          <li>点击 <strong>Speak</strong>。系统会一边生成音频一边尽快开始播放，不需要等整段生成完成。</li>
+          <li>播放中可以 <strong>Pause / Resume</strong>；生成完成后可以 <strong>Replay</strong> 重听同一段音频；随时可以 <strong>Stop</strong> 结束当前这一轮。</li>
+        </ol>
+      </section>
+
+      <section class="panel guide-content">
+        <h2>Speed / Volume / Pitch</h2>
+        <p class="guide-subtitle">这三项统称 Prosody（语音的语速、音量、音高），对 Direct Speak 和 Chinese &rarr; English 两种模式都生效，不涉及任何 AI 文本改写。</p>
+
+        <h3>Speed</h3>
+        <p>范围 <strong>0.2 – 3.0</strong>，默认 <strong>1.0</strong>，步进 0.1。1.0 是你克隆音色本身的自然语速；数值是一个倍数，不是绝对语速。</p>
+        <ul>
+          <li><strong>调高</strong>：内容较长、时间紧张，希望信息更快讲完（如快速同步进展）。</li>
+          <li><strong>调低</strong>：内容包含较多数字、专业术语或合同条款，需要让听众（尤其是非母语听众）听清楚每个细节。</li>
+          <li>不建议大幅偏离 1.0（如接近 0.2 或 3.0）——克隆音色在极端语速下会明显失真，不再像本人的声音。</li>
+        </ul>
+
+        <h3>Volume</h3>
+        <p>范围 <strong>0.1 – 3.0</strong>，默认 <strong>1.0</strong>，步进 0.1。这是"合成响度"，不是设备/系统音量的替代品——它只影响生成出来的音频本身有多响，不会改变你电脑或音箱的实际音量设置。</p>
+        <ul>
+          <li><strong>调高</strong>：会议室环境嘈杂、用外接音箱播放、或原始音色偏小声。</li>
+          <li><strong>调低</strong>：戴耳机近距离收听、或原始音色偏响。</li>
+        </ul>
+
+        <h3>Pitch</h3>
+        <p>范围 <strong>-12 – 12</strong>（半音，整数步进），默认 <strong>0</strong>。0 表示保留克隆音色的原始音高；正值让声音更高，负值更低。这是一个精细调节项，大多数情况下不需要改动。</p>
+        <ul>
+          <li><strong>调高</strong>（如 +1 ~ +3）：想要语气更轻快、更精神一些。</li>
+          <li><strong>调低</strong>（如 -1 ~ -3）：想要语气更沉稳、更有分量（例如正式汇报）。</li>
+          <li>不建议一次调到极值（&plusmn;12），效果会明显失真，不再像本人声音。</li>
+        </ul>
+
+        <h3>推荐起始值</h3>
+        <table class="guide-recommend-table">
+          <thead>
+            <tr>
+              <th>场景</th>
+              <th>Speed</th>
+              <th>Volume</th>
+              <th>Pitch</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>自然日常表达</td>
+              <td>1.0（保持默认）</td>
+              <td>1.0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>英语商务会议</td>
+              <td>0.9 – 1.0（略慢，方便非母语听众听清）</td>
+              <td>1.0 – 1.3（视会议室扬声器情况）</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>公司内部汇报（中文）</td>
+              <td>1.0 – 1.1（同事熟悉内容，可略快）</td>
+              <td>1.0</td>
+              <td>0，需要更沉稳语气可尝试 -1 ~ -2</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="guide-subtitle">以上是起始建议，不是硬性规则——先用默认值试听一次，再按实际效果小幅微调即可。</p>
+      </section>
+
+      <section class="panel guide-content">
+        <h2>Chinese &rarr; English</h2>
+        <p>主页上的这个开关默认<strong>关闭</strong>，控制点击 Speak 时走哪一条链路。</p>
+
+        <h3>关闭时 — Direct Speak</h3>
+        <p>Speech Text 里输入什么，就原样直接送去合成语音，不经过任何 AI 处理——不管你输入的是中文还是英文都一样，不会有翻译、也不会有任何润色或改写。这是延迟最低、最直接的默认链路。</p>
+
+        <h3>开启时 — Translated Speak</h3>
+        <p>点击 Speak 后，系统会把当前的中文 Speech Text 以流式方式发送给翻译服务，按你选择的 Speaking Style 生成更口语化的英文；英文一边生成、一边就会被送去合成语音并尽快开始播放，不需要等整段翻译完成。生成过程中，页面会出现一个只读的 <strong>Translated Text</strong> 区域，实时显示这一轮实际会念出来的英文内容，方便你确认翻译是否符合预期。</p>
+
+        <h3>什么时候用哪种</h3>
+        <ul>
+          <li>已经准备好最终要说的英文文本 &mdash; 保持<strong>关闭</strong>，直接输入英文即可。</li>
+          <li>习惯用中文打草稿、但希望说出自然的英文 &mdash; <strong>打开</strong>开关，输入中文即可。</li>
+        </ul>
+        <p class="guide-subtitle">只有开启时，Speaking Style 选择器才会出现——它只影响 Translated Speak 生成的英文用词，对 Direct Speak 没有任何作用。</p>
+      </section>
+
+      <section class="panel guide-content">
+        <h2>Speaking Style</h2>
+        <p>只在 <strong>Chinese &rarr; English</strong> 开启时才会显示。四个选项都在同一次翻译请求里生效，不会增加额外等待时间。</p>
+
+        <h3>三个内置风格</h3>
+        <ul>
+          <li><strong>Natural Conversation</strong>（默认）&mdash; 适合真实视频会议的自然口语表达，避免过度书面化，也避免"AI 腔"套话（比如反复出现 "Absolutely!" "Certainly!" "Furthermore..."）。适合：日常周会/日会同步、和熟悉的同事或客户沟通。</li>
+          <li><strong>Professional</strong> &mdash; 清晰、沉稳、商务得体，但不会像正式报告或新闻稿那样生硬；用词更精炼，语气更专业克制。适合：英语商务会议、对外合作沟通、需要保持专业形象的场合。</li>
+          <li><strong>Concise</strong> &mdash; 句子更短、不啰嗦，但不会删掉任何关键信息——所有事实、数字、日期、承诺、专有名词都会被完整保留。适合：时间紧张、只想说重点的进展同步，或给管理层的简短更新。</li>
+        </ul>
+
+        <h3>My Style 怎么配置</h3>
+        <p>在 <strong>Settings &rarr; Speaking Style</strong> 里填写以下四项，都是自由文本，不需要懂提示词工程：</p>
+        <ul>
+          <li><strong>Speaking preferences</strong>（说话习惯）&mdash; 一段话描述你喜欢的语气/句式，例如 "Use relatively short sentences. State the conclusion first, then explain the reason."</li>
+          <li><strong>Preferred phrases</strong>（常用口头禅/过渡语）&mdash; 每行一个，例如 "Right, so..." / "Bottom line:"</li>
+          <li><strong>Avoided phrases</strong>（希望避免的表达）&mdash; 每行一个，例如 "Absolutely!" / "Certainly!"</li>
+          <li><strong>Example sentences</strong>（示例句子）&mdash; 每行一句，给几句真实反映你说话方式的英文例句；这些例句只作为语气/节奏参考，不会被逐字照搬进结果里。</li>
+        </ul>
+        <p>保存后，回到主页把 Speaking Style 切换为 <strong>My Style</strong> 即可生效。如果这几项都留空，系统会自动使用 Natural Conversation 的效果，不会报错。</p>
+
+        <h3>同一句话，四种风格的实际差异</h3>
+        <div class="guide-example-block">
+          <p class="guide-example-source">中文原文：我们在3月15日完成了与ACME公司的沙盒环境对接，交易金额是128,000美元，下一步是生产环境配置。</p>
+          <dl>
+            <dt>Natural Conversation</dt>
+            <dd>We completed the sandbox environment integration with ACME on March 15th, with a transaction amount of $128,000. The next step is to configure the production environment.</dd>
+            <dt>Professional</dt>
+            <dd>We completed the sandbox integration with ACME on March 15 for a transaction amount of $128,000. The next step is the production environment configuration.</dd>
+            <dt>Concise</dt>
+            <dd>We completed the sandbox environment integration with ACME on March 15. The transaction amount is $128,000. The next step is production environment configuration.</dd>
+            <dt>My Style（preferred phrases 配置了 "Right, so..." 和 "Bottom line:"）</dt>
+            <dd>Bottom line: We're moving to production environment configuration. Right, so we finished the ACME sandbox integration on March 15 for $128,000.</dd>
+          </dl>
+        </div>
+        <p class="guide-subtitle">可以看到：无论选哪种风格，日期（March 15）、金额（$128,000）、公司名（ACME）这些关键事实都会完整保留，改变的只是语气和句式——Speaking Style 只影响"怎么说"，不影响"说什么"。</p>
+      </section>
+
+      <div class="guide-nav-footer">
+        <a class="btn btn-ghost" href="settings.html">Go to Settings</a>
+        <a class="btn btn-primary" href="index.html">Back to Workspace</a>
+      </div>
+
+    </main>
+  </div>
+</body>
+</html>

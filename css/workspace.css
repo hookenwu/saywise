@@ -358,6 +358,111 @@ body {
   gap: 10px;
 }
 
+.header-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* User Guide (guide.html) — static prose content, scoped under .guide-content so it
+ * cannot affect any other page's typography. */
+.guide-content h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.guide-content h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin: 14px 0 6px;
+}
+
+.guide-content p {
+  margin: 0 0 8px;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.guide-content ul,
+.guide-content ol {
+  margin: 0 0 8px;
+  padding-left: 20px;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.guide-content li {
+  margin-bottom: 4px;
+}
+
+.guide-subtitle {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin: 0 0 10px;
+}
+
+.guide-recommend-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 8px 0 12px;
+}
+
+.guide-recommend-table th,
+.guide-recommend-table td {
+  border: 1px solid var(--color-border);
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.guide-recommend-table th {
+  background: var(--color-badge-bg);
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.guide-example-block {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  margin: 6px 0 12px;
+  font-size: 13px;
+  line-height: 1.6;
+  background: var(--color-bg);
+}
+
+.guide-example-block .guide-example-source {
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+.guide-example-block dl {
+  margin: 0;
+}
+
+.guide-example-block dt {
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-top: 8px;
+}
+
+.guide-example-block dt:first-child {
+  margin-top: 0;
+}
+
+.guide-example-block dd {
+  margin: 2px 0 0;
+}
+
+.guide-nav-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
 @media (max-width: 480px) {
   .voice-controls-row {
     flex-wrap: wrap;
@@ -365,5 +470,11 @@ body {
 
   .settings-group {
     grid-template-columns: 1fr;
+  }
+
+  .guide-recommend-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
   }
 }
