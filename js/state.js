@@ -16,6 +16,9 @@ const state = {
   selectedVoiceProfileId: null,
   speed: 1.0,
   volume: 1.0,
+  // Prosody Controls (speaking-style spec.md §7, plan.md §5.2) — neutral default 0,
+  // wire field is req_params.post_process.pitch, range [-12, 12] (js/tts-client.js).
+  pitch: 0,
 
   generationStatus: 'idle', // 'idle' | 'generating' | 'completed' | 'error'
   // { type, message } | null — type is 'tts-generation-failed' or, since Phase 11's
@@ -74,6 +77,11 @@ export function setSpeed(speed) {
 
 export function setVolume(volume) {
   state.volume = volume;
+  notify();
+}
+
+export function setPitch(pitch) {
+  state.pitch = pitch;
   notify();
 }
 

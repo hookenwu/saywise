@@ -1,11 +1,12 @@
 /**
  * Voice Copilot MVP — localStorage persistence (plan.md §17).
  *
- * Persisted: selectedVoiceProfileId, speed, volume, a Speech Text
+ * Persisted: selectedVoiceProfileId, speed, volume, pitch, a Speech Text
  * draft, and (since Phase 11, spec.md §9) the "Chinese -> English"
  * translationEnabled toggle — plain user preferences with no "confirmed"
  * semantics to go stale (unlike the old, discarded LLM-era design's Final
- * Text).
+ * Text). pitch (speaking-style spec.md §7, plan.md §5.4) follows the exact
+ * same pattern as speed/volume.
  *
  * Never persisted: credentials (live only in config/voice-config.local.js,
  * Phase 2, or the dedicated server's credential store, Phase 12), any
@@ -22,6 +23,7 @@ const KEYS = {
   selectedVoiceProfileId: 'voiceCopilot.selectedVoiceProfileId',
   speed: 'voiceCopilot.speed',
   volume: 'voiceCopilot.volume',
+  pitch: 'voiceCopilot.pitch',
   speechText: 'voiceCopilot.speechText',
   translationEnabled: 'voiceCopilot.translationEnabled',
 };
@@ -49,6 +51,7 @@ function safeSet(key, value) {
  *   selectedVoiceProfileId: string | null,
  *   speed: number | null,
  *   volume: number | null,
+ *   pitch: number | null,
  *   speechText: string,
  *   translationEnabled: boolean,
  * }}
@@ -56,12 +59,15 @@ function safeSet(key, value) {
 export function loadPersistedPreferences() {
   const speedRaw = safeGet(KEYS.speed);
   const volumeRaw = safeGet(KEYS.volume);
+  const pitchRaw = safeGet(KEYS.pitch);
   const speed = speedRaw !== null ? parseFloat(speedRaw) : NaN;
   const volume = volumeRaw !== null ? parseFloat(volumeRaw) : NaN;
+  const pitch = pitchRaw !== null ? parseFloat(pitchRaw) : NaN;
   return {
     selectedVoiceProfileId: safeGet(KEYS.selectedVoiceProfileId),
     speed: Number.isFinite(speed) ? speed : null,
     volume: Number.isFinite(volume) ? volume : null,
+    pitch: Number.isFinite(pitch) ? pitch : null,
     speechText: safeGet(KEYS.speechText) || '',
     translationEnabled: safeGet(KEYS.translationEnabled) === 'true',
   };
@@ -77,6 +83,10 @@ export function persistSpeed(speed) {
 
 export function persistVolume(volume) {
   safeSet(KEYS.volume, String(volume));
+}
+
+export function persistPitch(pitch) {
+  safeSet(KEYS.pitch, String(pitch));
 }
 
 export function persistSpeechText(text) {

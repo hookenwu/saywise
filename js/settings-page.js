@@ -35,6 +35,7 @@ const voiceLangEnEl = document.getElementById('settings-voice-lang-en');
 const voiceLangZhEl = document.getElementById('settings-voice-lang-zh');
 const voiceSpeedEl = document.getElementById('settings-voice-speed');
 const voiceVolumeEl = document.getElementById('settings-voice-volume');
+const voicePitchEl = document.getElementById('settings-voice-pitch');
 
 const saveBtn = document.getElementById('settings-save-btn');
 
@@ -62,6 +63,7 @@ function populate() {
   voiceLangZhEl.checked = profile?.languageCapability?.includes('zh') ?? false;
   voiceSpeedEl.value = profile?.speed ?? '';
   voiceVolumeEl.value = profile?.volume ?? '';
+  voicePitchEl.value = profile?.pitch ?? '';
 }
 
 populate();
@@ -79,6 +81,10 @@ saveBtn.addEventListener('click', () => {
     // currently read it (Volcengine's bidirectional WS only uses appKey/accessToken).
     secretKey: ttsSecretKeyEl.value.trim(),
   };
+  // Number.isFinite() guard (speaking-style plan.md §6.1/tasks.md T15.7), not the looser
+  // `parseFloat(...) || 0` coercion — the correct fallback for arbitrary invalid/empty
+  // input (e.g. stray whitespace or non-numeric text), not just for a literal 0.
+  const parsedPitch = parseFloat(voicePitchEl.value);
   const voiceProfiles = [
     {
       id: 'my-voice',
@@ -87,6 +93,7 @@ saveBtn.addEventListener('click', () => {
       languageCapability: languageCapability.length ? languageCapability : ['en', 'zh'],
       speed: parseFloat(voiceSpeedEl.value) || 1.0,
       volume: parseFloat(voiceVolumeEl.value) || 1.0,
+      pitch: Number.isFinite(parsedPitch) ? parsedPitch : 0,
     },
   ];
 

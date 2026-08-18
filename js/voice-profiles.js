@@ -15,6 +15,10 @@
  * @property {string[]} languageCapability
  * @property {number} speed
  * @property {number} volume
+ * @property {number} [pitch] optional Prosody control (speaking-style spec.md §7,
+ *   plan.md §5.2) — neutral default 0 if omitted; not required for a profile to be
+ *   valid (see validateConfiguration() below), same tolerance as speed/volume already have
+ *   at read time via tts-client.js's own fallback.
  * @property {string} [description]
  *
  * Phase 12 (spec.md §13, plan.md §9.1): loadConfiguration() is now localStorage-first,

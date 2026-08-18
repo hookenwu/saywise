@@ -36,6 +36,7 @@ export const SERVER_BASE_URL = DEV_SERVER_BASE_URL_OVERRIDE || '';
  *   languageCapability: string[],
  *   speed: number,
  *   volume: number,
+ *   pitch?: number,
  *   description?: string,
  * }>}
  */
@@ -47,6 +48,7 @@ export const VOICE_PROFILES = [
     languageCapability: ['en', 'zh'],
     speed: 1.0,
     volume: 1.0,
+    pitch: 0, // optional Prosody control (speaking-style spec.md §7.3) — 0 is neutral
     description: '',
   },
 ];

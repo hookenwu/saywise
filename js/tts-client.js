@@ -191,7 +191,8 @@ export class StreamingTTSClient {
    * 多个 beginSession 调用会通过 _synthChain 串行：后来的 beginSession 会等前一个
    * endSession()/cancelSession() 释放 chain 后才继续。
    *
-   * @param {object} voiceSettings  { speaker, speed, volume, useTTS2 } — speaker is required
+   * @param {object} voiceSettings  { speaker, speed, volume, pitch, useTTS2 } — speaker is
+   *   required; pitch is optional, defaults to 0 (neutral), clamped to [-12, 12]
    * @param {object} callbacks      { onChunk(Uint8Array), onSentenceStart(string), onSentenceEnd(string) }
    * @returns {Promise<void>}        在收到 SessionStarted 后 resolve（不是 SessionFinished）
    */
@@ -242,6 +243,14 @@ export class StreamingTTSClient {
     const userUid = this._uuid();
     const speed = Math.max(0.2, Math.min(3.0, voiceSettings.speed || 1.0));
     const volume = Math.max(0.1, Math.min(3.0, voiceSettings.volume || 1.0));
+    // Pitch (speaking-style spec.md §7.3, plan.md §5.2): confirmed wire field is
+    // req_params.post_process.pitch — a sibling of audio_params/additions on req_params,
+    // NOT a *_ratio field inside `additions` alongside speed_ratio/volume_ratio above.
+    // Range [-12, 12], neutral/default 0. Sent unconditionally (including at 0), the same
+    // way speed_ratio/volume_ratio are already sent unconditionally at their own neutral
+    // values, so the payload shape stays uniform regardless of whether the user customized
+    // prosody.
+    const pitch = Math.max(-12, Math.min(12, voiceSettings.pitch ?? 0));
     const additions = JSON.stringify({
       disable_markdown_filter: true,
       speed_ratio: speed,
@@ -253,6 +262,7 @@ export class StreamingTTSClient {
       model: useTTS2 ? 'seed-tts-2.0-expressive' : 'seed-tts-1.1',
       audio_params: { format: this.encoding, sample_rate: this.sampleRate, enable_timestamp: false },
       additions,
+      post_process: { pitch },
     };
 
     const sessionPayload = JSON.stringify({

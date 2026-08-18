@@ -28,6 +28,7 @@ import {
   setSelectedVoiceProfileId,
   setSpeed,
   setVolume,
+  setPitch,
   setGenerationStatus,
   setPlaybackStatus,
   setPlaybackError,
@@ -44,6 +45,7 @@ import {
   persistSelectedVoiceProfileId,
   persistSpeed,
   persistVolume,
+  persistPitch,
   persistSpeechText,
   persistTranslationEnabled,
 } from './persistence.js';
@@ -60,6 +62,7 @@ const voiceSelectEl = document.getElementById('voice-select');
 const voiceLanguageBadgeEl = document.getElementById('voice-language-badge');
 const speedInputEl = document.getElementById('speed-input');
 const volumeInputEl = document.getElementById('volume-input');
+const pitchInputEl = document.getElementById('pitch-input');
 const errorBannerEl = document.getElementById('error-banner');
 const generationErrorEl = document.getElementById('generation-error');
 const generationErrorTextEl = document.getElementById('generation-error-text');
@@ -255,7 +258,7 @@ function showConfigurationError(error) {
 
 /**
  * @param {object} profile
- * @param {{speed?: number, volume?: number}} [overrides] persisted values
+ * @param {{speed?: number, volume?: number, pitch?: number}} [overrides] persisted values
  *   (T7.3) take priority over the profile's own defaults when present.
  */
 function applyProfileDefaults(profile, overrides = {}) {
@@ -267,10 +270,16 @@ function applyProfileDefaults(profile, overrides = {}) {
   // mid-edit. This function only runs on startup and on profile change.
   const speed = overrides.speed ?? profile.speed;
   const volume = overrides.volume ?? profile.volume;
+  // Pitch (speaking-style plan.md §5.2/§7): same override-then-profile-then-neutral
+  // fallback chain as speed/volume, ending at 0 (neutral) rather than an assumed profile
+  // field, since pitch is optional on VoiceProfile (T15.3).
+  const pitch = overrides.pitch ?? profile.pitch ?? 0;
   speedInputEl.value = String(speed);
   volumeInputEl.value = String(volume);
+  pitchInputEl.value = String(pitch);
   setSpeed(speed);
   setVolume(volume);
+  setPitch(pitch);
 }
 
 /**
@@ -395,7 +404,7 @@ async function handleDirectSpeak() {
 
   try {
     await ttsClient.beginSession(
-      { speaker: profile.speakerId, speed: state.speed, volume: state.volume, useTTS2: true },
+      { speaker: profile.speakerId, speed: state.speed, volume: state.volume, pitch: state.pitch, useTTS2: true },
       { onChunk: (bytes) => player.appendChunk(bytes) }
     );
     await ttsClient.pushText(text);
@@ -487,7 +496,7 @@ async function handleTranslatedSpeak() {
 
   try {
     await ttsClient.beginSession(
-      { speaker: profile.speakerId, speed: state.speed, volume: state.volume, useTTS2: true },
+      { speaker: profile.speakerId, speed: state.speed, volume: state.volume, pitch: state.pitch, useTTS2: true },
       { onChunk: (bytes) => player.appendChunk(bytes) }
     );
     ttsSessionOpen = true;
@@ -609,6 +618,14 @@ volumeInputEl.addEventListener('input', () => {
   }
 });
 
+pitchInputEl.addEventListener('input', () => {
+  const value = parseFloat(pitchInputEl.value);
+  if (!Number.isNaN(value)) {
+    setPitch(value);
+    persistPitch(value);
+  }
+});
+
 generationErrorRetryBtn.addEventListener('click', () => {
   handleSpeak(); // re-reads state.speechText fresh — same text, same profile, tried again
 });
@@ -652,6 +669,7 @@ loadConfiguration().then((result) => {
   applyProfileDefaults(defaultProfile, {
     speed: persisted.speed ?? undefined,
     volume: persisted.volume ?? undefined,
+    pitch: persisted.pitch ?? undefined,
   });
   ttsClient = new StreamingTTSClient(result.providerConfiguration);
 });
