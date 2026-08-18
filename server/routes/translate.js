@@ -16,12 +16,36 @@ import { readCredential } from '../lib/credential-store.js';
 
 const router = Router();
 
+// Speaking Style (speaking-style spec.md §4, plan.md §4.5): the only normalization this
+// route performs on stylePreset/myStyle is type/shape and the stylePreset allowlist below
+// — NOT character-count truncation. The 500/300/300/800 caps live exclusively in
+// buildMyStyleBlock()/cap() inside ../lib/translate.js, so a field is truncated exactly
+// once, not twice at two layers (tasks.md T16.3).
+const STYLE_PRESETS = new Set(['natural', 'professional', 'concise', 'my-style']);
+
+function normalizeStylePreset(value) {
+  return STYLE_PRESETS.has(value) ? value : 'natural';
+}
+
+function normalizeMyStyle(value) {
+  const v = value && typeof value === 'object' ? value : {};
+  const asString = (field) => (typeof v[field] === 'string' ? v[field] : '');
+  return {
+    speakingPreferences: asString('speakingPreferences'),
+    preferredPhrases: asString('preferredPhrases'),
+    avoidedPhrases: asString('avoidedPhrases'),
+    exampleSentences: asString('exampleSentences'),
+  };
+}
+
 router.post('/translate-stream', async (req, res) => {
   const text = req.body?.text;
   if (typeof text !== 'string' || !text.trim()) {
     res.status(400).json({ error: 'Request body must include a non-empty "text" field' });
     return;
   }
+  const stylePreset = normalizeStylePreset(req.body?.stylePreset);
+  const myStyle = normalizeMyStyle(req.body?.myStyle);
 
   const credential = await readCredential();
   const apiKey = credential?.accessToken;
@@ -57,7 +81,7 @@ router.post('/translate-stream', async (req, res) => {
   });
 
   try {
-    for await (const { content } of streamTranslate(text, { apiKey, signal: upstreamAbort.signal })) {
+    for await (const { content } of streamTranslate(text, { apiKey, signal: upstreamAbort.signal, stylePreset, myStyle })) {
       if (aborted) break;
       res.write(`data: ${JSON.stringify({ content })}\n\n`);
     }
