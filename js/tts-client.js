@@ -241,26 +241,38 @@ export class StreamingTTSClient {
 
     const sessionId = this._uuid();
     const userUid = this._uuid();
-    const speed = Math.max(0.2, Math.min(3.0, voiceSettings.speed || 1.0));
-    const volume = Math.max(0.1, Math.min(3.0, voiceSettings.volume || 1.0));
+    // Speed/Volume (bug fix, prosody-audit): the official Volcengine bidirectional-streaming
+    // TTS API (https://docs.volcengine.com/docs/6561/2532486) does NOT define `speed_ratio`/
+    // `volume_ratio` anywhere — those were never real fields and the server silently ignores
+    // unknown JSON keys, which is why Speed/Volume previously had no audible effect. The real
+    // fields are `req_params.audio_params.speech_rate`/`loudness_rate`: int, range [-50, 100],
+    // where 0 = normal (1.0x), 100 = 2.0x, -50 = 0.5x — a single linear scale across the whole
+    // range (rate = (ratio - 1) * 100). True achievable ratio range is therefore [0.5, 2.0],
+    // not the previous (also-wrong) [0.2, 3.0]/[0.1, 3.0] — see index.html/settings.html's
+    // matching min/max update.
+    const speed = Math.max(0.5, Math.min(2.0, voiceSettings.speed || 1.0));
+    const volume = Math.max(0.5, Math.min(2.0, voiceSettings.volume || 1.0));
+    const speechRate = Math.round(Math.max(-50, Math.min(100, (speed - 1) * 100)));
+    const loudnessRate = Math.round(Math.max(-50, Math.min(100, (volume - 1) * 100)));
     // Pitch (speaking-style spec.md §7.3, plan.md §5.2): confirmed wire field is
-    // req_params.post_process.pitch — a sibling of audio_params/additions on req_params,
-    // NOT a *_ratio field inside `additions` alongside speed_ratio/volume_ratio above.
-    // Range [-12, 12], neutral/default 0. Sent unconditionally (including at 0), the same
-    // way speed_ratio/volume_ratio are already sent unconditionally at their own neutral
-    // values, so the payload shape stays uniform regardless of whether the user customized
-    // prosody.
+    // req_params.post_process.pitch — a sibling of audio_params/additions on req_params.
+    // Range [-12, 12] per the official doc, neutral/default 0. This field was already
+    // correctly placed/named prior to this fix.
     const pitch = Math.max(-12, Math.min(12, voiceSettings.pitch ?? 0));
     const additions = JSON.stringify({
       disable_markdown_filter: true,
-      speed_ratio: speed,
-      volume_ratio: volume,
       ...(useTTS2 ? { use_tag_parser: true } : {}),
     });
     const reqParamsBase = {
       speaker: voiceType,
       model: useTTS2 ? 'seed-tts-2.0-expressive' : 'seed-tts-1.1',
-      audio_params: { format: this.encoding, sample_rate: this.sampleRate, enable_timestamp: false },
+      audio_params: {
+        format: this.encoding,
+        sample_rate: this.sampleRate,
+        enable_timestamp: false,
+        speech_rate: speechRate,
+        loudness_rate: loudnessRate,
+      },
       additions,
       post_process: { pitch },
     };
