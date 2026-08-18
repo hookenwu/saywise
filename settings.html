@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice Copilot — Settings</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="css/workspace.css" />
+</head>
+<body>
+  <div class="workspace">
+    <header class="workspace-header">
+      <h1>Voice Copilot — Settings</h1>
+      <a id="back-btn" class="btn btn-ghost" href="index.html">&larr; Back to Workspace</a>
+    </header>
+
+    <main class="workspace-main">
+      <section class="panel panel-settings">
+        <fieldset class="settings-group">
+          <legend>Voice / TTS Provider</legend>
+          <span id="settings-tts-status" class="settings-llm-status settings-status-not-configured">Not Configured</span>
+          <label for="settings-tts-app-id">App ID</label>
+          <input id="settings-tts-app-id" class="settings-input" type="text" autocomplete="off" placeholder="Not configured" />
+          <label for="settings-tts-access-token">Access Token</label>
+          <input id="settings-tts-access-token" class="settings-input" type="text" autocomplete="off" placeholder="Not configured" />
+          <label for="settings-tts-secret-key">Secret Key</label>
+          <input id="settings-tts-secret-key" class="settings-input" type="text" autocomplete="off" placeholder="Not configured (optional)" />
+        </fieldset>
+
+        <fieldset class="settings-group">
+          <legend>Voice Profile</legend>
+          <label for="settings-voice-name">Name</label>
+          <input id="settings-voice-name" class="settings-input" type="text" placeholder="Not configured" />
+          <label for="settings-voice-speaker-id">Speaker ID</label>
+          <input id="settings-voice-speaker-id" class="settings-input" type="text" placeholder="Not configured" />
+          <span class="control-label">Language</span>
+          <span class="settings-checkbox-row">
+            <label><input id="settings-voice-lang-en" type="checkbox" /> EN</label>
+            <label><input id="settings-voice-lang-zh" type="checkbox" /> 中</label>
+          </span>
+          <label for="settings-voice-speed">Speed</label>
+          <input id="settings-voice-speed" class="settings-input settings-input-narrow" type="number" min="0.2" max="3.0" step="0.1" placeholder="1.0" />
+          <label for="settings-voice-volume">Volume</label>
+          <input id="settings-voice-volume" class="settings-input settings-input-narrow" type="number" min="0.1" max="3.0" step="0.1" placeholder="1.0" />
+        </fieldset>
+
+        <div class="settings-actions">
+          <a class="btn btn-ghost" href="index.html">Cancel</a>
+          <button id="settings-save-btn" class="btn btn-primary" type="button">Save</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="js/settings-page.js"></script>
+</body>
+</html>

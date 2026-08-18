@@ -1,0 +1,4 @@
+config/voice-config.local.js
+server/.env
+server/node_modules/
+node_modules/

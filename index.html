@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice Copilot</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="css/workspace.css" />
+</head>
+<body>
+  <div class="workspace">
+    <header class="workspace-header">
+      <h1>Voice Copilot</h1>
+      <a id="settings-btn" class="btn btn-ghost" href="settings.html">Settings</a>
+    </header>
+
+    <main class="workspace-main">
+      <section class="panel panel-speech-text">
+        <label for="speech-text" class="panel-label">Speech Text</label>
+        <textarea
+          id="speech-text"
+          class="speech-text-input"
+          placeholder="输入或粘贴你想说的中文 / 英文内容..."
+          rows="8"
+        ></textarea>
+      </section>
+
+      <section class="panel panel-voice">
+        <div class="voice-row">
+          <label for="voice-select" class="panel-label">Voice</label>
+          <select id="voice-select" class="voice-select" disabled>
+            <option value="">No voice configured</option>
+          </select>
+          <span id="voice-language-badge" class="language-badge" hidden></span>
+        </div>
+
+        <div class="voice-controls-row">
+          <label for="speed-input" class="control-label">Speed</label>
+          <input
+            id="speed-input"
+            class="control-input"
+            type="number"
+            min="0.2"
+            max="3.0"
+            step="0.1"
+            value="1.0"
+          />
+
+          <label for="volume-input" class="control-label">Volume</label>
+          <input
+            id="volume-input"
+            class="control-input"
+            type="number"
+            min="0.1"
+            max="3.0"
+            step="0.1"
+            value="1.0"
+          />
+        </div>
+
+        <div class="translation-toggle-row">
+          <label for="translation-toggle" class="control-label">Chinese &rarr; English</label>
+          <input id="translation-toggle" class="translation-toggle" type="checkbox" disabled title="Checking translation server…" />
+        </div>
+      </section>
+
+      <section class="panel panel-speak">
+        <button id="speak-btn" class="btn btn-primary btn-speak" type="button" disabled>
+          Speak
+        </button>
+        <div id="generation-error" class="error-inline" hidden>
+          <span id="generation-error-text"></span>
+          <button id="generation-error-retry" class="btn btn-ghost" type="button">Retry</button>
+        </div>
+      </section>
+
+      <section id="translated-text-panel" class="panel panel-translated-text" hidden>
+        <label for="translated-text-display" class="panel-label">Translated Text</label>
+        <div id="translated-text-display" class="translated-text-display" aria-live="polite"></div>
+      </section>
+
+      <section class="panel panel-player">
+        <div class="player-controls">
+          <button id="pause-btn" class="btn" type="button" disabled>⏸ Pause</button>
+          <button id="resume-btn" class="btn" type="button" disabled>▶ Resume</button>
+          <button id="replay-btn" class="btn" type="button" disabled>↻ Replay</button>
+          <button id="stop-btn" class="btn" type="button" disabled>■ Stop</button>
+        </div>
+        <div id="status-line" class="status-line" data-generation-status="idle" data-playback-status="stopped">
+          <span class="status-label">Status:</span>
+          <span id="status-text" class="status-text">Idle</span>
+        </div>
+        <div id="playback-error" class="error-inline" hidden></div>
+      </section>
+
+      <section id="error-banner" class="error-banner" hidden></section>
+    </main>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
