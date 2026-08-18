@@ -1,0 +1,10 @@
+{
+  "name": "voice-copilot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Root package.json for the Vercel deployment — declares the dependency Vercel's Serverless Functions under /api need (server/lib/translate.js's @google/genai import). Not used for local development, which runs entirely from server/ (see README.md).",
+  "dependencies": {
+    "@google/genai": "^1.0.0"
+  }
+}

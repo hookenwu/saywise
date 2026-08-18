@@ -92,6 +92,41 @@ gitignored. `llm-credential.local.json` — once it exists — takes precedence 
 | `VOICE_COPILOT_ALLOWED_ORIGIN` | `http://localhost:3000` | CORS allowlist for cross-origin API calls. Not relevant when the server serves its own frontend (the default, same-origin setup) — only matters if you point a *different* origin's frontend at this server's API. |
 | `GEMINI_API_KEY` | — | Optional bootstrap for the Translation Provider; superseded once you save a credential through Settings. |
 
+## Deploying to Vercel
+
+`server/index.js` (a long-running Express app, `app.listen()`) is **not** what runs on
+Vercel — Vercel doesn't execute persistent servers. Instead, `api/translate-stream.js` and
+`api/settings/llm-provider.js` are Vercel Serverless Functions that import the exact same
+business logic from `server/lib/translate.js`/`server/lib/credential-store.js` — nothing is
+duplicated or forked between the two adapters, they just have different request/response
+plumbing (Express `Router` vs. a plain `(req, res) => {}` handler).
+
+Deployment is otherwise zero-config: Vercel auto-detects the static files at the repo root
+(`index.html`, `css/`, `js/`, `config/`) as the public site and the `api/` directory as
+serverless functions, from the existence of `api/*.js` files alone. `vercel.json` only sets
+an extended `maxDuration` for `api/translate-stream.js`, since a full translation stream can
+run longer than a default serverless timeout — adjust or remove this if your plan doesn't
+support it. `package.json` at the repo root declares `@google/genai`, the one dependency
+those two functions need; it isn't used for local development, which runs entirely out of
+`server/` (see Quick Start above).
+
+**Only one thing needs configuring for Chinese → English to work in production:** set
+`GEMINI_API_KEY` in your Vercel project's **Settings → Environment Variables** (for
+Production, and Preview if you want translation to work on preview deployments too) — not
+`server/.env`, which Vercel never reads. Leave it unset (or empty) to run with Direct Speak
+only, same fallback behavior as local dev.
+
+No `VOICE_COPILOT_ALLOWED_ORIGIN`/CORS configuration is needed on Vercel at all: the static
+frontend and the `/api/*` functions are served from the same Vercel domain, so
+`js/translation-client.js`'s default same-origin fetch (`SERVER_BASE_URL = ''`) reaches them
+directly. CORS only becomes relevant for the local dedicated server (`server/index.js`),
+which is commonly accessed from a different origin during local dev — see the environment
+variable table above.
+
+Voice/TTS Provider credentials and your Voice Profile are unaffected by any of this — they
+already go through **Settings → localStorage**, per browser, independent of which backend
+(local `server/`, or Vercel) happens to be running.
+
 ## Usage
 
 - **Speak** — click after typing/pasting your text. Audio starts playing as soon as the
@@ -113,6 +148,13 @@ gitignored. `llm-credential.local.json` — once it exists — takes precedence 
 ```text
 voice-copilot/
   index.html              Main page
+  guide.html               User Guide page
+  settings.html             Settings page
+  package.json               Vercel-only: declares @google/genai for api/. Not used locally.
+  vercel.json                 Vercel-only: extended maxDuration for api/translate-stream.js
+  api/                      Vercel Serverless Functions — see "Deploying to Vercel" above
+    translate-stream.js       Adapter for server/lib/translate.js's streamTranslate()
+    settings/llm-provider.js  Adapter for server/lib/credential-store.js's readMaskedStatus()
   css/workspace.css        Styling
   js/                       Browser code (ES modules, no bundler)
     app.js                   Entry point / DOM wiring / Speak orchestration

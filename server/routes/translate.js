@@ -11,32 +11,10 @@
 
 import { Router } from 'express';
 
-import { streamTranslate } from '../lib/translate.js';
+import { streamTranslate, normalizeStylePreset, normalizeMyStyle } from '../lib/translate.js';
 import { readCredential } from '../lib/credential-store.js';
 
 const router = Router();
-
-// Speaking Style (speaking-style spec.md §4, plan.md §4.5): the only normalization this
-// route performs on stylePreset/myStyle is type/shape and the stylePreset allowlist below
-// — NOT character-count truncation. The 500/300/300/800 caps live exclusively in
-// buildMyStyleBlock()/cap() inside ../lib/translate.js, so a field is truncated exactly
-// once, not twice at two layers (tasks.md T16.3).
-const STYLE_PRESETS = new Set(['natural', 'professional', 'concise', 'my-style']);
-
-function normalizeStylePreset(value) {
-  return STYLE_PRESETS.has(value) ? value : 'natural';
-}
-
-function normalizeMyStyle(value) {
-  const v = value && typeof value === 'object' ? value : {};
-  const asString = (field) => (typeof v[field] === 'string' ? v[field] : '');
-  return {
-    speakingPreferences: asString('speakingPreferences'),
-    preferredPhrases: asString('preferredPhrases'),
-    avoidedPhrases: asString('avoidedPhrases'),
-    exampleSentences: asString('exampleSentences'),
-  };
-}
 
 router.post('/translate-stream', async (req, res) => {
   const text = req.body?.text;

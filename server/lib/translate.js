@@ -116,6 +116,28 @@ export function buildSystemInstruction({ stylePreset, myStyle } = {}) {
   return `${BASE_TRANSLATION_INSTRUCTION}\n\n${styleBlock}\n\n${MEANING_GUARDRAIL}`;
 }
 
+// Speaking Style request normalization (speaking-style spec.md §4, plan.md §4.5) — shared
+// by both server adapters (Express's routes/translate.js and Vercel's api/translate-stream.js)
+// so the two never drift: type/shape + the stylePreset allowlist only, NOT character-count
+// truncation (that lives exclusively in buildMyStyleBlock()/cap() above, so a field is
+// truncated exactly once, not twice at two layers, tasks.md T16.3).
+const STYLE_PRESETS = new Set(['natural', 'professional', 'concise', 'my-style']);
+
+export function normalizeStylePreset(value) {
+  return STYLE_PRESETS.has(value) ? value : 'natural';
+}
+
+export function normalizeMyStyle(value) {
+  const v = value && typeof value === 'object' ? value : {};
+  const asString = (field) => (typeof v[field] === 'string' ? v[field] : '');
+  return {
+    speakingPreferences: asString('speakingPreferences'),
+    preferredPhrases: asString('preferredPhrases'),
+    avoidedPhrases: asString('avoidedPhrases'),
+    exampleSentences: asString('exampleSentences'),
+  };
+}
+
 function isTransientError(err) {
   const status = err?.status || err?.response?.status;
   return status === 503 || status === 429 || /overloaded|unavailable|resource_exhausted/i.test(err?.message || '');
