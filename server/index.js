@@ -25,6 +25,7 @@ import dotenv from 'dotenv';
 
 import settingsRouter from './routes/settings.js';
 import translateRouter from './routes/translate.js';
+import { attachAudioBridge, BRIDGE_PATH } from './lib/audio-bridge.js';
 
 dotenv.config();
 
@@ -33,6 +34,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.VOICE_COPILOT_SERVER_PORT || 4100;
 const HOST = process.env.VOICE_COPILOT_SERVER_HOST || '127.0.0.1';
 const ALLOWED_ORIGIN = process.env.VOICE_COPILOT_ALLOWED_ORIGIN || 'http://localhost:3000';
+// Extra origins (comma-separated, or '*') allowed to connect to the Audio Bridge, on top of
+// same-origin, ALLOWED_ORIGIN, and Teams Web (consumer only) — see lib/audio-bridge.js.
+const BRIDGE_ALLOWED_ORIGINS = (process.env.VOICE_COPILOT_BRIDGE_ALLOWED_ORIGINS || '')
+  .split(',')
+  .map((s) => s.trim())
+  .filter(Boolean);
 
 const app = express();
 
@@ -47,6 +54,18 @@ app.use('/api', translateRouter);
 // (plan.md §4.3) — no app.js, no Live2D project files required.
 app.use(express.static(path.join(__dirname, '..')));
 
-app.listen(PORT, HOST, () => {
+// Diagnostics for the Audio Bridge below (docs/teams-web-audio-injection-spec.md Phase 1).
+app.get('/api/audio-bridge/status', (req, res) => {
+  res.json(audioBridge.getStats());
+});
+
+const httpServer = app.listen(PORT, HOST, () => {
   console.log(`[voice-copilot-server] listening on http://${HOST}:${PORT}`);
+  console.log(`[voice-copilot-server] audio bridge at ws://${HOST}:${PORT}${BRIDGE_PATH}`);
+});
+
+// Local WebSocket fan-out of Streaming TTS Audio Chunks — handles only upgrade requests
+// for BRIDGE_PATH, so the HTTP routes above are unaffected.
+const audioBridge = attachAudioBridge(httpServer, {
+  allowedOrigins: [ALLOWED_ORIGIN, ...BRIDGE_ALLOWED_ORIGINS],
 });

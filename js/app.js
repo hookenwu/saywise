@@ -42,6 +42,7 @@ import { StreamingAudioPlayer } from './streaming-audio-player.js';
 import { streamTranslation, extractCompletedSentences, TranslationError } from './translation-client.js';
 import { updateTranslationAvailability } from './settings-client.js';
 import { loadMyStyleProfile } from './speaking-style.js';
+import { AudioBridgeClient } from './audio-bridge-client.js';
 import {
   loadPersistedPreferences,
   persistSelectedVoiceProfileId,
@@ -51,6 +52,7 @@ import {
   persistSpeechText,
   persistTranslationEnabled,
   persistStylePreset,
+  persistAudioBridgeEnabled,
 } from './persistence.js';
 
 const speechTextEl = document.getElementById('speech-text');
@@ -76,6 +78,8 @@ const stylePresetEl = document.getElementById('style-preset-select');
 const stylePresetRowEl = document.getElementById('style-preset-row');
 const translatedTextPanelEl = document.getElementById('translated-text-panel');
 const translatedTextDisplayEl = document.getElementById('translated-text-display');
+const audioBridgeToggleEl = document.getElementById('audio-bridge-toggle');
+const audioBridgeStatusEl = document.getElementById('audio-bridge-status');
 
 // Set once configuration loading finishes (T2.7) — when true, the
 // workspace stays permanently disabled because there is no usable
@@ -123,6 +127,35 @@ let serverBaseUrl = '';
 // player/session teardown steps, which is also what triggers the dedicated server's own
 // prompt upstream-abort handling (Phase 10, T10.3).
 let currentTranslationAbort = null;
+
+// Audio Bridge producer (docs/teams-web-audio-injection-spec.md Phase 1) — forwards each
+// round's Audio Chunks to the local bridge alongside, never instead of, local playback.
+// Connected only while the "Audio Bridge" toggle is on; every call below is a silent no-op
+// otherwise, so the Speak flow behaves exactly as before with the toggle off.
+const AUDIO_BRIDGE_STATUS_LABELS = {
+  DISCONNECTED: 'Offline',
+  CONNECTING: 'Connecting…',
+  IDLE: 'Connected',
+  STREAMING: 'Sending',
+};
+const audioBridge = new AudioBridgeClient({
+  role: 'producer',
+  onStateChange: (bridgeState) => {
+    audioBridgeStatusEl.textContent = AUDIO_BRIDGE_STATUS_LABELS[bridgeState];
+  },
+});
+
+function setAudioBridgeEnabled(enabled) {
+  audioBridgeStatusEl.hidden = !enabled;
+  if (enabled) audioBridge.connect();
+  else audioBridge.disconnect();
+}
+
+// Fan-out used as each round's onChunk: local player first, bridge second.
+function forwardChunk(player, bytes) {
+  player.appendChunk(bytes);
+  audioBridge.sendChunk(bytes);
+}
 
 function statusLabel(state) {
   const { generationStatus, playbackStatus, translationEnabled, translatedText } = state;
@@ -323,6 +356,7 @@ async function teardownCurrentRound() {
     currentPlayer.stop();
     currentPlayer = null;
   }
+  audioBridge.abortStream();
 
   if (wasGenerating && ttsClient) {
     // Forces a disconnect before releasing the chain (Phase 3, T3.5a) —
@@ -411,11 +445,12 @@ async function handleDirectSpeak() {
     },
   });
   currentPlayer = player;
+  audioBridge.beginStream({ startedAt: performance.timeOrigin + speakClickedAt });
 
   try {
     await ttsClient.beginSession(
       { speaker: profile.speakerId, speed: state.speed, volume: state.volume, pitch: state.pitch, useTTS2: true },
-      { onChunk: (bytes) => player.appendChunk(bytes) }
+      { onChunk: (bytes) => forwardChunk(player, bytes) }
     );
     await ttsClient.pushText(text);
     // endSession()'s Promise is gated on the provider's SessionFinished
@@ -435,8 +470,10 @@ async function handleDirectSpeak() {
     replayAvailable = true;
     setGenerationStatus('completed');
     player.end();
+    audioBridge.endStream();
   } catch (err) {
     if (currentPlayer !== player) return; // same staleness guard for the failure path
+    audioBridge.abortStream();
     console.error('[Voice Copilot] Speak failed:', err);
     setGenerationStatus('error', { type: 'tts-generation-failed', message: err.message });
   }
@@ -491,6 +528,7 @@ async function handleTranslatedSpeak() {
     },
   });
   currentPlayer = player;
+  audioBridge.beginStream({ startedAt: performance.timeOrigin + speakClickedAt });
 
   // Tracks whether ttsClient.beginSession() has actually succeeded, so the catch block
   // below knows whether there's a real session to cancelSession() (T11.5 step 6/T11.8) —
@@ -507,7 +545,7 @@ async function handleTranslatedSpeak() {
   try {
     await ttsClient.beginSession(
       { speaker: profile.speakerId, speed: state.speed, volume: state.volume, pitch: state.pitch, useTTS2: true },
-      { onChunk: (bytes) => player.appendChunk(bytes) }
+      { onChunk: (bytes) => forwardChunk(player, bytes) }
     );
     ttsSessionOpen = true;
 
@@ -553,6 +591,7 @@ async function handleTranslatedSpeak() {
     replayAvailable = true;
     setGenerationStatus('completed');
     player.end();
+    audioBridge.endStream();
   } catch (err) {
     if (currentPlayer !== player) return; // same staleness guard for the failure path
 
@@ -566,6 +605,7 @@ async function handleTranslatedSpeak() {
     }
     player.dispose();
     currentPlayer = null;
+    audioBridge.abortStream();
     setPlaybackStatus('stopped');
 
     if (err instanceof TranslationError) {
@@ -658,6 +698,11 @@ stylePresetEl.addEventListener('change', () => {
   persistStylePreset(stylePresetEl.value);
 });
 
+audioBridgeToggleEl.addEventListener('change', () => {
+  setAudioBridgeEnabled(audioBridgeToggleEl.checked);
+  persistAudioBridgeEnabled(audioBridgeToggleEl.checked);
+});
+
 // T7.3 — restore the persisted Speech Text draft immediately on load,
 // independent of configuration loading (which can fail or take a moment).
 const persisted = loadPersistedPreferences();
@@ -674,6 +719,12 @@ setTranslationEnabled(persisted.translationEnabled);
 // already allowlist-normalized by loadPersistedPreferences() (persistence.js).
 stylePresetEl.value = persisted.stylePreset;
 setStylePreset(persisted.stylePreset);
+
+// Audio Bridge — restore the persisted toggle; `?bridge=1` in the URL also turns it on
+// (handy for a dedicated meeting tab) without changing the persisted preference.
+const audioBridgeAutoConnect = new URLSearchParams(location.search).get('bridge') === '1';
+audioBridgeToggleEl.checked = persisted.audioBridgeEnabled || audioBridgeAutoConnect;
+setAudioBridgeEnabled(audioBridgeToggleEl.checked);
 
 subscribe(render);
 render(getState());

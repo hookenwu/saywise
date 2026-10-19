@@ -27,6 +27,7 @@ const KEYS = {
   speechText: 'voiceCopilot.speechText',
   translationEnabled: 'voiceCopilot.translationEnabled',
   stylePreset: 'voiceCopilot.stylePreset',
+  audioBridgeEnabled: 'voiceCopilot.audioBridgeEnabled',
 };
 
 // Speaking Style (speaking-style spec.md §4, plan.md §4.1) — only these four values are
@@ -64,6 +65,7 @@ function safeSet(key, value) {
  *   speechText: string,
  *   translationEnabled: boolean,
  *   stylePreset: 'natural' | 'professional' | 'concise' | 'my-style',
+ *   audioBridgeEnabled: boolean,
  * }}
  */
 export function loadPersistedPreferences() {
@@ -82,6 +84,7 @@ export function loadPersistedPreferences() {
     speechText: safeGet(KEYS.speechText) || '',
     translationEnabled: safeGet(KEYS.translationEnabled) === 'true',
     stylePreset: VALID_STYLE_PRESETS.has(stylePresetRaw) ? stylePresetRaw : 'natural',
+    audioBridgeEnabled: safeGet(KEYS.audioBridgeEnabled) === 'true',
   };
 }
 
@@ -111,4 +114,8 @@ export function persistTranslationEnabled(enabled) {
 
 export function persistStylePreset(preset) {
   safeSet(KEYS.stylePreset, preset);
+}
+
+export function persistAudioBridgeEnabled(enabled) {
+  safeSet(KEYS.audioBridgeEnabled, String(enabled));
 }

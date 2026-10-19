@@ -91,6 +91,7 @@ gitignored. `llm-credential.local.json` — once it exists — takes precedence 
 | `VOICE_COPILOT_SERVER_HOST` | `127.0.0.1` | Bind address — localhost-only by default; this server holds credential material, so don't widen this without knowing why. |
 | `VOICE_COPILOT_ALLOWED_ORIGIN` | `http://localhost:3000` | CORS allowlist for cross-origin API calls. Not relevant when the server serves its own frontend (the default, same-origin setup) — only matters if you point a *different* origin's frontend at this server's API. |
 | `GEMINI_API_KEY` | — | Optional bootstrap for the Translation Provider; superseded once you save a credential through Settings. |
+| `VOICE_COPILOT_BRIDGE_ALLOWED_ORIGINS` | — | Extra origins (comma-separated, or `*`) allowed to connect to the Audio Bridge. Same-origin pages and `VOICE_COPILOT_ALLOWED_ORIGIN` are always allowed; Teams Web is allowed as a consumer only. |
 
 ## Deploying to Vercel
 
@@ -142,6 +143,24 @@ already go through **Settings → localStorage**, per browser, independent of wh
   English; when off, behavior is identical to the toggle not existing at all.
 - **Settings** — top-right button. Configure Provider credentials and your Voice Profile
   without touching any file. Saving reloads the page to apply the new configuration.
+- **Audio Bridge** — toggle in the main workspace (or open the page with `?bridge=1`). Off
+  by default. When on, every Speak round's audio is also sent, as it arrives, to the local
+  server's `ws://<host>/audio-bridge` WebSocket, where any number of consumer pages (a Teams
+  Web injector, the test receiver) get the same chunks. Local playback is unchanged either
+  way; Replay only replays locally. Local server only — not available on Vercel.
+
+### Audio Bridge test receiver
+
+Open **http://localhost:4100/test/audio-bridge-test.html**, click **Start receiver**, then
+Speak in a SayWise tab with Audio Bridge on. The page plays the stream through Web Audio
+into a `MediaStreamAudioDestinationNode` (the track a meeting client would get) and shows
+an RMS/peak meter measured on that track, chunk counts, and TTFA from the Speak click to
+first chunk, playback start, and first audible output. Choose between MediaSource decoding
+and frame-aligned `decodeAudioData` with scheduled buffers. **Simulate producer** streams a
+local MP3 file instead, so you can try it without TTS credentials.
+`GET /api/audio-bridge/status` returns the bridge's state and counters.
+
+Automated tests: `node test/test-audio-bridge.js` (needs `server/node_modules` installed).
 
 ## Project structure
 
@@ -166,14 +185,19 @@ voice-copilot/
     voice-profiles.js         Provider Configuration + Voice Profile loading (localStorage-first)
     settings-client.js        Settings panel wiring
     persistence.js            localStorage persistence for user preferences
+    audio-bridge-client.js    Audio Bridge WebSocket client (producer + consumer roles)
   config/
     voice-config.example.js   Template — copy to voice-config.local.js
     voice-config.local.js     Your real credentials (gitignored)
   server/                   Independent Node.js runtime layer — see Quick Start
     index.js                  Express app: static hosting + API routes
     routes/                   translate-stream (SSE relay), settings (credential API)
-    lib/                      translate.js (Gemini call), credential-store.js
-    package.json               Own dependencies: express, dotenv, cors, @google/genai
+    lib/                      translate.js (Gemini call), credential-store.js,
+                              audio-bridge.js (/audio-bridge WebSocket fan-out)
+    package.json               Own dependencies: express, dotenv, cors, @google/genai, ws
+  test/
+    test-audio-bridge.js      Audio Bridge tests (node test/test-audio-bridge.js)
+    audio-bridge-test.html    Audio Bridge test receiver page
 ```
 
 ## Notes

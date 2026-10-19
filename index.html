@@ -77,6 +77,12 @@
           <input id="translation-toggle" class="translation-toggle" type="checkbox" disabled title="Checking translation server…" />
         </div>
 
+        <div class="audio-bridge-row">
+          <label for="audio-bridge-toggle" class="control-label">Audio Bridge</label>
+          <input id="audio-bridge-toggle" class="translation-toggle" type="checkbox" title="Also send Speak audio to the local Audio Bridge (e.g. a Teams Web tab)" />
+          <span id="audio-bridge-status" class="language-badge" hidden></span>
+        </div>
+
         <div id="style-preset-row" class="style-preset-row" hidden>
           <label for="style-preset-select" class="control-label">Speaking Style</label>
           <select id="style-preset-select" class="style-preset-select">
