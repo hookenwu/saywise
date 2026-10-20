@@ -102,25 +102,45 @@
 
 ---
 
-## 5. 分阶段实施计划 (Phased Plan)
+## 5. 分阶段实施计划与实测验证结果 (Phased Plan & Verification Baseline)
 
-### Phase 1：跨源音频传输与独立 Web Audio 验证 (VPS 端)
-- 在 SayWise 后端增加 `/audio-bridge` 轻量 WebSocket 通道；
-- SayWise 前端增加 Bridge 发送逻辑，用户点击 Speak 时同步发送音频 chunks；
-- 编写独立的接收端测试页（`test-receiver.html`），实测验证流式分片接收、Web Audio 动态解码与混音的延迟与连续性。
+### Phase 1：跨源音频传输与独立 Web Audio 验证 (已完成实测)
+- **实现内容**：
+  - SayWise 服务端实现 `/audio-bridge` 轻量 WebSocket 通道（`server/lib/audio-bridge.js`），支持 `producer`（单例、自动替换旧 Producer）与 `consumer`（多端广播，4MB 溢出保护）；
+  - 严格源安全检查（`isOriginAllowed`）：仅允许同源和微软 Teams 官方域名（`teams.microsoft.com`, `teams.live.com`, `teams.cloud.microsoft`）作为 consumer，外来来源严禁作为 producer；
+  - 浏览器端接收器（`test/audio-bridge-test.html`）支持 WebAudio 帧对齐（Scheduled Buffers）与 MSE（MediaSource）双模式播放；
+  - 完善 Autoplay Policy 自动唤醒机制（捕获 `pointerdown`, `keydown`, `click` 及流首包自动调用 `ctx.resume()`）。
+- **VPS 真实 Chromium 实测数据 (`node test/test-chromium-deep.js`)**：
+  - **首包播放延迟 (TTFA Play)**：30 ~ 57 ms；
+  - **首包可听延迟 (TTFA Audible)**：27 ms；
+  - **流连续性**：0 Underruns，分片 100% 字节无损按序到达；
+  - **音量电平**：-21.5 dBFS 稳定输出；
+  - **Autoplay 策略验证**：默认策略下初态为 `suspended`，在受信任用户交互后 100% 自动恢复为 `running`。
 
-### Phase 2：Teams Web 麦克风劫持注入器 (Injector Script / Extension)
-- 开发注入脚本，安全劫持 `navigator.mediaDevices.getUserMedia` 与 `RTCPeerConnection`；
-- 在标准 WebRTC 测试环境（如 `appr.tc` 或标准 WebRTC 远端收音探针）中验证虚拟 Track 能被正常采集、编码并传输到远端。
+### Phase 2：Teams Web 麦克风劫持注入器 (已完成实测)
+- **实现内容**：
+  - 双载体设计：Violentmonkey/Tampermonkey 脚本（`injector/saywise-teams-injector.user.js`）及标准 MV3 扩展（`injector/extension/`）；
+  - 跨隔离域通信架构：MV3 扩展内实现 `world: "ISOLATED"` 的 WebSocket 继电器（`relay.js`），通过 `window.postMessage` 穿透 Teams Web CSP `connect-src` 限制；
+  - `MediaDevices.prototype.getUserMedia` 劫持与混音图谱：
+    - `realMicSource -> realMicGain -> mixer -> limiter -> destination -> WebRTC Track`；
+    - `ttsBus -> ttsGain -> mixer`；
+    - 物理麦克风缺失时（如 Linux 无头服务器），平滑回退为静音虚拟源，绝不阻断通话；
+  - 互斥混音模式机：`REAL_MIC_ONLY`, `TTS_ONLY`, `DUCKING`（TTS 发言期间物理麦克风精准闪避 -18.00 dB，结束后平滑释放恢复至 1.0），`SIMULTANEOUS`；
+  - 注入式轻量 HUD 监控器：纯 DOM 原生构建（兼容 Teams Trusted Types），支持实时电平柱（Mic, TTS, Out）、状态指示灯及快捷键（Alt+Shift+M）切模。
+- **端到端 WebRTC 真实闭环验证 (`node test/test-e2e-teams-webrtc.js`)**：
+  - 真实 Chrome 浏览器模拟完整 WebRTC 通话（Caller PC1 -> SDP 协商 -> Remote Receiver PC2）；
+  - 发言前：远端音轨无杂音泄露；
+  - 发言中：远端音轨实时接收解码音频，电平平稳；
+  - 发言后：音轨保持 100% `live` 状态，平滑过渡无爆音；
+  - 闪避率实测：物理麦克风增益在 TTS 触发时精确压低至 0.12589（严格 -18.00 dB），TTS 结束后平稳回弹至 1.0。
 
-### Phase 3：Teams Web 端到端实测验证
-- 在 VPS 真实 Chrome 浏览器中加载注入器并打开 Teams Web；
-- 自动化或人工配合进入 Teams 会议测试间；
-- 触发 SayWise Speak，在远端会议接收端（如手机端 Teams 或另一个接收端）录音取证，确认声音清晰度与克隆音色完整度。
+### Phase 3：Teams Web 生产会议联调指引
+- 将 `injector/extension/` 通过 Chrome 的“加载已解压的扩展程序”载入；
+- 打开 `https://teams.microsoft.com/`，右下角即刻显示 SayWise HUD 控制台；
+- 在会议中加入通话，SayWise 点击 Speak 即可实时灌入克隆声音。
 
 ### Phase 4：PulseAudio 虚拟声卡兜底备选验证与对比评估
-- 在 VPS 上配置 PulseAudio `module-null-sink` 作为对照组；
-- 从延迟、CPU 占用、断流恢复和部署复杂度输出客观对比报告。
+- 详见 `docs/pulse-audio-alternative.md` 详尽实测对比报告。
 
 ---
 

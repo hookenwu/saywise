@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "SayWise Teams Web Microphone Injector",
+  "version": "0.2.0",
+  "description": "Injects SayWise streaming TTS into Microsoft Teams Web microphone track with real-time Web Audio mixing and ducking.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://teams.microsoft.com/*",
+    "https://teams.live.com/*",
+    "https://teams.cloud.microsoft/*",
+    "http://127.0.0.1/*",
+    "http://localhost/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://teams.microsoft.com/*",
+        "https://teams.live.com/*",
+        "https://teams.cloud.microsoft/*",
+        "http://127.0.0.1:4100/test/*",
+        "http://localhost:4100/test/*"
+      ],
+      "js": ["relay.js"],
+      "run_at": "document_start",
+      "world": "ISOLATED"
+    },
+    {
+      "matches": [
+        "https://teams.microsoft.com/*",
+        "https://teams.live.com/*",
+        "https://teams.cloud.microsoft/*",
+        "http://127.0.0.1:4100/test/*",
+        "http://localhost:4100/test/*"
+      ],
+      "js": ["saywise-teams-injector.user.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "icons": {
+    "48": "icon48.png"
+  }
+}

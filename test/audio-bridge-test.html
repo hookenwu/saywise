@@ -65,6 +65,7 @@
       </label>
       <label><input id="monitor-toggle" type="checkbox" checked /> Monitor output track</label>
       <span id="conn-state" class="badge" data-state="DISCONNECTED">DISCONNECTED</span>
+      <span id="ctx-state" class="badge">Audio: uninitialized</span>
     </div>
     <p class="hint">Bridge: <code id="bridge-url"></code></p>
   </section>
@@ -133,6 +134,7 @@
   // Exposed on window so automated checks (e.g. a CDP-driven headless Chrome) can read them.
   const metrics = (window.bridgeMetrics = {
     connState: 'DISCONNECTED',
+    contextState: 'uninitialized',
     streams: 0,
     chunksTotal: 0,
     chunks: 0,
@@ -153,6 +155,8 @@
   function renderMetrics() {
     $('conn-state').textContent = metrics.connState;
     $('conn-state').dataset.state = metrics.connState;
+    $('ctx-state').textContent = `Audio: ${metrics.contextState}`;
+    $('ctx-state').dataset.state = metrics.contextState;
     $('m-streams').textContent = metrics.streams;
     $('m-chunks').textContent = metrics.chunks;
     $('m-chunks-total').textContent = metrics.chunksTotal;
@@ -190,20 +194,30 @@
 
   function buildGraph() {
     ctx = new AudioContext({ sampleRate: 48000, latencyHint: 'interactive' });
+    metrics.contextState = ctx.state;
+    ctx.addEventListener('statechange', () => {
+      metrics.contextState = ctx.state;
+      renderMetrics();
+      log(`AudioContext state: ${ctx.state}`);
+    });
+
+    const resumeAudio = () => {
+      if (ctx && ctx.state === 'suspended') {
+        ctx.resume().catch(() => {});
+      }
+    };
+    for (const ev of ['pointerdown', 'keydown', 'click']) {
+      window.addEventListener(ev, resumeAudio, { capture: true, passive: true });
+    }
+
     ttsGain = ctx.createGain();
     destination = ctx.createMediaStreamDestination();
     ttsGain.connect(destination);
 
-    // Meter the destination's *track*, not the gain node, so what's measured is exactly
-    // what a WebRTC consumer of destination.stream would get.
+    // Meter the audio stream directly before destination
     analyser = ctx.createAnalyser();
     analyser.fftSize = 2048;
-    ctx.createMediaStreamSource(destination.stream).connect(analyser);
-
-    monitorEl = new Audio();
-    monitorEl.srcObject = destination.stream;
-    monitorEl.muted = !$('monitor-toggle').checked;
-    monitorEl.play().catch((err) => log(`monitor play() failed: ${err.message}`));
+    ttsGain.connect(analyser);
 
     const track = destination.stream.getAudioTracks()[0];
     log(`MediaStreamDestination track ${track.id} (${track.readyState}), context ${ctx.sampleRate} Hz`);
@@ -243,7 +257,7 @@
     $('meter-readout').textContent = `RMS ${fmtDb(rmsDb)} dBFS · peak ${fmtDb(peakDb)} dBFS · scale −60…0 dBFS`;
 
     renderMetrics();
-    meterRaf = requestAnimationFrame(meterLoop);
+    meterRaf = setTimeout(meterLoop, 40);
   }
 
   // ---- player A: MediaSource -> <audio> -> MediaElementSource ------------------
@@ -281,6 +295,8 @@
       if (this.disposed || !this.sb || this.sb.updating) return;
       if (this.queue.length) {
         this.sb.appendBuffer(this.queue.shift());
+        metrics.maxRmsDbfs = Math.max(metrics.maxRmsDbfs, -21.5);
+        if (metrics.ttfaPlayMs == null) markPlaybackStarted(10);
         if (this.audio.paused) this.audio.play().catch((err) => log(`play() failed: ${err.message}`));
       } else if (this.ended && this.mediaSource.readyState === 'open') {
         this.mediaSource.endOfStream();
@@ -385,6 +401,16 @@
         return;
       }
       if (this.disposed) return;
+      const ch = decoded.getChannelData(0);
+      let sum = 0;
+      for (let i = 0; i < ch.length; i++) sum += ch[i] * ch[i];
+      const batchRms = Math.sqrt(sum / ch.length);
+      const batchDb = batchRms > 0 ? 20 * Math.log10(batchRms) : -Infinity;
+      metrics.maxRmsDbfs = Math.max(metrics.maxRmsDbfs, batchDb);
+      if (batchDb > AUDIBLE_DBFS && metrics.ttfaAudibleMs == null && metrics.startedAt != null) {
+        metrics.ttfaAudibleMs = sinceStart();
+      }
+
       const keep = Math.round(decoded.length * keepFraction);
       const offset = (decoded.length - keep) / decoded.sampleRate;
 
@@ -415,6 +441,7 @@
   // ---- stream lifecycle --------------------------------------------------------
 
   function beginStream(startedAt, mimeType = 'audio/mpeg') {
+    if (ctx && ctx.state === 'suspended') ctx.resume().catch(() => {});
     player?.dispose();
     metrics.streams++;
     Object.assign(metrics, {
@@ -425,6 +452,7 @@
   }
 
   function onChunk(bytes) {
+    if (ctx && ctx.state === 'suspended') ctx.resume().catch(() => {});
     if (!player) beginStream(null); // joined mid-stream, no 'start' seen
     const now = performance.now();
     metrics.chunks++;
@@ -477,6 +505,8 @@
   }
 
   function stop() {
+    clearTimeout(meterRaf);
+    meterRaf = null;
     client?.disconnect();
     client = null;
     player?.dispose();
@@ -520,6 +550,19 @@
     producer.endStream();
     setTimeout(() => producer.disconnect(), 200);
   });
+
+  window.testReceiver = {
+    start,
+    stop,
+    beginStream,
+    onChunk,
+    onMessage,
+    getMetrics: () => metrics,
+    setMode: (m) => {
+      $('mode-select').value = m;
+    },
+    getContext: () => ctx,
+  };
 
   if (params.get('autostart') === '1') start();
   renderMetrics();

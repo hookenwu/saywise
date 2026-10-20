@@ -33,6 +33,9 @@ const REPLACED_CLOSE_CODE = 4000;
 
 /** ws://<current host>/audio-bridge?role=<role> — the bridge lives on the same server. */
 export function defaultBridgeUrl(role, base = globalThis.location?.href) {
+  if (!base || base.startsWith('file:') || base.startsWith('about:')) {
+    return `ws://127.0.0.1:4100/audio-bridge?role=${role}`;
+  }
   const url = new URL('/audio-bridge', base);
   url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
   url.searchParams.set('role', role);

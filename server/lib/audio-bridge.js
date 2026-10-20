@@ -39,7 +39,11 @@ export const BridgeState = Object.freeze({
 
 // Origins always allowed to consume (Teams Web, both enterprise and consumer flavours) —
 // Phase 2's injector runs inside these pages.
-const DEFAULT_CONSUMER_ORIGINS = ['https://teams.microsoft.com', 'https://teams.live.com'];
+const DEFAULT_CONSUMER_ORIGINS = [
+  'https://teams.microsoft.com',
+  'https://teams.live.com',
+  'https://teams.cloud.microsoft',
+];
 
 // A consumer that can't keep up is skipped for this chunk rather than letting its send
 // queue grow without bound and stall the process — live audio has no use for stale bytes.
@@ -79,6 +83,7 @@ export function attachAudioBridge(httpServer, options = {}) {
     // machine since the server binds to loopback by default.
     if (!origin) return true;
     if (extraOrigins.includes('*') || extraOrigins.includes(origin)) return true;
+    if ((origin === 'null' || origin === 'file://') && role === 'consumer') return true;
     // Same-origin: the SayWise workspace and test page served by this very server.
     try {
       if (new URL(origin).host === host) return true;
