@@ -63,7 +63,7 @@ Translated Speak              Chinese → LLM translate + Style + Delivery ┘ c
   `app.js` stops using it.
 
 ### 2.5 `js/state.js`, `js/persistence.js`
-- State: `delivery: 'natural'`, `humanizeEnabled: false`, with setters.
+- State: `delivery: 'natural'`, `humanizeEnabled: true` (default on; only a persisted `'false'` turns it off), with setters.
 - Persistence: `voiceCopilot.delivery` (allowlist-validated) and
   `voiceCopilot.humanizeEnabled`.
 

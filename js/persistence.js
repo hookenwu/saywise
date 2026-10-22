@@ -94,7 +94,8 @@ export function loadPersistedPreferences() {
     stylePreset: VALID_STYLE_PRESETS.has(stylePresetRaw) ? stylePresetRaw : 'natural',
     audioBridgeEnabled: safeGet(KEYS.audioBridgeEnabled) === 'true',
     delivery: VALID_DELIVERY_LEVELS.has(deliveryRaw) ? deliveryRaw : 'natural',
-    humanizeEnabled: safeGet(KEYS.humanizeEnabled) === 'true',
+    // Default on when never set; only an explicit opt-out ('false') turns it off.
+    humanizeEnabled: safeGet(KEYS.humanizeEnabled) !== 'false',
   };
 }
 

@@ -61,7 +61,7 @@ const visible = (page, sel) => page.$eval(sel, (el) => !el.closest('[hidden]') &
 test('Delivery and Humanize controls render, hide correctly and persist', async () => {
   const { page } = await openPage();
   assert.equal(await page.$eval('#delivery-select', (el) => el.value), 'natural', 'default Delivery is Natural');
-  assert.equal(await page.$eval('#humanize-toggle', (el) => el.checked), false, 'Humanize is opt-in');
+  assert.equal(await page.$eval('#humanize-toggle', (el) => el.checked), true, 'Humanize is on by default');
   assert.equal(await visible(page, '#humanize-toggle'), true);
   // Speaking Style is translate-only; before the [hidden] CSS fix it was always visible.
   assert.equal(await visible(page, '#style-preset-select'), false);
@@ -72,7 +72,7 @@ test('Delivery and Humanize controls render, hide correctly and persist', async 
   await page.click('#humanize-toggle');
   await page.reload({ waitUntil: 'networkidle0' });
   assert.equal(await page.$eval('#delivery-select', (el) => el.value), 'light', 'Delivery persisted');
-  assert.equal(await page.$eval('#humanize-toggle', (el) => el.checked), true, 'Humanize persisted');
+  assert.equal(await page.$eval('#humanize-toggle', (el) => el.checked), false, 'explicit Humanize opt-out persisted');
   await page.evaluate(() => localStorage.clear());
   await page.close();
 });
@@ -93,6 +93,7 @@ test('real Speak rounds: Direct Natural, Direct Off, Humanize', { skip: !hasTtsC
   const { page, logs, translateBodies } = await openPage();
   await page.evaluate(() => { localStorage.clear(); });
   await page.reload({ waitUntil: 'networkidle0' });
+  await page.click('#humanize-toggle'); // default is on — turn it off for the verbatim rounds
 
   let out = await speakRound(page, logs, 'Okay, that makes sense. Let me check with the backend team.');
   assert.match(out, /delivery= natural model= \(default\)/);

@@ -147,7 +147,7 @@ Re-test: 0/12 hedged numbers on the number-heavy inputs.
    instruction. Small gain, never harmful (E2/E3).
 2. The LLM paths emit a **spoken script**: Light uses punctuation and markers, Natural also
    adds sparse fillers (E3: the largest effect measured). Humanize brings the same to
-   Direct Speak, opt-in.
+   Direct Speak (opt-in at first, on by default since 2026-10-23 at the user's request).
 3. The LLM paths push word-safe chunks immediately instead of whole sentences (E4/E4b).
 4. Default is Natural. Off is byte-for-byte legacy, verified against git `666cec1` for
    both the TTS payload and the LLM prompt.
@@ -187,7 +187,8 @@ a sound-alike mishearing ("Sorry" → "Laurie").
   new default wins decisively, with no latency regression for translation.
 - Direct Speak with verbatim text gains little: the TTS instruction channel is weak on this
   clone (E1). Humanize is the strong lever there, at the cost of one LLM round trip
-  (≈ +1.2 s TTFA). It stays opt-in, because it changes the user's words: rewrites can add
+  (≈ +1.2 s TTFA). It was opt-in at first and is on by default since 2026-10-23 at the user's
+  request. The trade-off to keep in mind is that it changes the user's words: rewrites can add
   small nuances (e.g. "要是现在**非得**加这个功能"), even with the meaning guardrail in place.
 
 ## 6. Remaining levers (outside code)

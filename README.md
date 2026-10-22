@@ -147,7 +147,7 @@ already go through **Settings → localStorage**, per browser, independent of wh
   discourse markers; Natural also adds sparse "uh/um/嗯/呃"-style hesitations). **Off** is
   the original read-aloud behaviour, byte-for-byte. Measurements behind this:
   `specs/voice-copilot-natural-delivery/research.md`.
-- **Humanize text** — opt-in, Direct Speak only (off by default). Lets the LLM rewrite your
+- **Humanize text** — Direct Speak only, **on by default**. Lets the LLM rewrite your
   text as natural spoken language *in the same language* before speaking; the rewrite is
   shown as "Spoken Text". Adds one LLM round trip (~1 s) to time-to-first-audio. With it off,
   your text is spoken exactly as typed.

@@ -28,11 +28,13 @@ renders it the way a person reads a document aloud. Two secondary causes:
 Make the cloned voice sound as close as possible to the user speaking
 spontaneously in a meeting, without:
 
-- increasing Direct Speak time-to-first-audio (TTFA);
+- increasing Direct Speak time-to-first-audio (TTFA) on the verbatim path
+  (Humanize, on by default, deliberately trades ≈ +1.2 s for naturalness);
 - changing the audio format, the Audio Bridge, or the Teams Web injector
   contract (MP3 chunks over `/audio-bridge`);
-- silently rewriting Direct Speak text (MVP / speaking-style spec §2.2 still
-  holds — rewriting is opt-in only).
+- rewriting Direct Speak text without a visible, switchable control. MVP /
+  speaking-style spec §2.2 is relaxed here: since 2026-10-23, at the user's
+  request, Humanize is on by default, and the rewrite is always shown.
 
 Success metric (pre-registered in `research.md` §2): blind pairwise
 preference judged by an audio LLM, plus UTMOS, speaker similarity, ASR error
@@ -55,13 +57,17 @@ One setting, three levels, persisted per browser, default **Natural**:
 Off exists for rollback and A/B comparison. It must reproduce the
 pre-feature behavior exactly.
 
-### 3.2 Humanize (new opt-in, Direct Speak only)
+### 3.2 Humanize (Direct Speak only, on by default)
 
-A checkbox, **off by default**, visible only when Chinese → English is off.
+A checkbox, **on by default**, visible only when Chinese → English is off. It
+was opt-in at first and was switched to default-on on 2026-10-23 at the
+user's request, because it is the strong lever for Direct Speak
+(`research.md` §5). Unchecking it is persisted.
 When it is on and Delivery is Light or Natural, the Speech Text first goes
 through the same LLM endpoint in **rewrite** mode (same language as the
 input, meaning preserved) and the rewrite is spoken. This is the only way
-Direct Speak text is ever changed, and only when the user explicitly opts in.
+Direct Speak text is ever changed. Trade-off: ≈ +1.2 s TTFA, and the rewrite
+can add small nuances (`research.md` §5).
 The rewritten text is shown in the existing read-only panel, labelled
 "Spoken Text". With Humanize off, Direct Speak sends the user's text verbatim,
 exactly as before.
