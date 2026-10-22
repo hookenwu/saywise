@@ -1,0 +1,284 @@
+[
+ {
+  "cond": "ctx",
+  "tid": "en1",
+  "human": 6,
+  "tells": "Slightly flat intonation and uniform pacing lack natural conversational rhythm."
+ },
+ {
+  "cond": "none",
+  "tid": "en1",
+  "human": 5,
+  "tells": "Uniform pacing and lack of natural breath sounds reveal its synthetic nature."
+ },
+ {
+  "cond": "ctx",
+  "tid": "en1",
+  "human": 5,
+  "tells": "Uniform pacing and flat pitch lack natural conversational hesitations."
+ },
+ {
+  "cond": "none",
+  "tid": "en1",
+  "human": 5,
+  "tells": "Flat intonation, mechanical pacing, lacks natural breathing."
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "en1",
+  "human": 6,
+  "tells": "Pacing is slightly uniform, lacking natural micro-hesitations and spontaneous breath sounds."
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "en1",
+  "human": 5,
+  "tells": "Uniform pacing and lack of natural micro-hesitations or breath sounds indicate synthetic generation."
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "en1",
+  "human": 5,
+  "tells": "Pacing around 'uh' feels programmed. Pitch contours at sentence ends are too uniform and lack spontaneous variation."
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "en1",
+  "human": 6,
+  "tells": "Pacing around fillers is slightly stiff, and sentence endings lack dynamic intonation."
+ },
+ {
+  "cond": "dialog",
+  "tid": "en1",
+  "human": 5,
+  "tells": "Pacing is slightly uniform and lacks natural conversational pauses."
+ },
+ {
+  "cond": "official",
+  "tid": "en1",
+  "human": 6,
+  "tells": "Uniform pacing and missing breath sounds hint at synthetic generation."
+ },
+ {
+  "cond": "ctx",
+  "tid": "en2",
+  "human": 5,
+  "tells": "Uniform pacing and lack of natural hesitations make it sound read."
+ },
+ {
+  "cond": "ctx",
+  "tid": "en2",
+  "human": 5,
+  "tells": "Uniform pacing and lack of natural breath sounds suggest a synthetic origin."
+ },
+ {
+  "cond": "none",
+  "tid": "en2",
+  "human": 5,
+  "tells": "Uniform pacing and flat intonation on acronyms. Lacks natural pauses."
+ },
+ {
+  "cond": "none",
+  "tid": "en2",
+  "human": 5,
+  "tells": "Pacing is too uniform, lacking natural hesitations and breath sounds of spontaneous speech."
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "en2",
+  "human": 5,
+  "tells": "Uniform pacing, flat intonation, and lack of natural breaths suggest a read-aloud or synthetic origin."
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "en2",
+  "human": 5,
+  "tells": "Slightly rigid pacing and lack of natural breath sounds suggest synthetic generation."
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "en2",
+  "human": 6,
+  "tells": "Filler words sound slightly forced. Pacing is too consistent for spontaneous speech."
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "en2",
+  "human": 6,
+  "tells": "Pacing around fillers feels slightly artificial and lacks natural breathiness or micro-hesitations."
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "en3",
+  "human": 6,
+  "tells": "Pacing around the disfluency is stiff, and final question intonation lacks natural pitch variation."
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "en3",
+  "human": 5,
+  "tells": "Slightly flat intonation and uniform pacing lack the natural hesitation of spontaneous speech."
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "en3",
+  "human": 5,
+  "tells": "Uniform pacing and artificial pitch contour on the final question."
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "en3",
+  "human": 6,
+  "tells": "Pacing around filler word feels slightly calculated and lacks natural breathiness."
+ },
+ {
+  "cond": "dialog",
+  "tid": "en3",
+  "human": 5,
+  "tells": "Uniform pacing and lack of natural breath sounds suggest synthetic generation."
+ },
+ {
+  "cond": "official",
+  "tid": "en3",
+  "human": 6,
+  "tells": "Slightly uniform pacing and lack of natural breath sounds suggest a synthetic origin."
+ },
+ {
+  "cond": "official",
+  "tid": "en3",
+  "human": 6,
+  "tells": "Uniform pacing and missing breath sounds suggest a rehearsed or synthetic origin."
+ },
+ {
+  "cond": "dialog",
+  "tid": "en3",
+  "human": 5,
+  "tells": "Uniform pacing and flat question inflection reveal its synthetic nature."
+ },
+ {
+  "cond": "none",
+  "tid": "en4",
+  "human": 5,
+  "tells": "Pacing is too uniform. Lacks natural hesitations. Question intonation feels slightly forced."
+ },
+ {
+  "cond": "none",
+  "tid": "en4",
+  "human": 5,
+  "tells": "Uniform pacing and lack of natural breath sounds make it sound slightly read."
+ },
+ {
+  "cond": "ctx",
+  "tid": "en4",
+  "human": 5,
+  "tells": "Uniform pacing and lack of natural breath sounds suggest synthetic generation."
+ },
+ {
+  "cond": "ctx",
+  "tid": "en4",
+  "human": 6,
+  "tells": "Uniform pacing and lack of natural breath sounds suggest reading."
+ },
+ {
+  "cond": "ctx",
+  "tid": "zh1",
+  "human": 6,
+  "tells": "Pacing is slightly uniform, lacking natural hesitations or breathing pauses typical of spontaneous speech."
+ },
+ {
+  "cond": "none",
+  "tid": "zh1",
+  "human": 5,
+  "tells": "Uniform pacing and lack of natural breath sounds suggest synthetic generation."
+ },
+ {
+  "cond": "none",
+  "tid": "zh1",
+  "human": 6,
+  "tells": "Slightly uniform pacing and flat intonation lack natural hesitations."
+ },
+ {
+  "cond": "ctx",
+  "tid": "zh1",
+  "human": 6,
+  "tells": "Uniform pacing and lack of natural breath sounds suggest synthetic origin."
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "zh1",
+  "human": 5,
+  "tells": "Uniform pacing, lacks natural hesitations and breathing sounds typical of spontaneous speech."
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "zh1",
+  "human": 7,
+  "tells": "Slightly uniform pacing and lack of natural breath sounds reduce spontaneity."
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "zh1",
+  "human": 6,
+  "tells": "Pacing is slightly uniform; lacks natural micro-hesitations despite conversational fillers."
+ },
+ {
+  "cond": "dialog",
+  "tid": "zh1",
+  "human": 6,
+  "tells": "Slightly uniform pacing and lacks natural hesitations."
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "zh1",
+  "human": 7,
+  "tells": "Very natural conversational tone, minor pacing uniformity."
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "zh2",
+  "human": 5,
+  "tells": "Slightly uniform intonation and forced fillers reveal synthetic nature."
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "zh2",
+  "human": 6,
+  "tells": "Pacing is too uniform. Lacks natural hesitations and breath sounds."
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "zh2",
+  "human": 6,
+  "tells": "Pacing is slightly uniform. Pauses feel calculated, lacking natural breath sounds."
+ },
+ {
+  "cond": "dialog",
+  "tid": "zh2",
+  "human": 5,
+  "tells": "Uniform pacing and flat intonation lack spontaneous dynamic variations."
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "zh2",
+  "human": 6,
+  "tells": "Pacing around fillers is slightly uniform, lacking natural micro-hesitations of spontaneous thought."
+ },
+ {
+  "cond": "dialog",
+  "tid": "zh2",
+  "human": 7,
+  "tells": "Pacing is slightly too uniform and lacks natural breath sounds."
+ },
+ {
+  "cond": "official",
+  "tid": "zh2",
+  "human": 6,
+  "tells": "Slightly uniform pacing lacks natural hesitations or breathing typical of spontaneous speech."
+ },
+ {
+  "cond": "official",
+  "tid": "zh2",
+  "human": 6,
+  "tells": "Pacing is slightly uniform and lacks natural hesitations, sounding somewhat read."
+ }
+]

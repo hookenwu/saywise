@@ -1,0 +1,158 @@
+[
+ {
+  "cond": "trans_natural",
+  "tid": "c1",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0.5,
+  "condHuman": 5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B features natural conversational pacing and melodic intonation, whereas Clip A sounds stiff, uniform, and synthesized.",
+   "Clip B has slightly better phrasing and conversational flow, sounding less stilted than Clip A."
+  ]
+ },
+ {
+  "cond": "trans_natural",
+  "tid": "c1",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 6,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B follows the target script accurately and exhibits more natural conversational pacing and intonation than the mechanical delivery in Clip A.",
+   "Clip A follows the intended script accurately, sounding slightly more conversational despite mechanical pacing present in both samples."
+  ]
+ },
+ {
+  "cond": "trans_natural",
+  "tid": "c2",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 2,
+  "condHuman": 6,
+  "baseHuman": 4,
+  "reasons": [
+   "Clip B features natural pauses and spontaneous conversational pacing, while Clip A sounds stiff and robotic.",
+   "Clip A delivers natural conversational cadence and adheres to the script, while Clip B sounds stilted, robotic, and heavily alters the text."
+  ]
+ },
+ {
+  "cond": "trans_natural",
+  "tid": "c3",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 0.5,
+  "condHuman": 5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B follows the natural script phrasing better and sounds slightly more fluid and conversational in rhythm.",
+   "Both sound somewhat robotic and flat, but Clip A adheres accurately to the intended phrasing rather than altering the words."
+  ]
+ },
+ {
+  "cond": "trans_natural",
+  "tid": "c2",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 5.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B sounds more conversational and spontaneous with natural hesitations, while Clip A sounds stiff and read aloud.",
+   "Clip A accurately follows the intended script and sounds more conversational, whereas Clip B alters the phrasing and sounds stiffer."
+  ]
+ },
+ {
+  "cond": "trans_natural",
+  "tid": "c3",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 6,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B follows the prompt accurately and exhibits more natural, conversational cadence and question intonation than Clip A.",
+   "Clip A matches the full script and flows more naturally with better conversational pacing than the slightly clipped B."
+  ]
+ },
+ {
+  "cond": "trans_natural",
+  "tid": "c4",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 5.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B includes the full intended text and features slightly more natural conversational pacing, despite both having monotonic vocal fry.",
+   "Clip A includes the complete message and delivers it with steady conversational pacing, whereas Clip B drops an entire phrase."
+  ]
+ },
+ {
+  "cond": "trans_natural",
+  "tid": "c5",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 2.5,
+  "condHuman": 6,
+  "baseHuman": 3.5,
+  "reasons": [
+   "Clip B features natural conversational pacing and inflection, whereas Clip A sounds choppy, segmented, and robotic.",
+   "Clip A flows much more naturally with realistic conversational rhythm and filler, whereas Clip B has awkward, disjointed pauses."
+  ]
+ },
+ {
+  "cond": "trans_natural",
+  "tid": "c4",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B includes the full script and features significantly more natural, conversational cadence and intonation than the robotic Clip A.",
+   "Clip B flows much more naturally and conversationally, whereas Clip A suffers from robotic cadence and awkward, segmented pauses despite having full text."
+  ]
+ },
+ {
+  "cond": "trans_natural",
+  "tid": "c5",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 5.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B captures natural conversational pacing and filler usage, whereas Clip A sounds rigid, synthetic, and omits intended text.",
+   "Clip A includes natural conversational phrasing matching the script, whereas Clip B alters wording and delivers a stiffer, more mechanical cadence."
+  ]
+ },
+ {
+  "cond": "trans_natural",
+  "tid": "c6",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 2,
+  "condHuman": 6,
+  "baseHuman": 4,
+  "reasons": [
+   "Clip B sounds much more conversational and spontaneous, matching the intended text with realistic pauses, whereas Clip A sounds robotic and read.",
+   "Clip A exhibits natural conversational rhythm and filler usage, matching the script, while Clip B sounds overly formal and stiffly read."
+  ]
+ },
+ {
+  "cond": "trans_natural",
+  "tid": "c6",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 1,
+  "condHuman": 6,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B matches the intended script and features natural conversational rhythm, while Clip A sounds stilted, robotic, and paraphrased.",
+   "Clip B offers smoother cadence and better phrase continuity, whereas Clip A is hindered by overly frequent, unnatural pauses."
+  ]
+ }
+]

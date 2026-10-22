@@ -1,0 +1,158 @@
+[
+ {
+  "cond": "fill_shaped",
+  "tid": "en1",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 4.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Both clips sound identical in rhythm, intonation, and synthetic quality, offering no perceptible difference in conversational delivery.",
+   "Both audio clips are identical in quality, timing, and robotic delivery."
+  ]
+ },
+ {
+  "cond": "fill_shaped",
+  "tid": "en1",
+  "rep": 0,
+  "score": -0.5,
+  "humanDelta": 0,
+  "condHuman": 5.5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Both clips share virtually identical cadence, prosody, and robotic artifacts, resulting in an equivalent, somewhat stiff delivery.",
+   "Both clips share identical conversational delivery, but Clip B preserves a natural room reverb decay instead of cutting off abruptly."
+  ]
+ },
+ {
+  "cond": "fill_shaped",
+  "tid": "en2",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5,
+  "baseHuman": 5,
+  "reasons": [
+   "Both clips are completely identical in prosody, pacing, and overall synthetic audio quality.",
+   "Both clips sound identical in prosody, pacing, and naturalness with no perceptible differences."
+  ]
+ },
+ {
+  "cond": "fill_shaped",
+  "tid": "en3",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 4.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Both clips sound identical in prosody, timing, and synthetic quality, offering a somewhat flat but clear conversational delivery.",
+   "Both clips appear identical, featuring flat, mechanical cadence and unnatural pitch contour with no audible differences between them."
+  ]
+ },
+ {
+  "cond": "fill_shaped",
+  "tid": "en3",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5,
+  "baseHuman": 5,
+  "reasons": [
+   "Both clips are identical in delivery, cadence, and flat robotic prosody, offering no discernible difference.",
+   "Both clips exhibit virtually identical phrasing, pacing, and acoustic qualities with no discernible difference."
+  ]
+ },
+ {
+  "cond": "fill_shaped",
+  "tid": "en2",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 6,
+  "baseHuman": 6,
+  "reasons": [
+   "Both clips feature identical, naturally paced conversational delivery with realistic pauses, sharing a minor audio artifact at the very end.",
+   "Both clips sound virtually identical with decent conversational prosody, but both contain an unnatural glitch syllable at the very end."
+  ]
+ },
+ {
+  "cond": "fill_shaped",
+  "tid": "en4",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5.5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Both clips are identical in prosody, pacing, voice quality, and minor pronunciation imperfections.",
+   "Both clips are identical in pacing, natural prosody, clear pronunciation, and voice quality."
+  ]
+ },
+ {
+  "cond": "fill_shaped",
+  "tid": "en4",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 6,
+  "baseHuman": 6,
+  "reasons": [
+   "Both clips appear completely identical in pacing, natural filler delivery, pitch contour, and audio quality.",
+   "Both audio clips are identical in prosody, timing, natural conversational flow, and overall quality."
+  ]
+ },
+ {
+  "cond": "fill_shaped",
+  "tid": "zh1",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 6,
+  "baseHuman": 6,
+  "reasons": [
+   "Both clips feature identical conversational pacing, natural filler timing, and clean pronunciation with no perceptible differences.",
+   "Both clips sound identical, exhibiting natural conversational phrasing, realistic pauses, and consistent audio quality throughout."
+  ]
+ },
+ {
+  "cond": "fill_shaped",
+  "tid": "zh1",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 6,
+  "baseHuman": 6,
+  "reasons": [
+   "Both audio clips are identical in prosody, timing, clarity, and overall natural conversational delivery.",
+   "Both clips appear completely identical in pacing, conversational intonation, and audio quality."
+  ]
+ },
+ {
+  "cond": "fill_shaped",
+  "tid": "zh2",
+  "rep": 0,
+  "score": -0.5,
+  "humanDelta": -0.5,
+  "condHuman": 6,
+  "baseHuman": 6.5,
+  "reasons": [
+   "Clip A has more natural conversational pacing and thoughtful pauses, sounding less rushed than Clip B.",
+   "Both clips sound identical in vocal quality, rhythm, filler usage, and natural conversational cadence."
+  ]
+ },
+ {
+  "cond": "fill_shaped",
+  "tid": "zh2",
+  "rep": 1,
+  "score": -0.5,
+  "humanDelta": -0.5,
+  "condHuman": 6,
+  "baseHuman": 6.5,
+  "reasons": [
+   "Both clips sound very natural, but Clip A features slightly more spontaneous pacing and realistic conversational pauses.",
+   "Both clips sound identical in tone, prosody, and timing, offering an equally natural conversational delivery."
+  ]
+ }
+]

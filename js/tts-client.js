@@ -41,6 +41,7 @@ import {
   marshalMessage,
   unmarshalMessage,
 } from './volcengine-protocol.js';
+import { buildTtsDeliveryParams, normalizeDelivery } from './delivery.js';
 
 function _voiceToResourceId(speaker) {
   if (typeof speaker === 'string' && speaker.startsWith('S_')) {
@@ -191,8 +192,10 @@ export class StreamingTTSClient {
    * 多个 beginSession 调用会通过 _synthChain 串行：后来的 beginSession 会等前一个
    * endSession()/cancelSession() 释放 chain 后才继续。
    *
-   * @param {object} voiceSettings  { speaker, speed, volume, pitch, useTTS2 } — speaker is
-   *   required; pitch is optional, defaults to 0 (neutral), clamped to [-12, 12]
+   * @param {object} voiceSettings  { speaker, speed, volume, pitch, delivery } — speaker is
+   *   required; pitch is optional, defaults to 0 (neutral), clamped to [-12, 12]; delivery is
+   *   'off' | 'light' | 'natural' (js/delivery.js). Legacy callers passing `useTTS2: true`
+   *   without `delivery` get 'off', i.e. exactly the pre-Natural-Delivery payload.
    * @param {object} callbacks      { onChunk(Uint8Array), onSentenceStart(string), onSentenceEnd(string) }
    * @returns {Promise<void>}        在收到 SessionStarted 后 resolve（不是 SessionFinished）
    */
@@ -225,13 +228,17 @@ export class StreamingTTSClient {
     const voiceType = voiceSettings.speaker;
     if (!voiceType) throw new Error('beginSession: voiceSettings.speaker is required');
     const resourceId = _voiceToResourceId(voiceType);
-    const useTTS2 = voiceSettings.useTTS2 === true;
+    const delivery = voiceSettings.delivery !== undefined
+      ? normalizeDelivery(voiceSettings.delivery)
+      : (voiceSettings.useTTS2 === true ? 'off' : normalizeDelivery(undefined));
+    const deliveryParams = buildTtsDeliveryParams(delivery);
 
     console.log(
       '[TTS WS] beginSession →',
       'speaker=', voiceType,
       'resourceId=', resourceId,
-      'model=', useTTS2 ? 'seed-tts-2.0-expressive' : 'seed-tts-1.1'
+      'delivery=', delivery,
+      'model=', deliveryParams.model || '(default)'
     );
 
     if (this.isConnected && this._currentResourceId !== resourceId) {
@@ -259,13 +266,14 @@ export class StreamingTTSClient {
     // Range [-12, 12] per the official doc, neutral/default 0. This field was already
     // correctly placed/named prior to this fix.
     const pitch = Math.max(-12, Math.min(12, voiceSettings.pitch ?? 0));
-    const additions = JSON.stringify({
-      disable_markdown_filter: true,
-      ...(useTTS2 ? { use_tag_parser: true } : {}),
-    });
+    // Natural Delivery (specs/voice-copilot-natural-delivery): `model` + `additions` come from
+    // js/delivery.js — 'off' is the legacy expressive-model payload, 'light'/'natural' omit
+    // `model` (a clone with `model` set rejects voice instructions) and carry one
+    // conversational `context_texts` instruction. `additions` must be a JSON *string*.
+    const additions = JSON.stringify(deliveryParams.additions);
     const reqParamsBase = {
       speaker: voiceType,
-      model: useTTS2 ? 'seed-tts-2.0-expressive' : 'seed-tts-1.1',
+      ...(deliveryParams.model ? { model: deliveryParams.model } : {}),
       audio_params: {
         format: this.encoding,
         sample_rate: this.sampleRate,

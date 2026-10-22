@@ -83,6 +83,20 @@
           <span id="audio-bridge-status" class="language-badge" hidden></span>
         </div>
 
+        <div class="style-preset-row">
+          <label for="delivery-select" class="control-label">Delivery</label>
+          <select id="delivery-select" class="style-preset-select" title="How human the voice sounds — Natural: conversational voice + spoken-style wording with light hesitations; Light: conversational voice + spoken wording, no hesitations; Off: original read-aloud behaviour">
+            <option value="natural">Natural</option>
+            <option value="light">Light</option>
+            <option value="off">Off</option>
+          </select>
+        </div>
+
+        <div id="humanize-row" class="translation-toggle-row">
+          <label for="humanize-toggle" class="control-label">Humanize text</label>
+          <input id="humanize-toggle" class="translation-toggle" type="checkbox" title="Let AI rewrite your text as natural spoken language (same language) before speaking. Off = your text is spoken exactly as typed." />
+        </div>
+
         <div id="style-preset-row" class="style-preset-row" hidden>
           <label for="style-preset-select" class="control-label">Speaking Style</label>
           <select id="style-preset-select" class="style-preset-select">
@@ -105,7 +119,7 @@
       </section>
 
       <section id="translated-text-panel" class="panel panel-translated-text" hidden>
-        <label for="translated-text-display" class="panel-label">Translated Text</label>
+        <label id="translated-text-label" for="translated-text-display" class="panel-label">Translated Text</label>
         <div id="translated-text-display" class="translated-text-display" aria-live="polite"></div>
       </section>
 

@@ -102,18 +102,111 @@ function buildMyStyleBlock(profile) {
   );
 }
 
+// Natural Delivery (specs/voice-copilot-natural-delivery, plan.md §2.3). The output of this
+// call is spoken by a TTS voice, and written-register text is the main reason a cloned voice
+// sounds read-aloud (research.md E3: spoken-script text won 11/0/1 blind pairwise comparisons
+// against the same content as plain written text). Each block carries a one-shot example —
+// without one, flash-lite under-applies the rules (research.md E6a).
+const SPOKEN_SCRIPT_RULES =
+  'SPOKEN DELIVERY (important). Your output is fed straight into a text-to-speech voice and heard ' +
+  'live in a meeting. Text written like an email makes the voice sound robotic, so write a SPOKEN ' +
+  'SCRIPT — exactly how a relaxed, fluent person would actually say it out loud:\n' +
+  '- Contractions, short spoken clauses, plain everyday words.\n' +
+  '- Punctuation is the timing script for the voice: commas for small breaths, an em dash (—) for a ' +
+  'break or self-correction, an ellipsis (...) for a thinking pause, question marks for real questions.\n';
+
+// Per output language: filler/marker vocabulary + ONE example in that language only. Mixing
+// a Chinese example into an English-output prompt made flash-lite answer an English Humanize
+// request in Chinese half the time (research.md E6c), so each prompt only ever shows the
+// language it must produce.
+const DELIVERY_VOCAB = {
+  en: {
+    markers: '"so", "well", "I mean", "actually", "yeah"',
+    fillers: '"uh", "um", "so", "well", "I mean", "you know", "like", "actually", "yeah"',
+    hedges: '"about", "around", "roughly"',
+    written:
+      'I understand your point. However, I am concerned about the timeline. If we add this feature now, ' +
+      'there will not be enough time for testing, and we may need to postpone the release.',
+    light:
+      "Yeah, I get your point. But I'm a bit worried about the timeline — if we add this now, QA won't " +
+      'really have enough time... and we might have to push the release.',
+    natural:
+      "Yeah, I get your point. But, um, I'm a bit worried about the timeline. Like, if we add this now, " +
+      "QA won't really have enough time... and we might have to push the release.",
+  },
+  zh: {
+    markers: '“那”、“其实”、“就是说”、“对”',
+    fillers: '“嗯”、“呃”、“那个”、“就是”、“其实”、“然后”',
+    hedges: '“大概”、“左右”、“差不多”',
+    written: '我理解你的观点。但是我有点担心时间线，如果现在加这个功能，测试时间会不够，我们可能需要推迟发布。',
+    light: '我理解你的意思。不过，我有点担心时间——如果现在加这个功能，测试可能就来不及了，那发布就得往后推。',
+    natural: '嗯，我理解你的意思。不过呢，我有点担心时间……如果现在加这个功能，那测试可能就来不及了，发布就得往后推了。',
+  },
+};
+
+function buildDeliveryBlock(delivery, lang) {
+  const v = DELIVERY_VOCAB[lang] || DELIVERY_VOCAB.en;
+  const pauses =
+    delivery === 'natural'
+      ? `- Real speakers hesitate a little. Include light fillers and spoken discourse markers where a person ` +
+        `would naturally pause or think (${v.fillers}). Roughly one every sentence or two. Never two in a row, ` +
+        'never inside or right before a number, date, name or key fact.\n'
+      : `- Use spoken discourse markers where a person naturally would (${v.markers}), sparingly. Do NOT add ` +
+        'hesitation sounds such as "uh", "um", "嗯" or "呃".\n';
+  return (
+    SPOKEN_SCRIPT_RULES +
+    pauses +
+    "- Do not add new information, greetings or sign-offs; keep the meaning, tone and level of certainty — " +
+    `exact figures stay exact (never add ${v.hedges} to a number). ` +
+    'Plain text only — no brackets, stage directions or emoji.\n\n' +
+    `Example\nWritten: ${v.written}\nSpoken: ${v[delivery]}`
+  );
+}
+
+/** 'zh' when CJK characters make up a meaningful share of the text, else 'en'. */
+export function detectLanguage(text) {
+  const cjk = (text.match(/[\u3400-\u9fff]/g) || []).length;
+  const latin = (text.match(/[A-Za-z]/g) || []).length;
+  return cjk > 0 && cjk * 3 >= latin ? 'zh' : 'en';
+}
+
+// Humanize (spec.md §3.2): same-language spoken rewrite for Direct Speak, opt-in only.
+const REWRITE_INSTRUCTION =
+  'You are a speech-script editor. Rewrite the given text as natural spoken language IN THE SAME LANGUAGE ' +
+  'as the input — do not translate. Output only the rewritten script — no commentary, no quotation marks, ' +
+  'no explanation. Use standard sentence-ending punctuation.';
+const REWRITE_LANGUAGE_LOCK = {
+  en: 'OUTPUT LANGUAGE: the input is English, so the output MUST be English.',
+  zh: '输出语言：输入是中文，所以输出必须是中文（保留原文中本来就有的英文术语）。',
+};
+
 /**
- * Composes the full system instruction for one translate request (speaking-style plan.md
- * §4.4). Unknown/missing stylePreset defaults to 'natural' (spec §12); 'my-style' with no
- * usable content falls back to Natural Conversation, not an error (spec §12, plan §4.3).
- * @param {{ stylePreset?: string, myStyle?: object }} options
+ * Composes the full system instruction for one request (speaking-style plan.md §4.4,
+ * natural-delivery plan.md §2.3): base task (translate | rewrite) + style (translate only) +
+ * delivery block (unless 'off') + MEANING_GUARDRAIL, always last so it wins any conflict.
+ * Unknown/missing stylePreset defaults to 'natural' (spec §12); 'my-style' with no usable
+ * content falls back to Natural Conversation, not an error (spec §12, plan §4.3).
+ * `delivery: 'off'` with `mode: 'translate'` yields exactly the pre-Natural-Delivery prompt.
+ * `inputText` only matters for rewrite mode, where it picks the output language.
+ * @param {{ stylePreset?: string, myStyle?: object, delivery?: string, mode?: string, inputText?: string }} options
  */
-export function buildSystemInstruction({ stylePreset, myStyle } = {}) {
-  const styleBlock =
-    stylePreset === 'my-style' && hasMyStyleContent(myStyle)
-      ? buildMyStyleBlock(myStyle)
-      : STYLE_INSTRUCTIONS[stylePreset] || STYLE_INSTRUCTIONS.natural;
-  return `${BASE_TRANSLATION_INSTRUCTION}\n\n${styleBlock}\n\n${MEANING_GUARDRAIL}`;
+export function buildSystemInstruction({ stylePreset, myStyle, delivery = 'off', mode = 'translate', inputText = '' } = {}) {
+  const parts = [];
+  const outputLang = mode === 'rewrite' ? detectLanguage(inputText) : 'en';
+  if (mode === 'rewrite') {
+    parts.push(REWRITE_INSTRUCTION);
+  } else {
+    parts.push(BASE_TRANSLATION_INSTRUCTION);
+    parts.push(
+      stylePreset === 'my-style' && hasMyStyleContent(myStyle)
+        ? buildMyStyleBlock(myStyle)
+        : STYLE_INSTRUCTIONS[stylePreset] || STYLE_INSTRUCTIONS.natural
+    );
+  }
+  if (delivery === 'light' || delivery === 'natural') parts.push(buildDeliveryBlock(delivery, outputLang));
+  if (mode === 'rewrite') parts.push(REWRITE_LANGUAGE_LOCK[outputLang]);
+  parts.push(MEANING_GUARDRAIL);
+  return parts.join('\n\n');
 }
 
 // Speaking Style request normalization (speaking-style spec.md §4, plan.md §4.5) — shared
@@ -125,6 +218,20 @@ const STYLE_PRESETS = new Set(['natural', 'professional', 'concise', 'my-style']
 
 export function normalizeStylePreset(value) {
   return STYLE_PRESETS.has(value) ? value : 'natural';
+}
+
+const DELIVERY_LEVELS = new Set(['off', 'light', 'natural']);
+const MODES = new Set(['translate', 'rewrite']);
+
+// Natural Delivery request normalization (natural-delivery spec.md R4) — shared by both
+// adapters, same allowlist-with-default pattern as normalizeStylePreset(). A client that
+// predates this feature sends neither field and gets translate + natural, the new default.
+export function normalizeDelivery(value) {
+  return DELIVERY_LEVELS.has(value) ? value : 'natural';
+}
+
+export function normalizeMode(value) {
+  return MODES.has(value) ? value : 'translate';
 }
 
 export function normalizeMyStyle(value) {
@@ -145,15 +252,16 @@ function isTransientError(err) {
 
 /**
  * @param {string} chineseText
- * @param {{ apiKey: string, signal?: AbortSignal, stylePreset?: string, myStyle?: object }} options
+ * @param {{ apiKey: string, signal?: AbortSignal, stylePreset?: string, myStyle?: object, delivery?: string, mode?: string }} options
+ *   delivery/mode: natural-delivery spec.md §3 — already normalized by the adapter.
  * @yields {{ content: string }}
  */
-export async function* streamTranslate(chineseText, { apiKey, signal, stylePreset, myStyle }) {
+export async function* streamTranslate(chineseText, { apiKey, signal, stylePreset, myStyle, delivery, mode }) {
   // Smaller than app.js's geminiChatStream deliberately (plan.md §8.2): translation has
   // no multi-turn session to protect, so at most one silent retry, and only before any
   // content has been yielded to the caller for this call.
   const MAX_ATTEMPTS = 2;
-  const systemInstruction = buildSystemInstruction({ stylePreset, myStyle });
+  const systemInstruction = buildSystemInstruction({ stylePreset, myStyle, delivery, mode, inputText: chineseText });
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     let emitted = false;

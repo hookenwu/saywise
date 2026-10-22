@@ -41,6 +41,13 @@ const state = {
   // persisted the same way as translationEnabled. Only ever consumed inside
   // handleTranslatedSpeak() (js/app.js) — has zero effect on Direct Speak.
   stylePreset: 'natural',
+
+  // Natural Delivery (natural-delivery spec.md §3.1/§3.2, plan.md §2.5): 'off' | 'light' |
+  // 'natural' — applies to both Speak paths (TTS payload) and to the LLM text. Humanize lets
+  // Direct Speak text be rewritten as spoken language — on by default (the user's call, made
+  // after research.md §5: it is the strong lever for Direct Speak), and can be switched off.
+  delivery: 'natural',
+  humanizeEnabled: true,
 };
 
 const listeners = new Set();
@@ -121,5 +128,15 @@ export function setTranslatedText(text) {
 
 export function setStylePreset(preset) {
   state.stylePreset = preset;
+  notify();
+}
+
+export function setDelivery(delivery) {
+  state.delivery = delivery;
+  notify();
+}
+
+export function setHumanizeEnabled(enabled) {
+  state.humanizeEnabled = enabled;
   notify();
 }

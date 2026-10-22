@@ -1,0 +1,362 @@
+[
+ {
+  "cond": "whole",
+  "tid": "en1",
+  "ttfa": 192,
+  "total": 1827,
+  "bytes": 123885,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "whole",
+  "tid": "en1",
+  "ttfa": 230,
+  "total": 1529,
+  "bytes": 121965,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "whole",
+  "tid": "en1",
+  "ttfa": 388,
+  "total": 1693,
+  "bytes": 126957,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en1",
+  "ttfa": 547,
+  "total": 1958,
+  "bytes": 120237,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en1",
+  "ttfa": 571,
+  "total": 2017,
+  "bytes": 121581,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en1",
+  "ttfa": 542,
+  "total": 1961,
+  "bytes": 113901,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en1",
+  "ttfa": 375,
+  "total": 2032,
+  "bytes": 113517,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en1",
+  "ttfa": 416,
+  "total": 1987,
+  "bytes": 107565,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en1",
+  "ttfa": 272,
+  "total": 2067,
+  "bytes": 110445,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "whole",
+  "tid": "en2",
+  "ttfa": 204,
+  "total": 1295,
+  "bytes": 95085,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "whole",
+  "tid": "en2",
+  "ttfa": 203,
+  "total": 1214,
+  "bytes": 91821,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "whole",
+  "tid": "en2",
+  "ttfa": 227,
+  "total": 1210,
+  "bytes": 89901,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en2",
+  "ttfa": 905,
+  "total": 2053,
+  "bytes": 94701,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en2",
+  "ttfa": 873,
+  "total": 1974,
+  "bytes": 98157,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en2",
+  "ttfa": 900,
+  "total": 1997,
+  "bytes": 91629,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en2",
+  "ttfa": 453,
+  "total": 1848,
+  "bytes": 96237,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en2",
+  "ttfa": 447,
+  "total": 1949,
+  "bytes": 99693,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en2",
+  "ttfa": 407,
+  "total": 1827,
+  "bytes": 103917,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "whole",
+  "tid": "en3",
+  "ttfa": 269,
+  "total": 988,
+  "bytes": 67629,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "whole",
+  "tid": "en3",
+  "ttfa": 262,
+  "total": 1087,
+  "bytes": 75885,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "whole",
+  "tid": "en3",
+  "ttfa": 222,
+  "total": 948,
+  "bytes": 69357,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en3",
+  "ttfa": 289,
+  "total": 1597,
+  "bytes": 72237,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en3",
+  "ttfa": 264,
+  "total": 1710,
+  "bytes": 85101,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en3",
+  "ttfa": 340,
+  "total": 1505,
+  "bytes": 75693,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en3",
+  "ttfa": 320,
+  "total": 1279,
+  "bytes": 75693,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en3",
+  "ttfa": 322,
+  "total": 1377,
+  "bytes": 70701,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en3",
+  "ttfa": 325,
+  "total": 1335,
+  "bytes": 80493,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "whole",
+  "tid": "en4",
+  "ttfa": 209,
+  "total": 1022,
+  "bytes": 77229,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "whole",
+  "tid": "en4",
+  "ttfa": 302,
+  "total": 1028,
+  "bytes": 66285,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "whole",
+  "tid": "en4",
+  "ttfa": 230,
+  "total": 928,
+  "bytes": 67437,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en4",
+  "ttfa": 891,
+  "total": 1552,
+  "bytes": 59757,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en4",
+  "ttfa": 889,
+  "total": 1590,
+  "bytes": 69357,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en4",
+  "ttfa": 898,
+  "total": 1631,
+  "bytes": 72621,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en4",
+  "ttfa": 390,
+  "total": 1399,
+  "bytes": 70893,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en4",
+  "ttfa": 308,
+  "total": 1239,
+  "bytes": 67437,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en4",
+  "ttfa": 336,
+  "total": 1354,
+  "bytes": 80685,
+  "error": null,
+  "sentences": 1,
+  "usage": null
+ }
+]

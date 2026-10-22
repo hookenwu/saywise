@@ -141,6 +141,16 @@ already go through **Settings → localStorage**, per browser, independent of wh
 - **Chinese → English** — toggle in the main workspace. Off by default. When on, Speech
   Text is treated as Chinese input and translated on the fly before being spoken in
   English; when off, behavior is identical to the toggle not existing at all.
+- **Delivery** — how human the voice sounds (default **Natural**). Natural/Light send the
+  cloned voice a conversational delivery instruction and, on the Chinese → English and
+  Humanize paths, turn the text into a spoken script (contractions, pause punctuation,
+  discourse markers; Natural also adds sparse "uh/um/嗯/呃"-style hesitations). **Off** is
+  the original read-aloud behaviour, byte-for-byte. Measurements behind this:
+  `specs/voice-copilot-natural-delivery/research.md`.
+- **Humanize text** — Direct Speak only, **on by default**. Lets the LLM rewrite your
+  text as natural spoken language *in the same language* before speaking; the rewrite is
+  shown as "Spoken Text". Adds one LLM round trip (~1 s) to time-to-first-audio. With it off,
+  your text is spoken exactly as typed.
 - **Settings** — top-right button. Configure Provider credentials and your Voice Profile
   without touching any file. Saving reloads the page to apply the new configuration.
 - **Audio Bridge** — toggle in the main workspace (or open the page with `?bridge=1`). Off
@@ -160,7 +170,11 @@ and frame-aligned `decodeAudioData` with scheduled buffers. **Simulate producer*
 local MP3 file instead, so you can try it without TTS credentials.
 `GET /api/audio-bridge/status` returns the bridge's state and counters.
 
-Automated tests: `node test/test-audio-bridge.js` (needs `server/node_modules` installed).
+Automated tests (need `server/node_modules` installed):
+`node test/test-audio-bridge.js`, `node test/test-natural-delivery.js`, and the headless
+Chrome smoke test `node test/test-natural-delivery-browser.js` (runs real Speak rounds when
+local credentials exist). Naturalness A/B tooling (real endpoints, objective metrics +
+blind audio-LLM judge): `test/naturalness/README.md`.
 
 ## Project structure
 
@@ -179,6 +193,7 @@ voice-copilot/
     app.js                   Entry point / DOM wiring / Speak orchestration
     state.js                 Application state (two independent state machines: generation + playback)
     tts-client.js             Volcengine bidirectional streaming TTS WebSocket client
+    delivery.js               Natural Delivery: TTS payload per level + word-safe text chunker
     volcengine-protocol.js    Binary protocol framing for the above
     streaming-audio-player.js MediaSource/SourceBuffer-backed low-latency audio playback
     translation-client.js     SSE client for the optional Chinese -> English path
@@ -197,6 +212,9 @@ voice-copilot/
     package.json               Own dependencies: express, dotenv, cors, @google/genai, ws
   test/
     test-audio-bridge.js      Audio Bridge tests (node test/test-audio-bridge.js)
+    test-natural-delivery.js  Natural Delivery unit tests (payload, prompts, chunker)
+    test-natural-delivery-browser.js  Headless Chrome smoke test of the Delivery/Humanize UI
+    naturalness/              Real-endpoint naturalness A/B + evaluation kit
     audio-bridge-test.html    Audio Bridge test receiver page
 ```
 

@@ -373,6 +373,11 @@ translation mode is enabled.
 
 ## 9. Volcengine Voice-Instruction Boundary
 
+> **Superseded (2026-10-23)** by `specs/voice-copilot-natural-delivery/spec.md` §3.1: measured on
+> the real endpoint, a clone voice *without* the `model` parameter accepts `context_texts`, and a
+> conversational instruction never lost a blind comparison (`research.md` E2/E3). Speaking Style
+> itself remains an LLM-text-layer feature as described below.
+
 The current product's primary use case is a cloned voice using
 Volcengine's voice-cloning model.
 
