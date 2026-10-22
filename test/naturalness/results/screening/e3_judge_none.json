@@ -1,0 +1,314 @@
+[
+ {
+  "cond": "fill_ctx",
+  "tid": "en2",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 6,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B captures the full intended conversational text with natural pauses and fillers, sounding more like an authentic meeting remark.",
+   "Clip A includes natural conversational fillers and fluid pacing, sounding much more spontaneous and authentic than the rigid delivery in Clip B."
+  ]
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "en1",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0.5,
+  "condHuman": 5.5,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B includes natural conversational fillers and realistic pacing, sounding far less robotic than Clip A.",
+   "Clip B flows more smoothly with less awkward pausing around discourse markers, sounding slightly more coherent despite similar robotic underlying qualities."
+  ]
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "en3",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 5.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B includes the conversational hesitation naturally and matches the intended script better, sounding slightly more spontaneous.",
+   "Clip A sounds more spontaneous and conversational with natural hesitation and better question intonation compared to Clip B."
+  ]
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "en2",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 2,
+  "condHuman": 6.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B sounds much more conversational with natural phrasing and pauses, whereas Clip A is overly stilted and segmented.",
+   "Clip A includes natural conversational hesitations and cadence, whereas Clip B sounds more deliberate and read aloud."
+  ]
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "en3",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 6,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B includes natural hesitation and better timing matching the prompt, sounding less mechanical than Clip A.",
+   "Clip A sounds conversational and natural, whereas Clip B cuts off the start of 'Sorry' and has stiffer phrasing."
+  ]
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "en4",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 6,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B follows the text accurately and sounds distinctly more natural and conversational with spontaneous timing and fillers.",
+   "Clip A includes natural conversational phrasing and follows the intended text, while Clip B omits words and sounds more mechanical."
+  ]
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "en4",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 6,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B features conversational fillers and natural pacing, sounding significantly more spontaneous and human-like than the rigid delivery in Clip A.",
+   "Clip A sounds more spontaneous and conversational with realistic hesitation and natural pacing suitable for a casual meeting setting."
+  ]
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "en1",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 5.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B includes natural conversational fillers and flows better, whereas Clip A drops words and sounds distinctly more disjointed and robotic.",
+   "Clip A exhibits more natural conversational pacing and spontaneous pauses, whereas Clip B sounds slightly more mechanical and stilted."
+  ]
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "zh1",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 6.5,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B sounds far more spontaneous and conversational, incorporating discourse markers and natural meeting-style prosody compared to A's rigid delivery.",
+   "Clip A exhibits far more spontaneous, conversational phrasing and natural pauses compared to Clip B's measured, read-aloud tone."
+  ]
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "zh1",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 2,
+  "condHuman": 7,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B captures natural meeting speech with authentic conversational pacing and colloquial particles, whereas Clip A sounds like rehearsed reading.",
+   "Clip A includes natural conversational particles and realistic pacing, sounding authentic rather than read aloud."
+  ]
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "zh2",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 7,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip B follows the conversational text naturally with realistic hesitations, pauses, and expressive intonation suited for a meeting.",
+   "Clip A includes natural conversational hesitations and particle words, creating a more realistic spontaneous meeting tone than Clip B."
+  ]
+ },
+ {
+  "cond": "fill_ctx",
+  "tid": "zh2",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 2,
+  "condHuman": 7,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B includes natural hesitation markers and pauses, making it sound authentically conversational rather than read aloud like Clip A.",
+   "Clip A includes natural conversational hesitation and varied intonation, sounding far more spontaneous and human than Clip B's flatter read."
+  ]
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "en1",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -1.5,
+  "condHuman": 4.5,
+  "baseHuman": 6,
+  "reasons": [
+   "Clip A flows naturally, whereas Clip B suffers from unnatural, choppy pauses between nearly every phrase.",
+   "Clip B features more natural phrasing and conversational pacing, whereas Clip A has slightly unnatural pauses."
+  ]
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "en1",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 6,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B exhibits better conversational phrasing, more natural pause placement, and more closely follows the script's intended rhythm.",
+   "Clip A flows naturally with conversational pacing, whereas Clip B suffers from choppy, unnatural pauses between words."
+  ]
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "en2",
+  "rep": 0,
+  "score": 0.5,
+  "humanDelta": 0,
+  "condHuman": 4,
+  "baseHuman": 4,
+  "reasons": [
+   "Both clips exhibit identical synthetic pacing, unnatural pauses, and robotic cadence with no discernible differences.",
+   "Both sound robotic and segmented, but Clip A has marginally better flow and less awkward pause lengths between phrases."
+  ]
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "en2",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 0.5,
+  "condHuman": 5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B features slightly more natural conversational pitch variation and rhythm, while Clip A sounds flat and segmented.",
+   "Clip A maintains slightly better conversational momentum, whereas Clip B has slightly prolonged, unnatural pauses between phrases."
+  ]
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "en3",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B features more natural, conversational question intonation and pacing across the clauses compared to the flatter delivery in Clip A.",
+   "Clip B exhibits slightly better pacing and more natural pitch contour on the final question, sounding marginally less robotic."
+  ]
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "en3",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 6,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B features a much more natural conversational pace, whereas Clip A feels sluggish, overly paused, and read-aloud.",
+   "Clip A has more natural conversational pacing and fluidity, whereas Clip B sounds slightly disjointed and overly deliberate."
+  ]
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "en4",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": -0.5,
+  "condHuman": 5.5,
+  "baseHuman": 6,
+  "reasons": [
+   "Clip B retains all intended words and exhibits slightly smoother conversational flow and phrasing than Clip A.",
+   "Clip B flows much more naturally with realistic conversational pacing and rhythm, whereas Clip A sounds robotic and choppy."
+  ]
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "en4",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5.5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip B follows the complete text accurately and displays more natural conversational timing and cadence than Clip A.",
+   "Clip B flows more naturally through the middle clause with less stilted, segmented phrasing than Clip A."
+  ]
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "zh1",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 6.5,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B accurately includes the conversational particles, sounding significantly more spontaneous, expressive, and natural for a meeting setting.",
+   "Clip A includes natural conversational particles and timing, making it sound more spontaneous than the read-style Clip B."
+  ]
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "zh1",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 2,
+  "condHuman": 7,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B features natural conversational particles and realistic pacing, whereas Clip A sounds flatter and more read aloud.",
+   "Clip A has more natural conversational pacing, breathing room, and modal particles typical of a spontaneous meeting update."
+  ]
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "zh2",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 7,
+  "baseHuman": 6,
+  "reasons": [
+   "Clip B includes the full script with '那' and features more natural conversational pacing and rhythm.",
+   "Clip A includes all words accurately and exhibits more natural conversational pacing and hesitation compared to Clip B."
+  ]
+ },
+ {
+  "cond": "punct_ctx",
+  "tid": "zh2",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 6,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B sounds more conversational and spontaneous with better pausing, and it accurately includes the full intended script.",
+   "Clip A sounds more spontaneous with better conversational pauses and includes all target words naturally, whereas B feels slightly rushed and drops a word."
+  ]
+ }
+]

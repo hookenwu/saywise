@@ -1,0 +1,626 @@
+[
+ {
+  "cond": "none",
+  "tid": "en1",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -2,
+  "condHuman": 4,
+  "baseHuman": 6,
+  "reasons": [
+   "Clip A has smoother pacing. Clip B is highly robotic and choppy.",
+   "Clip B features slightly better pacing and intonation, sounding less robotic than Clip A."
+  ]
+ },
+ {
+  "cond": "none",
+  "tid": "en1",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 5,
+  "baseHuman": 4,
+  "reasons": [
+   "Clip B has slightly better pacing and intonation, making it sound marginally more conversational than Clip A.",
+   "Clip A has slightly better pacing and pitch variation, though both sound quite robotic and lack natural conversational flow."
+  ]
+ },
+ {
+  "cond": "none",
+  "tid": "en2",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -1.5,
+  "condHuman": 4,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip A has slightly better flow and fewer robotic artifacts. Clip B sounds very flat and mechanical.",
+   "B has slightly better conversational pacing and phrasing, making it sound marginally more natural than A."
+  ]
+ },
+ {
+  "cond": "none",
+  "tid": "en3",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 4.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B has slightly better question intonation and pacing, sounding marginally more conversational than A.",
+   "Clip B has slightly better question intonation at the end, making it sound a bit more conversational than A."
+  ]
+ },
+ {
+  "cond": "none",
+  "tid": "en2",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 4.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B has slightly better pacing and conversational rhythm, feeling marginally less like read speech.",
+   "Clip B has slightly better pacing and phrasing, though both sound stiff. Clip A is flatter and more robotic."
+  ]
+ },
+ {
+  "cond": "none",
+  "tid": "en3",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 4.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B offers slightly better pacing and intonation, sounding a bit more conversational.",
+   "Clip B has slightly better pacing and conversational rhythm, though both sound somewhat synthetic."
+  ]
+ },
+ {
+  "cond": "none",
+  "tid": "zh1",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 2,
+  "condHuman": 6,
+  "baseHuman": 4,
+  "reasons": [
+   "Clip B has better pacing and more natural intonation, sounding more conversational than the slower Clip A.",
+   "Clip A has more natural pacing and conversational intonation, whereas Clip B sounds slower and more like reading aloud."
+  ]
+ },
+ {
+  "cond": "none",
+  "tid": "en4",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": -0.5,
+  "condHuman": 4.5,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B has slightly better pacing and more natural intonation, sounding less rushed and robotic than Clip A.",
+   "Clip B has better pacing and intonation. Clip A sounds flatter and slightly robotic."
+  ]
+ },
+ {
+  "cond": "none",
+  "tid": "en4",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B has slightly better intonation and pacing, making it sound a bit more conversational than Clip A.",
+   "Clip B has slightly better rhythm and conversational intonation, whereas A sounds more flat and read."
+  ]
+ },
+ {
+  "cond": "none",
+  "tid": "zh2",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": -0.5,
+  "condHuman": 5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip B has better pacing and pauses, sounding more thoughtful and conversational.",
+   "Clip B has more natural conversational intonation and pacing. Clip A sounds slightly more robotic and read-aloud."
+  ]
+ },
+ {
+  "cond": "none",
+  "tid": "zh2",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B has better pacing and a more natural hesitation.",
+   "Clip B has better pacing and sounds more conversational. Clip A is flat."
+  ]
+ },
+ {
+  "cond": "standard",
+  "tid": "en1",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 4,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip A features slightly smoother pacing and less choppy phrasing than B.",
+   "Clip B has slightly better pacing and intonation, sounding marginally more conversational than A."
+  ]
+ },
+ {
+  "cond": "standard",
+  "tid": "en2",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 2,
+  "condHuman": 5.5,
+  "baseHuman": 3.5,
+  "reasons": [
+   "Clip B has better pacing and intonation, sounding more conversational, while Clip A is flat.",
+   "Clip A has slightly better pacing and fewer synthetic artifacts, sounding marginally more conversational than B."
+  ]
+ },
+ {
+  "cond": "standard",
+  "tid": "en1",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 4.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B has slightly better pacing and intonation, sounding a bit more conversational than A.",
+   "Clip B features slightly better pacing and more natural pauses, making it marginally more conversational."
+  ]
+ },
+ {
+  "cond": "standard",
+  "tid": "en3",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 4.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B has slightly better question intonation and pacing, though both sound somewhat synthetic.",
+   "Clip B flows better with fewer awkward pauses, sounding slightly more natural."
+  ]
+ },
+ {
+  "cond": "standard",
+  "tid": "en2",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -1.5,
+  "condHuman": 4,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip A has slightly better pacing and flow, whereas B sounds more disjointed and robotic.",
+   "Clip B has slightly better pacing and intonation, sounding less robotic."
+  ]
+ },
+ {
+  "cond": "standard",
+  "tid": "en3",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 4,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip A features slightly better question intonation, whereas B sounds flatter overall.",
+   "Clip B has slightly better pacing and sounds marginally more conversational than A."
+  ]
+ },
+ {
+  "cond": "standard",
+  "tid": "en4",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -2,
+  "condHuman": 4,
+  "baseHuman": 6,
+  "reasons": [
+   "Clip A has more natural conversational pacing and fewer robotic qualities than Clip B.",
+   "Clip B features more natural intonation and pacing, sounding less robotic than Clip A."
+  ]
+ },
+ {
+  "cond": "standard",
+  "tid": "zh1",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -1.5,
+  "condHuman": 4.5,
+  "baseHuman": 6,
+  "reasons": [
+   "Clip A flows slightly better with more natural pacing.",
+   "Clip B has more natural rhythm and intonation, sounding less robotic than A."
+  ]
+ },
+ {
+  "cond": "standard",
+  "tid": "en4",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -1.5,
+  "condHuman": 4,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip A has more natural conversational pacing and intonation, whereas B sounds flatter and read-aloud.",
+   "Clip B has slightly better intonation and pacing, making it sound a bit more natural than Clip A."
+  ]
+ },
+ {
+  "cond": "standard",
+  "tid": "zh2",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 2.5,
+  "condHuman": 6.5,
+  "baseHuman": 4,
+  "reasons": [
+   "Clip B has better conversational rhythm and intonation. Clip A sounds flatter and more like reading.",
+   "Clip A has more natural intonation and pacing, while Clip B sounds flat and robotic."
+  ]
+ },
+ {
+  "cond": "standard",
+  "tid": "zh1",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 2,
+  "condHuman": 6,
+  "baseHuman": 4,
+  "reasons": [
+   "Clip B has more natural intonation and rhythm, while Clip A sounds flat and robotic.",
+   "Clip A has better conversational flow despite a minor tone error. Clip B sounds stiff."
+  ]
+ },
+ {
+  "cond": "standard",
+  "tid": "zh2",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B has better pacing and more natural conversational intonation than Clip A.",
+   "Clip B flows better and sounds slightly more conversational than A."
+  ]
+ },
+ {
+  "cond": "m11",
+  "tid": "en1",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 4,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip A has slightly better pacing and flow, whereas Clip B sounds more disjointed and robotic.",
+   "Clip B features slightly better pacing and conversational rhythm, sounding marginally more natural than A."
+  ]
+ },
+ {
+  "cond": "m11",
+  "tid": "en2",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 4.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B has slightly better pacing and intonation, sounding marginally more conversational than A's flatter delivery.",
+   "Clip B has slightly better pacing and conversational intonation, making it sound less read than A."
+  ]
+ },
+ {
+  "cond": "m11",
+  "tid": "en2",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 2.5,
+  "condHuman": 6,
+  "baseHuman": 3.5,
+  "reasons": [
+   "Clip B has better pacing and flow. Clip A sounds slow, disjointed, and robotic.",
+   "Clip A has more natural pacing and conversational intonation, whereas Clip B sounds robotic."
+  ]
+ },
+ {
+  "cond": "m11",
+  "tid": "en1",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 5,
+  "baseHuman": 4,
+  "reasons": [
+   "Clip B has slightly better pacing and flow, sounding marginally more natural.",
+   "Clip A has smoother pacing and fewer robotic artifacts. Clip B sounds more disjointed and synthetic."
+  ]
+ },
+ {
+  "cond": "m11",
+  "tid": "en3",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 5.5,
+  "baseHuman": 4,
+  "reasons": [
+   "Clip B flows better with more natural pacing and fewer awkward pauses.",
+   "Clip A has slightly better pacing and flow, whereas Clip B sounds more disjointed and robotic."
+  ]
+ },
+ {
+  "cond": "m11",
+  "tid": "en4",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0.5,
+  "condHuman": 5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B has slightly better intonation and rhythm, sounding more conversational than A.",
+   "Clip B features slightly better pacing and more conversational intonation than Clip A."
+  ]
+ },
+ {
+  "cond": "m11",
+  "tid": "en4",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B has slightly better conversational intonation and pacing compared to A.",
+   "Clip B has slightly better intonation and pacing, making it sound a bit more conversational than Clip A."
+  ]
+ },
+ {
+  "cond": "m11",
+  "tid": "zh1",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B has slightly better rhythm and sounds less flat, making it more conversational.",
+   "Clip B has better pacing and sounds more conversational."
+  ]
+ },
+ {
+  "cond": "m11",
+  "tid": "en3",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 4.5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip A flows slightly better than B, but both lack natural conversational rhythm and sound somewhat synthetic.",
+   "Clip B has slightly better pacing and sounds more conversational than A."
+  ]
+ },
+ {
+  "cond": "m11",
+  "tid": "zh1",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 4.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B sounds more conversational and natural despite a minor tone error. Clip A is overly robotic and monotonous.",
+   "Clip B features smoother phrasing and less robotic, staccato rhythm compared to Clip A."
+  ]
+ },
+ {
+  "cond": "m11",
+  "tid": "zh2",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -1.5,
+  "condHuman": 4.5,
+  "baseHuman": 6,
+  "reasons": [
+   "Clip A has better pacing and conversational intonation. Clip B sounds slightly flatter.",
+   "Clip B has better pacing and natural hesitation, making it sound more conversational."
+  ]
+ },
+ {
+  "cond": "none",
+  "tid": "zh1",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 4.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B has slightly better pitch variation and sounds less monotonous.",
+   "Clip B has slightly better rhythm and intonation, sounding less monotonous than Clip A."
+  ]
+ },
+ {
+  "cond": "ctx",
+  "tid": "en1",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 5,
+  "baseHuman": 4,
+  "reasons": [
+   "Clip B has slightly better pacing and fewer robotic artifacts. Both sound synthetic, but B's intonation is marginally more conversational.",
+   "Clip A has slightly better pacing and fewer robotic artifacts than B, making it sound marginally more natural."
+  ]
+ },
+ {
+  "cond": "m11",
+  "tid": "zh2",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -1.5,
+  "condHuman": 4.5,
+  "baseHuman": 6,
+  "reasons": [
+   "Clip A has better conversational rhythm. Clip B sounds slightly more robotic and read-aloud at the start.",
+   "Clip B sounds more conversational with better pacing. Clip A is stiffer."
+  ]
+ },
+ {
+  "cond": "ctx",
+  "tid": "en2",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 5.5,
+  "baseHuman": 4,
+  "reasons": [
+   "Clip B features slightly better pitch variation and conversational rhythm, while A sounds flatter.",
+   "Clip A has slightly better intonation and pacing, making it sound a bit more conversational than Clip B."
+  ]
+ },
+ {
+  "cond": "ctx",
+  "tid": "en1",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 4.5,
+  "baseHuman": 3,
+  "reasons": [
+   "Clip B has slightly better pacing and intonation, sounding marginally less robotic than Clip A.",
+   "Clip A flows better. Clip B is too slow and choppy."
+  ]
+ },
+ {
+  "cond": "ctx",
+  "tid": "en2",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 5,
+  "baseHuman": 4,
+  "reasons": [
+   "Clip B features slightly better pacing and intonation, making it sound marginally more conversational.",
+   "Clip A has slightly better flow. Both sound synthetic, but B is more disjointed."
+  ]
+ },
+ {
+  "cond": "ctx",
+  "tid": "en3",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 4.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B flows better with slightly more natural intonation, whereas Clip A has awkward pacing.",
+   "Clip B has slightly better pacing and intonation, making it sound marginally more conversational than Clip A."
+  ]
+ },
+ {
+  "cond": "ctx",
+  "tid": "en3",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 5,
+  "baseHuman": 4,
+  "reasons": [
+   "Clip B has slightly better pacing and intonation, making it sound a bit more conversational than Clip A.",
+   "Clip A has slightly better intonation on the final question. Both sound synthetic."
+  ]
+ },
+ {
+  "cond": "ctx",
+  "tid": "en4",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B has slightly better conversational flow and intonation, making it sound a bit more natural than A.",
+   "Clip B has slightly better pacing and intonation, sounding marginally more conversational than Clip A."
+  ]
+ },
+ {
+  "cond": "ctx",
+  "tid": "en4",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -1.5,
+  "condHuman": 4,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip A has better pacing and conversational flow. Clip B sounds slightly more rigid.",
+   "Clip B has slightly better intonation and pacing, making it sound a bit more conversational."
+  ]
+ },
+ {
+  "cond": "ctx",
+  "tid": "zh1",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 2,
+  "condHuman": 6,
+  "baseHuman": 4,
+  "reasons": [
+   "Clip B has better rhythm and sounds more conversational, while A is flat.",
+   "Clip A has more natural pacing and conversational intonation, while Clip B sounds flatter and read-like."
+  ]
+ },
+ {
+  "cond": "ctx",
+  "tid": "zh1",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": -0.5,
+  "condHuman": 4.5,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B has slightly better rhythm and phrasing, sounding less robotic.",
+   "Clip B features slightly more natural pacing and intonation, reducing the monotonous read-aloud feel present in Clip A."
+  ]
+ },
+ {
+  "cond": "ctx",
+  "tid": "zh2",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -1.5,
+  "condHuman": 4,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip A has better pacing and sounds more conversational, whereas Clip B feels slightly disjointed.",
+   "Clip B has slightly better conversational pacing and intonation, sounding less read than A."
+  ]
+ },
+ {
+  "cond": "ctx",
+  "tid": "zh2",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": -0.5,
+  "condHuman": 5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip B has better pacing and a more natural start.",
+   "Clip B has better pacing and sounds more conversational. Clip A is slightly robotic."
+  ]
+ }
+]

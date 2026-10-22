@@ -1,0 +1,158 @@
+[
+ {
+  "cond": "direct_humanize",
+  "tid": "en2",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 2,
+  "condHuman": 6.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B includes natural conversational fillers and realistic phrasing, sounding much more like a spontaneous meeting comment than Clip A's rigid read-aloud delivery.",
+   "Clip A sounds significantly more natural and conversational with spontaneous pacing, while Clip B feels flat and segmented."
+  ]
+ },
+ {
+  "cond": "direct_humanize",
+  "tid": "en1",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 6,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B includes natural conversational fillers and follows the intended script more accurately, resulting in a more spontaneous meeting delivery.",
+   "Clip A captures spontaneous conversational pacing and realistic hesitations, while following the intended text accurately without omitting words."
+  ]
+ },
+ {
+  "cond": "direct_humanize",
+  "tid": "en1",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5.5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip B follows the complete script and features smoother phrasing and more natural conversational rhythm than Clip A.",
+   "Clip B features slightly more natural conversational cadence and inflection, sounding less stilted and robotic than Clip A."
+  ]
+ },
+ {
+  "cond": "direct_humanize",
+  "tid": "en2",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 2,
+  "condHuman": 6,
+  "baseHuman": 4,
+  "reasons": [
+   "Clip B sounds far more spontaneous and conversational with natural hesitations, while Clip A delivers a flat, mechanical reading.",
+   "Clip A sounds distinctly more conversational and spontaneous with natural hesitation, whereas Clip B feels flatter and read-aloud."
+  ]
+ },
+ {
+  "cond": "direct_humanize",
+  "tid": "en3",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 5.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B flows more smoothly with natural conversational phrasing and better pacing than Clip A's stilted delivery.",
+   "Clip A has a more natural conversational rhythm and phrasing, whereas Clip B sounds choppy and segmented."
+  ]
+ },
+ {
+  "cond": "direct_humanize",
+  "tid": "en3",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0.5,
+  "condHuman": 5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B exhibits slightly better conversational pacing and phrasing, whereas Clip A sounds more segmented and robotic.",
+   "Clip B features more natural phrasing and fluid pacing, whereas Clip A suffers from awkward, choppy pauses between words."
+  ]
+ },
+ {
+  "cond": "direct_humanize",
+  "tid": "en4",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5.5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip B is more accurate to the text and exhibits more natural conversational pacing and rhythm than Clip A.",
+   "Clip B has much smoother, more natural conversational cadence, whereas Clip A sounds robotic, choppy, and segmented."
+  ]
+ },
+ {
+  "cond": "direct_humanize",
+  "tid": "en4",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5.5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip B features a distinct glitch on 'makes sense', while Clip A is clean, fluent, and artifact-free despite minor text deviations.",
+   "Clip A matches the script accurately and sounds much more conversational with natural hesitation, whereas B feels slightly stiff and robotic."
+  ]
+ },
+ {
+  "cond": "direct_humanize",
+  "tid": "zh1",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 7,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip B follows the script accurately and exhibits more natural conversational rhythm, inflections, and spontaneous pacing suitable for a meeting.",
+   "Clip A matches the full script with more natural, conversational phrasing, while Clip B omits words and sounds slightly rushed."
+  ]
+ },
+ {
+  "cond": "direct_humanize",
+  "tid": "zh1",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 6.5,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B follows the natural conversational flow and intended wording much better, with realistic rhythm and casual conversational delivery.",
+   "Clip A adheres accurately to the script and maintains a smoother conversational flow, while Clip B omits multiple words."
+  ]
+ },
+ {
+  "cond": "direct_humanize",
+  "tid": "zh2",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 2.5,
+  "condHuman": 7,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B sounds far more conversational, with natural pauses and cadence fitting a meeting, whereas Clip A sounds robotic and flatly read.",
+   "Clip A sounds authentically conversational and spontaneous, matching the text well, whereas Clip B is rushed, monotone, and omits words."
+  ]
+ },
+ {
+  "cond": "direct_humanize",
+  "tid": "zh2",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 2.5,
+  "condHuman": 7,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B includes natural conversational fillers and phrasing with far more realistic, spontaneous meeting cadence than Clip A's stiff reading.",
+   "Clip A sounds far more conversational with natural pacing and discourse markers, whereas Clip B is flat and reads like text."
+  ]
+ }
+]

@@ -11,9 +11,13 @@
  * correctly returning to 'idle' after Stop (review ②).
  * Phase 7: localStorage persistence (plan.md §17) and the full error
  * catalogue (plan.md §18) surfaced inline near Speak/Player.
+ * Natural Delivery (specs/voice-copilot-natural-delivery): a Delivery level that shapes
+ * both the TTS payload and the LLM text, an opt-in Humanize (same-language spoken rewrite)
+ * for Direct Speak, and word-safe incremental pushes on the LLM paths — see that spec's
+ * research.md for the measurements behind each choice.
  * Phase 11: the optional Translated Speak path (spec.md §9) — a thin
  * handleSpeak() dispatcher branching to the unchanged handleDirectSpeak()
- * (renamed, zero logic change) or the new handleTranslatedSpeak(), per
+ * (renamed, zero logic change) or the new handleTranslatedSpeak() (now handleLlmSpeak(mode)), per
  * plan.md §7's double-teardown/guard-ordering correction: the dispatcher
  * itself performs no guards and no teardown — each handler independently
  * owns its own guard sequence and its own single teardownCurrentRound()
@@ -35,11 +39,14 @@ import {
   setTranslationEnabled,
   setTranslatedText,
   setStylePreset,
+  setDelivery,
+  setHumanizeEnabled,
 } from './state.js';
 import { loadConfiguration, formatLanguageCapability } from './voice-profiles.js';
 import { StreamingTTSClient } from './tts-client.js';
 import { StreamingAudioPlayer } from './streaming-audio-player.js';
-import { streamTranslation, extractCompletedSentences, TranslationError } from './translation-client.js';
+import { streamTranslation, TranslationError } from './translation-client.js';
+import { createSpeakableChunker } from './delivery.js';
 import { updateTranslationAvailability } from './settings-client.js';
 import { loadMyStyleProfile } from './speaking-style.js';
 import { AudioBridgeClient } from './audio-bridge-client.js';
@@ -53,6 +60,8 @@ import {
   persistTranslationEnabled,
   persistStylePreset,
   persistAudioBridgeEnabled,
+  persistDelivery,
+  persistHumanizeEnabled,
 } from './persistence.js';
 
 const speechTextEl = document.getElementById('speech-text');
@@ -78,6 +87,10 @@ const stylePresetEl = document.getElementById('style-preset-select');
 const stylePresetRowEl = document.getElementById('style-preset-row');
 const translatedTextPanelEl = document.getElementById('translated-text-panel');
 const translatedTextDisplayEl = document.getElementById('translated-text-display');
+const translatedTextLabelEl = document.getElementById('translated-text-label');
+const deliverySelectEl = document.getElementById('delivery-select');
+const humanizeRowEl = document.getElementById('humanize-row');
+const humanizeToggleEl = document.getElementById('humanize-toggle');
 const audioBridgeToggleEl = document.getElementById('audio-bridge-toggle');
 const audioBridgeStatusEl = document.getElementById('audio-bridge-status');
 
@@ -128,6 +141,23 @@ let serverBaseUrl = '';
 // prompt upstream-abort handling (Phase 10, T10.3).
 let currentTranslationAbort = null;
 
+// Which LLM mode produced the current state.translatedText ('translate' | 'rewrite'), or
+// null for a Direct Speak round — drives the text panel's label/visibility and the
+// status/error wording. Local module state for the same reason as awaitingManualPlay.
+let lastLlmMode = null;
+
+/**
+ * Which Speak path the current settings select (natural-delivery spec.md §3.2): Chinese ->
+ * English always goes through the LLM; Direct Speak only does when the user explicitly
+ * opted into Humanize AND Delivery isn't Off. Otherwise the text is spoken verbatim.
+ * @returns {'translate' | 'rewrite' | null}
+ */
+function llmModeFor(state) {
+  if (state.translationEnabled) return 'translate';
+  if (state.humanizeEnabled && state.delivery !== 'off') return 'rewrite';
+  return null;
+}
+
 // Audio Bridge producer (docs/teams-web-audio-injection-spec.md Phase 1) — forwards each
 // round's Audio Chunks to the local bridge alongside, never instead of, local playback.
 // Connected only while the "Audio Bridge" toggle is on; every call below is a silent no-op
@@ -158,7 +188,7 @@ function forwardChunk(player, bytes) {
 }
 
 function statusLabel(state) {
-  const { generationStatus, playbackStatus, translationEnabled, translatedText } = state;
+  const { generationStatus, playbackStatus, translatedText } = state;
   // Player-facing states take priority once something is happening;
   // otherwise fall back to the generation-facing label (spec.md §6.1/§7.2
   // — these are two independent state machines, this is purely a display
@@ -167,8 +197,8 @@ function statusLabel(state) {
     // Display-only refinement (plan.md §7.4, T11.9) — not a new state value; every other
     // piece of code still only ever sees playbackStatus: 'buffering'. Translating covers
     // the window before any TTS chunk (and therefore no translated text) has arrived yet.
-    if (translationEnabled && generationStatus === 'generating' && !translatedText) {
-      return 'Translating…';
+    if (lastLlmMode && generationStatus === 'generating' && !translatedText) {
+      return lastLlmMode === 'rewrite' ? 'Rewriting…' : 'Translating…';
     }
     return 'Buffering';
   }
@@ -255,8 +285,17 @@ function render(state) {
   // Translated Text panel (Phase 11, T11.6, plan.md §12): DOM-present but hidden unless
   // translation is on and this round has actually produced translated output — no layout
   // shift for the common Direct-Speak case (spec.md §11).
-  translatedTextPanelEl.hidden = !(state.translationEnabled && state.translatedText.length > 0);
+  // Natural Delivery: the same panel also shows a Humanize rewrite ("Spoken Text"); it stays
+  // visible only while the current settings still select the mode that produced it.
+  translatedTextPanelEl.hidden = !(
+    lastLlmMode && llmModeFor(state) === lastLlmMode && state.translatedText.length > 0
+  );
+  translatedTextLabelEl.textContent = lastLlmMode === 'rewrite' ? 'Spoken Text' : 'Translated Text';
   translatedTextDisplayEl.textContent = state.translatedText;
+
+  // Humanize only applies to Direct Speak — Translated Speak already produces spoken text.
+  humanizeRowEl.hidden = state.translationEnabled;
+  humanizeToggleEl.disabled = state.delivery === 'off';
 
   // Speaking Style row (speaking-style spec.md §6.2/§8, plan.md §6.2): hidden — not merely
   // disabled — when translation is off, since Style has zero effect on Direct Speak. Same
@@ -271,7 +310,10 @@ function render(state) {
   // same element, same field, just a copy prefix that varies by type.
   if (state.generationStatus === 'error' && state.generationError) {
     generationErrorEl.hidden = false;
-    const prefix = state.generationError.type === 'translation-failed' ? 'Translation error: ' : '';
+    const prefix =
+      state.generationError.type === 'translation-failed'
+        ? lastLlmMode === 'rewrite' ? 'Rewrite error: ' : 'Translation error: '
+        : '';
     generationErrorTextEl.textContent = `${prefix}${state.generationError.message}`;
   } else {
     generationErrorEl.hidden = true;
@@ -383,7 +425,7 @@ async function teardownCurrentRound() {
 /**
  * Speak dispatcher (Phase 11, T11.4). A pure branch with no side effects of its own — it
  * performs no guard checks and never calls teardownCurrentRound() itself. Each of
- * handleDirectSpeak/handleTranslatedSpeak independently owns its own guard sequence and
+ * handleDirectSpeak/handleLlmSpeak independently owns its own guard sequence and
  * its own single teardownCurrentRound() call (see the double-teardown/guard-ordering
  * correction in this file's header comment and plan.md §7): if the dispatcher tore down
  * the current round before delegating, a Speak click that turns out to be a no-op (a
@@ -391,8 +433,9 @@ async function teardownCurrentRound() {
  * was previously playing — a real regression, not merely a redundant call.
  */
 function handleSpeak() {
-  if (getState().translationEnabled) {
-    return handleTranslatedSpeak();
+  const mode = llmModeFor(getState());
+  if (mode) {
+    return handleLlmSpeak(mode);
   }
   return handleDirectSpeak();
 }
@@ -420,6 +463,7 @@ async function handleDirectSpeak() {
   await teardownCurrentRound();
 
   awaitingManualPlay = false;
+  lastLlmMode = null;
   speakClickedAt = performance.now();
   setGenerationStatus('generating');
   setPlaybackStatus('buffering');
@@ -449,7 +493,7 @@ async function handleDirectSpeak() {
 
   try {
     await ttsClient.beginSession(
-      { speaker: profile.speakerId, speed: state.speed, volume: state.volume, pitch: state.pitch, useTTS2: true },
+      { speaker: profile.speakerId, speed: state.speed, volume: state.volume, pitch: state.pitch, delivery: state.delivery },
       { onChunk: (bytes) => forwardChunk(player, bytes) }
     );
     await ttsClient.pushText(text);
@@ -480,7 +524,9 @@ async function handleDirectSpeak() {
 }
 
 /**
- * Translated Speak (Phase 11, T11.5, spec.md §9, plan.md §7.2) — a full sibling of
+ * LLM Speak — Translated Speak (Phase 11, T11.5, spec.md §9, plan.md §7.2) and, since
+ * Natural Delivery, Humanize (`mode === 'rewrite'`, same-language spoken rewrite). The two
+ * differ only in the request's `mode`; everything below is shared. A full sibling of
  * handleDirectSpeak, not a continuation that assumes teardown already happened:
  * independently guards, then tears down, then runs LLM Streaming Translation ->
  * Streaming TTS. Player construction, callback wiring, staleness guards, and completion
@@ -488,7 +534,7 @@ async function handleDirectSpeak() {
  * duplication rather than a shared helper, so handleDirectSpeak's own body stays a true,
  * untouched "pure rename" — see this file's header comment).
  */
-async function handleTranslatedSpeak() {
+async function handleLlmSpeak(mode) {
   const state = getState();
   if (configurationFailed) return;
   const text = state.speechText.trim();
@@ -502,6 +548,7 @@ async function handleTranslatedSpeak() {
   await teardownCurrentRound();
 
   awaitingManualPlay = false;
+  lastLlmMode = mode;
   setTranslatedText(''); // cleared at the start of every Speak round (plan.md §11)
   speakClickedAt = performance.now();
   setGenerationStatus('generating');
@@ -544,41 +591,45 @@ async function handleTranslatedSpeak() {
 
   try {
     await ttsClient.beginSession(
-      { speaker: profile.speakerId, speed: state.speed, volume: state.volume, pitch: state.pitch, useTTS2: true },
+      { speaker: profile.speakerId, speed: state.speed, volume: state.volume, pitch: state.pitch, delivery: state.delivery },
       { onChunk: (bytes) => forwardChunk(player, bytes) }
     );
     ttsSessionOpen = true;
 
-    let sentenceBuffer = '';
+    // Natural Delivery (spec.md §3.3): push word-safe chunks as soon as they arrive rather
+    // than whole sentences — the provider segments sentences itself with lookahead, and
+    // app-side sentence batching both delayed audio and broke cross-sentence prosody
+    // (research.md E4/E4b).
+    const chunker = createSpeakableChunker();
     let translatedSoFar = '';
     // Speaking Style (speaking-style spec.md §4, plan.md §4.5): stylePreset always
     // accompanies the request; myStyle is only loaded (and only meaningful server-side)
     // when stylePreset === 'my-style' — no change to the streaming/staleness-guard/
     // cleanup control flow below, this is purely a request-body addition to a call site
     // that already exists.
-    const myStyle = state.stylePreset === 'my-style' ? loadMyStyleProfile() : undefined;
+    const myStyle = mode === 'translate' && state.stylePreset === 'my-style' ? loadMyStyleProfile() : undefined;
     for await (const { content } of streamTranslation(text, {
       signal: translationAbort.signal,
       serverBaseUrl,
       stylePreset: state.stylePreset,
       myStyle,
+      delivery: state.delivery,
+      mode,
     })) {
       if (currentPlayer !== player) return; // staleness guard, same pattern as Direct Speak
 
       translatedSoFar += content;
       setTranslatedText(translatedSoFar); // live update of the read-only Translated Text area (§12)
 
-      sentenceBuffer += content;
-      const { sentences, remainder } = extractCompletedSentences(sentenceBuffer);
-      for (const sentence of sentences) {
-        await ttsClient.pushText(sentence);
+      for (const chunk of chunker.push(content)) {
+        await ttsClient.pushText(chunk);
       }
-      sentenceBuffer = remainder;
     }
 
     if (currentPlayer !== player) return;
-    if (sentenceBuffer.trim()) {
-      await ttsClient.pushText(sentenceBuffer.trim()); // flush trailing partial sentence
+    const tail = chunker.flush();
+    if (tail) {
+      await ttsClient.pushText(tail); // flush trailing partial word
     }
 
     // Same completion semantics as Direct Speak (review ⑦, unchanged) — gated on the
@@ -595,7 +646,7 @@ async function handleTranslatedSpeak() {
   } catch (err) {
     if (currentPlayer !== player) return; // same staleness guard for the failure path
 
-    console.error('[Voice Copilot] Translated Speak failed:', err);
+    console.error(`[Voice Copilot] ${mode === 'rewrite' ? 'Humanized' : 'Translated'} Speak failed:`, err);
 
     // Correctness-critical cleanup (T11.5 step 6 / T11.8) — see the ttsSessionOpen comment
     // above for why this must happen unconditionally, regardless of which branch
@@ -698,6 +749,16 @@ stylePresetEl.addEventListener('change', () => {
   persistStylePreset(stylePresetEl.value);
 });
 
+deliverySelectEl.addEventListener('change', () => {
+  setDelivery(deliverySelectEl.value);
+  persistDelivery(deliverySelectEl.value);
+});
+
+humanizeToggleEl.addEventListener('change', () => {
+  setHumanizeEnabled(humanizeToggleEl.checked);
+  persistHumanizeEnabled(humanizeToggleEl.checked);
+});
+
 audioBridgeToggleEl.addEventListener('change', () => {
   setAudioBridgeEnabled(audioBridgeToggleEl.checked);
   persistAudioBridgeEnabled(audioBridgeToggleEl.checked);
@@ -719,6 +780,13 @@ setTranslationEnabled(persisted.translationEnabled);
 // already allowlist-normalized by loadPersistedPreferences() (persistence.js).
 stylePresetEl.value = persisted.stylePreset;
 setStylePreset(persisted.stylePreset);
+
+// Natural Delivery (plan.md §2.5) — restore the same way; defaults Natural / Humanize off,
+// already allowlist-normalized by loadPersistedPreferences().
+deliverySelectEl.value = persisted.delivery;
+setDelivery(persisted.delivery);
+humanizeToggleEl.checked = persisted.humanizeEnabled;
+setHumanizeEnabled(persisted.humanizeEnabled);
 
 // Audio Bridge — restore the persisted toggle; `?bridge=1` in the URL also turns it on
 // (handy for a dedicated meeting tab) without changing the persisted preference.

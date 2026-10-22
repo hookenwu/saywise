@@ -1,0 +1,314 @@
+[
+ {
+  "cond": "per_sentence",
+  "tid": "en1",
+  "rep": 2,
+  "score": -1,
+  "humanDelta": -2,
+  "condHuman": 4,
+  "baseHuman": 6,
+  "reasons": [
+   "Clip B hallucinates an extra word ('dot'/'thought') after 'everyone'. Clip A reads smoothly with natural conversational pacing.",
+   "Clip A includes an extraneous hallucinated word after 'everyone'. Clip B is clean, accurate, and delivers more natural meeting pacing."
+  ]
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en1",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -1.5,
+  "condHuman": 4,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip A adheres to the script naturally, whereas Clip B introduces an odd vocal glitch or misspoken word early on.",
+   "Clip B correctly says 'So' rather than mispronouncing it as 'thought so' like Clip A, maintaining smoother conversational flow."
+  ]
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en1",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -1.5,
+  "condHuman": 4.5,
+  "baseHuman": 6,
+  "reasons": [
+   "Clip B mistakenly pronounces punctuation ('dot') and has choppy phrasing, while Clip A delivers a smooth, natural conversational update.",
+   "Clip B correctly articulates 'So' where Clip A inserts an unnatural 'thought so', making B cleaner and more accurate."
+  ]
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en2",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -0.5,
+  "condHuman": 5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip A flows more naturally, avoiding the awkward pause before 'timeline' heard in Clip B.",
+   "Clip B features slightly smoother pacing and more cohesive phrasing, particularly around 'the timeline', sounding more conversational."
+  ]
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en2",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -0.5,
+  "condHuman": 4.5,
+  "baseHuman": 5,
+  "reasons": [
+   "Both sound robotic, but Clip A has a cleaner flow without the awkward repetition and hesitation heard in Clip B.",
+   "Clip B adheres cleanly to the script and has slightly better conversational pacing without Clip A's extra, awkward conjunction."
+  ]
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en2",
+  "rep": 2,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 5,
+  "baseHuman": 6,
+  "reasons": [
+   "Clip A sounds cleaner and adheres accurately to the text without the awkward inserted word and hesitation present mid-sentence in Clip B.",
+   "Clip B follows the text accurately and sounds more natural and conversational, whereas Clip A inserts an extraneous word and stumbles slightly."
+  ]
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en3",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 4.5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip A delivers a smoother, more natural flow without the odd extra syllable or word insertion present in Clip B.",
+   "Clip B follows the text cleanly, whereas Clip A inserts an unnatural extra syllable or glitch before 'did you say'."
+  ]
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en3",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -2.5,
+  "condHuman": 4,
+  "baseHuman": 6.5,
+  "reasons": [
+   "Clip B mistakenly speaks the punctuation mark 'dot' aloud, whereas Clip A delivers a clean, natural conversational flow.",
+   "Clip A literally reads the punctuation aloud ('dot'), whereas Clip B has a clean and natural conversational delivery."
+  ]
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en3",
+  "rep": 2,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 4.5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip A has a more natural conversational flow, whereas Clip B has awkward pauses and a robotic rhythm.",
+   "Clip B flows more smoothly with natural phrasing, avoiding the awkward pause and inserted word present in Clip A."
+  ]
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en4",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 6,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B has more natural conversational pacing and fluidity, whereas Clip A sounds overly deliberate and segmented.",
+   "Clip A is fluid and natural, while Clip B contains a distinct garbled pronunciation glitch on 'makes sense'."
+  ]
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en4",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": 0,
+  "condHuman": 5,
+  "baseHuman": 5,
+  "reasons": [
+   "Both clips sound identical in pitch, cadence, pacing, and overall quality, showing no discernible differences.",
+   "Both clips sound identical, sharing the same slightly rigid cadence and unnatural pausing throughout."
+  ]
+ },
+ {
+  "cond": "per_sentence",
+  "tid": "en4",
+  "rep": 2,
+  "score": -1,
+  "humanDelta": -0.5,
+  "condHuman": 5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip A has slightly more cohesive conversational pacing and rhythm, whereas Clip B sounds more fragmented and drawn out.",
+   "Clip B features slightly smoother cadence and natural phrasing across clauses, whereas Clip A sounds a bit more segmented and robotic."
+  ]
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en1",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 6,
+  "baseHuman": 5,
+  "reasons": [
+   "Clip B features slightly smoother pacing and more natural conversational phrasing than Clip A's somewhat stiff delivery.",
+   "Clip A has smoother, more natural conversational pacing, whereas Clip B suffers from disjointed, slightly unnatural pausing between phrases."
+  ]
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en1",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 6,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B sounds far more natural and conversational, while Clip A is disjointed with overly long, stilted pauses.",
+   "Clip A has slightly more cohesive pacing and fewer awkward pauses between short phrases than Clip B, sounding marginally more natural."
+  ]
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en1",
+  "rep": 2,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 6,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B has a noticeably more natural conversational flow and pacing, whereas Clip A sounds unnaturally slow, robotic, and segmented.",
+   "Clip A has a more natural conversational flow, whereas Clip B sounds disjointed with overly prolonged pauses between phrases."
+  ]
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en2",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 4.5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip A maintains a more natural conversational flow, avoiding the awkward, abrupt pause after 'But' heard in Clip B.",
+   "Clip B flows more naturally without the awkward, disjointed pause after 'But' present in Clip A."
+  ]
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en2",
+  "rep": 1,
+  "score": -0.5,
+  "humanDelta": -0.5,
+  "condHuman": 4,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Both clips share near-identical stilted pacing, robotic cadence, and unnatural pauses, making neither sound authentically conversational.",
+   "Both sound somewhat stilted, but Clip B features slightly better pacing and less unnatural hesitation between phrases."
+  ]
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en2",
+  "rep": 2,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 4.5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip A maintains a smoother, more natural conversational cadence, whereas Clip B sounds slightly disjointed and choppy between phrases.",
+   "Clip B features better conversational pacing and natural sentence flow, whereas Clip A is overly staccato and robotic."
+  ]
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en3",
+  "rep": 0,
+  "score": 0,
+  "humanDelta": -0.5,
+  "condHuman": 4,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip A avoids the glitchy, harsh onset artifact heard on 'Sorry' at the beginning of Clip B.",
+   "Clip A has a cleaner onset on 'Sorry', whereas Clip B cuts in slightly. Both have somewhat flat, synthetic cadence."
+  ]
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en3",
+  "rep": 1,
+  "score": 1,
+  "humanDelta": 1,
+  "condHuman": 5.5,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B flows more naturally with better phrasing, whereas Clip A suffers from unnatural, choppy pauses between words.",
+   "Clip A delivers smoother phrasing and avoids clipping off the initial consonant of 'sorry' heard in Clip B."
+  ]
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en3",
+  "rep": 2,
+  "score": -1,
+  "humanDelta": -2,
+  "condHuman": 4.5,
+  "baseHuman": 6.5,
+  "reasons": [
+   "Clip A flows much more naturally and avoids the garbled initial consonant and halting pauses heard in Clip B.",
+   "Clip B features natural conversational pacing and fluid phrasing, whereas Clip A is overly stilted with awkward, prolonged pauses."
+  ]
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en4",
+  "rep": 0,
+  "score": 1,
+  "humanDelta": 1.5,
+  "condHuman": 6,
+  "baseHuman": 4.5,
+  "reasons": [
+   "Clip B exhibits slightly more natural pacing and smoother conversational flow between phrases than Clip A.",
+   "Clip B suffers from a clear audio glitch and hallucinated syllable during 'makes sense', while Clip A is clean and intelligible."
+  ]
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en4",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -0.5,
+  "condHuman": 5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Both sound very similar and somewhat robotic, but Clip A has slightly cleaner audio with fewer buzzing artifacts.",
+   "Clip B features more natural, conversational inflection on the closing question compared to Clip A's overly flat delivery."
+  ]
+ },
+ {
+  "cond": "chunks3w",
+  "tid": "en4",
+  "rep": 2,
+  "score": 0,
+  "humanDelta": -0.5,
+  "condHuman": 5,
+  "baseHuman": 5.5,
+  "reasons": [
+   "Clip B features more natural conversational pacing and pause structure, sounding less hurried and mechanical than Clip A.",
+   "Clip B exhibits a more fluid, conversational cadence, whereas Clip A sounds unnaturally slow, segmented, and robotic."
+  ]
+ }
+]

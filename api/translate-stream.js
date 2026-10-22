@@ -25,7 +25,7 @@
  * at all, on purpose: it is not meant to be called cross-origin.
  */
 
-import { streamTranslate, normalizeStylePreset, normalizeMyStyle } from '../server/lib/translate.js';
+import { streamTranslate, normalizeStylePreset, normalizeMyStyle, normalizeDelivery, normalizeMode } from '../server/lib/translate.js';
 import { readCredential } from '../server/lib/credential-store.js';
 
 export default async function handler(req, res) {
@@ -41,6 +41,9 @@ export default async function handler(req, res) {
   }
   const stylePreset = normalizeStylePreset(req.body?.stylePreset);
   const myStyle = normalizeMyStyle(req.body?.myStyle);
+  // Natural Delivery (natural-delivery spec.md R4): allowlisted, defaulting to translate/natural.
+  const delivery = normalizeDelivery(req.body?.delivery);
+  const mode = normalizeMode(req.body?.mode);
 
   const credential = await readCredential();
   const apiKey = credential?.accessToken;
@@ -66,7 +69,7 @@ export default async function handler(req, res) {
   });
 
   try {
-    for await (const { content } of streamTranslate(text, { apiKey, signal: upstreamAbort.signal, stylePreset, myStyle })) {
+    for await (const { content } of streamTranslate(text, { apiKey, signal: upstreamAbort.signal, stylePreset, myStyle, delivery, mode })) {
       if (aborted) break;
       res.write(`data: ${JSON.stringify({ content })}\n\n`);
     }

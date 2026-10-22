@@ -11,7 +11,7 @@
 
 import { Router } from 'express';
 
-import { streamTranslate, normalizeStylePreset, normalizeMyStyle } from '../lib/translate.js';
+import { streamTranslate, normalizeStylePreset, normalizeMyStyle, normalizeDelivery, normalizeMode } from '../lib/translate.js';
 import { readCredential } from '../lib/credential-store.js';
 
 const router = Router();
@@ -24,6 +24,9 @@ router.post('/translate-stream', async (req, res) => {
   }
   const stylePreset = normalizeStylePreset(req.body?.stylePreset);
   const myStyle = normalizeMyStyle(req.body?.myStyle);
+  // Natural Delivery (natural-delivery spec.md R4): allowlisted, defaulting to translate/natural.
+  const delivery = normalizeDelivery(req.body?.delivery);
+  const mode = normalizeMode(req.body?.mode);
 
   const credential = await readCredential();
   const apiKey = credential?.accessToken;
@@ -59,7 +62,7 @@ router.post('/translate-stream', async (req, res) => {
   });
 
   try {
-    for await (const { content } of streamTranslate(text, { apiKey, signal: upstreamAbort.signal, stylePreset, myStyle })) {
+    for await (const { content } of streamTranslate(text, { apiKey, signal: upstreamAbort.signal, stylePreset, myStyle, delivery, mode })) {
       if (aborted) break;
       res.write(`data: ${JSON.stringify({ content })}\n\n`);
     }

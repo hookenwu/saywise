@@ -17,6 +17,11 @@
   --radius: 6px;
 }
 
+/* Rows below set `display: flex`, which would otherwise override the `hidden` attribute. */
+[hidden] {
+  display: none !important;
+}
+
 * {
   box-sizing: border-box;
 }

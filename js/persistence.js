@@ -28,6 +28,8 @@ const KEYS = {
   translationEnabled: 'voiceCopilot.translationEnabled',
   stylePreset: 'voiceCopilot.stylePreset',
   audioBridgeEnabled: 'voiceCopilot.audioBridgeEnabled',
+  delivery: 'voiceCopilot.delivery',
+  humanizeEnabled: 'voiceCopilot.humanizeEnabled',
 };
 
 // Speaking Style (speaking-style spec.md §4, plan.md §4.1) — only these four values are
@@ -37,6 +39,9 @@ const KEYS = {
 // 'natural' fallback) so a corrupted/tampered localStorage value can never reach app.js's
 // reactive state or the translate request as anything but one of the four known presets.
 const VALID_STYLE_PRESETS = new Set(['natural', 'professional', 'concise', 'my-style']);
+
+// Natural Delivery (natural-delivery plan.md §2.5) — same allowlist-with-default pattern.
+const VALID_DELIVERY_LEVELS = new Set(['off', 'light', 'natural']);
 
 function safeGet(key) {
   try {
@@ -66,6 +71,8 @@ function safeSet(key, value) {
  *   translationEnabled: boolean,
  *   stylePreset: 'natural' | 'professional' | 'concise' | 'my-style',
  *   audioBridgeEnabled: boolean,
+ *   delivery: 'off' | 'light' | 'natural',
+ *   humanizeEnabled: boolean,
  * }}
  */
 export function loadPersistedPreferences() {
@@ -76,6 +83,7 @@ export function loadPersistedPreferences() {
   const volume = volumeRaw !== null ? parseFloat(volumeRaw) : NaN;
   const pitch = pitchRaw !== null ? parseFloat(pitchRaw) : NaN;
   const stylePresetRaw = safeGet(KEYS.stylePreset);
+  const deliveryRaw = safeGet(KEYS.delivery);
   return {
     selectedVoiceProfileId: safeGet(KEYS.selectedVoiceProfileId),
     speed: Number.isFinite(speed) ? speed : null,
@@ -85,6 +93,8 @@ export function loadPersistedPreferences() {
     translationEnabled: safeGet(KEYS.translationEnabled) === 'true',
     stylePreset: VALID_STYLE_PRESETS.has(stylePresetRaw) ? stylePresetRaw : 'natural',
     audioBridgeEnabled: safeGet(KEYS.audioBridgeEnabled) === 'true',
+    delivery: VALID_DELIVERY_LEVELS.has(deliveryRaw) ? deliveryRaw : 'natural',
+    humanizeEnabled: safeGet(KEYS.humanizeEnabled) === 'true',
   };
 }
 
@@ -118,4 +128,12 @@ export function persistStylePreset(preset) {
 
 export function persistAudioBridgeEnabled(enabled) {
   safeSet(KEYS.audioBridgeEnabled, String(enabled));
+}
+
+export function persistDelivery(delivery) {
+  safeSet(KEYS.delivery, delivery);
+}
+
+export function persistHumanizeEnabled(enabled) {
+  safeSet(KEYS.humanizeEnabled, String(enabled));
 }

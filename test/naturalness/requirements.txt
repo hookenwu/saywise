@@ -1,0 +1,9 @@
+# Objective evaluation stack (CPU only). torch/torchaudio from https://download.pytorch.org/whl/cpu
+numpy
+soundfile
+praat-parselmouth
+faster-whisper
+speechbrain
+zhconv
+torch
+torchaudio
