@@ -10,3 +10,4 @@
   - Teams e2e a–e pass; f fails only with the owner's uncommitted injector WIP (clean `main` passes);
   - the browser smoke test was not run, because it makes paid TTS calls.
 - [x] T7. Deployed on the VPS (`~/saywise-start.sh`, gate on, Humanize on flash-lite). Live latency measured (research.md §3).
+- [x] T8. Decision-state class (决定 → 看看 miss) plus regression cases; scan of other state verbs; fallback-cause analysis (research.md §5). Redeployed.

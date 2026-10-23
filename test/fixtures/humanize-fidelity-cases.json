@@ -495,8 +495,7 @@
    "source": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
    "output": "我觉得我们可以先上线一个简化版本，嗯，收集一下用户的反馈，然后再看看要不要做完整的功能。",
    "label": "unsafe",
-   "note": "决定 → 看看 (weaker decision)",
-   "knownMiss": true
+   "note": "决定 → 看看 (weaker decision) (caught by the decision class since 2026-10-23)"
   },
   {
    "id": "z1old:c5_1",
@@ -504,8 +503,7 @@
    "source": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
    "output": "我觉得吧，我们可以先上线一个简化版，呃，收集一下用户的反馈，然后再看看要不要做那个完整的功能。",
    "label": "unsafe",
-   "note": "决定 → 看看 (weaker decision)",
-   "knownMiss": true
+   "note": "决定 → 看看 (weaker decision) (caught by the decision class since 2026-10-23)"
   },
   {
    "id": "z1old:c6_0",

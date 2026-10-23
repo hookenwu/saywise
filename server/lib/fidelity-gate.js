@@ -57,6 +57,10 @@ const ZH_CLASSES = {
     ['毫无疑问', '肯定'], ['百分之百', '肯定']],
   must: [['必须', '必须'], ['务必', '必须'], ['非得', '必须'], ['一定要', '必须'], ['不得不', '必须'], ['只能', '只能']],
   commit: [['承诺', '承诺'], ['保证', '保证'], ['确保', '保证'], ['答应', '答应'], ['负责', '负责'], ['担保', '保证']],
+  // Decision state: only decisive verbs are tracked, so dropping one (再决定 → 再看看) or adding
+  // one is a mismatch, while tentative 看看/考虑 alone (very common spoken filler) is not.
+  decision: [['决定', '决定'], ['敲定', '决定'], ['拍板', '决定'], ['定下来', '决定'], ['同意', '同意'], ['批准', '同意'],
+    ['确认', '确认'], ['拒绝', '拒绝']],
   intent: [['打算', '打算'], ['计划', '计划'], ['准备', '准备'], ['争取', '争取'], ['尽量', '尽量'], ['想要', '想要']],
   timing: [['准时', '准时'], ['按时', '准时'], ['尽快', '尽快'], ['马上', '马上'], ['立刻', '马上'], ['立即', '马上'],
     ['第一时间', '第一时间'], ['及时', '及时'], ['随时', '随时']],
@@ -205,6 +209,8 @@ const EN_CLASSES = {
     ['for sure', 'definitely'], ['of course', 'of course'], ['guaranteed', 'guarantee']],
   must: [['must', 'must'], ['have to', 'have to'], ['has to', 'have to'], ['need to', 'need to'], ['got to', 'have to'], ['only option', 'only']],
   commit: [['promise', 'promise'], ['guarantee', 'guarantee'], ['ensure', 'guarantee'], ['commit', 'commit']],
+  decision: [['decide', 'decide'], ['decided', 'decide'], ['decision', 'decide'], ['finalize', 'decide'], ['confirm', 'confirm'],
+    ['confirmed', 'confirm'], ['approve', 'approve'], ['approved', 'approve'], ['agree', 'agree'], ['agreed', 'agree'], ['reject', 'reject'], ['sign off', 'approve']],
   intent: [['plan to', 'plan'], ['planning to', 'plan'], ['intend', 'intend'], ['aim to', 'aim'], ['try to', 'try']],
   timing: [['on time', 'on time'], ['asap', 'asap'], ['as soon as possible', 'asap'], ['right away', 'now'], ['immediately', 'now'], ['first thing', 'first thing']],
   condition: [['if', 'if'], ['unless', 'unless'], ['as long as', 'as long as'], ['in case', 'in case'], ['provided', 'provided']],

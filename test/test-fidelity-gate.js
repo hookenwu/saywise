@@ -16,13 +16,9 @@ const { cases } = JSON.parse(fs.readFileSync(new URL('./fixtures/humanize-fideli
 
 // ------------------------------------------------ recorded real rewrites (hand-labelled)
 
-test('recorded rewrites: no unsafe rewrite is spoken unchanged (except documented known misses)', () => {
-  const missed = cases.filter((c) => c.label === 'unsafe' && !c.knownMiss && gateRewrite(c.source, c.output, c.lang).verdict === 'pass');
+test('recorded rewrites: no unsafe rewrite is spoken unchanged', () => {
+  const missed = cases.filter((c) => c.label === 'unsafe' && gateRewrite(c.source, c.output, c.lang).verdict === 'pass');
   assert.deepEqual(missed.map((c) => `${c.id}: ${c.note}`), []);
-});
-
-test('recorded rewrites: known misses are still the only ones (update the fixture if one gets fixed)', () => {
-  for (const c of cases.filter((x) => x.knownMiss)) assert.equal(gateRewrite(c.source, c.output, c.lang).verdict, 'pass', c.id);
 });
 
 test('recorded rewrites: whatever is spoken is meaning-equivalent to the source', () => {
@@ -82,6 +78,18 @@ test('zh certainty, commitment, intent, timing', () => {
   assert.equal(zh('我好像没听到最后一部分。', '我没听清最后那部分。').verdict, 'fallback');
 });
 
+test('zh decision state: dropping/adding a decisive verb falls back; tentative 看看 alone does not', () => {
+  assert.equal(zh('收集一下用户反馈，再决定要不要做完整的功能。', '收集一下用户的反馈，然后再看看要不要做完整的功能。').verdict, 'fallback');
+  assert.equal(zh('再决定要不要做。', '再考虑要不要做。').verdict, 'fallback');
+  assert.equal(zh('我们再看看要不要做。', '我们再决定要不要做。').verdict, 'fallback');
+  assert.equal(zh('客户已经同意了这个方案。', '客户还在考虑这个方案。').verdict, 'fallback');
+  assert.equal(zh('我回头确认一下。', '我回头看一下。').verdict, 'fallback');
+  assert.equal(zh('方案下周敲定。', '方案下周定。').verdict, 'fallback');
+  assert.equal(zh('收集一下用户反馈，再决定要不要做。', '先看看用户的反馈怎么样，再决定要不要做。').verdict, 'pass');
+  assert.equal(zh('我回头确认一下。', '那个，我回头去确认一下。').verdict, 'pass');
+  assert.equal(zh('方案下周敲定。', '方案呢，下周就能定下来。').verdict, 'pass');
+});
+
 test('zh conditions, qualifiers and before/after', () => {
   assert.equal(zh('剩下的验收后一次付清。', '剩下的等验收合格之后一次付清。').verdict, 'fallback');
   assert.equal(zh('剩下的验收后一次付清。', '剩下的验收前一次付清。').verdict, 'fallback');
@@ -132,6 +140,9 @@ test('en: facts, negation, certainty, commitment, subjects', () => {
   assert.equal(en('We have about 20 users.', 'We have 20 users.').verdict, 'fallback');
   assert.equal(en("I'll send it to you tonight.", "You'll get it from me tonight.").verdict, 'fallback');
   assert.equal(en('Let me check and get back to you.', "Yeah, I'll check and, you know, get back to you.").verdict, 'pass');
+  assert.equal(en("We'll decide after the review.", "We'll see after the review.").verdict, 'fallback');
+  assert.equal(en('The client approved the budget.', 'The client is looking at the budget.').verdict, 'fallback');
+  assert.equal(en("Let me confirm with the backend team.", "Let me, um, confirm with the backend team.").verdict, 'pass');
   const r = en("I'm a bit worried about the timeline.", "I'm actually a bit worried about the timeline.");
   assert.deepEqual([r.verdict, r.text], ['repaired', "I'm a bit worried about the timeline."]);
 });
