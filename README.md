@@ -96,6 +96,13 @@ affected. Leave `HUMANIZE_LLM_BASE_URL` unset to keep the default Gemini path. T
 the recommended setting, because the gateway model measured worse on fidelity and latency
 (`specs/voice-copilot-humanize-gateway/research.md`).
 
+**Humanize Fidelity Gate (on by default).** Every Humanize rewrite is checked against your original
+text before it is spoken. It checks numbers, units, dates, terms, negation, subjects, certainty,
+commitments and conditions. A rewrite that changes any of them is either minimally repaired (an added
+其实/估计/actually… is deleted) or replaced by your original text, verbatim. There is no extra LLM call;
+the cost is about 0.1 s. Set `HUMANIZE_FIDELITY_GATE=off` to disable it. See
+`specs/voice-copilot-humanize-fidelity-gate/`.
+
 ### Server environment variables (`server/.env`)
 
 | Variable | Default | Purpose |

@@ -1,0 +1,838 @@
+{
+ "about": "Real Humanize rewrites (gemini-3.1-flash-lite = old/z1old, gateway gemini-3.8-flash = gw, restrained-prompt experiments = z1new/z1bnew/z1cnew), hand-labelled: unsafe = the rewrite as-is changes meaning (facts, certainty, commitment, condition, subject, attitude). See specs/voice-copilot-humanize-fidelity-gate/research.md. holdout = 12 new inputs never used for tuning, gemini-3.1-flash-lite.",
+ "cases": [
+  {
+   "id": "old:zh1_0",
+   "lang": "zh",
+   "source": "好的，那我简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在在跟两家商户联调，整体比预期顺利。",
+   "output": "行，那我简单说一下啊。这周我们主要在做支付迁移，呃，接口这边都已经改完了。现在正跟两家商户联调呢，整体进度其实比预期要顺利。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "old:zh1_1",
+   "lang": "zh",
+   "source": "好的，那我简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在在跟两家商户联调，整体比预期顺利。",
+   "output": "行，那我简单说一下。这周我们主要在忙支付迁移的事，接口其实已经改完了，现在呢，正在跟两家商户做联调，整体进度比预期还要顺利一些。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "old:zh2_0",
+   "lang": "zh",
+   "source": "我理解你的意思。不过我有点担心时间，如果现在加这个功能，测试可能来不及，发布就得往后推了。",
+   "output": "嗯，我理解你的意思。不过呢，我其实有点担心时间，要是现在加这个功能的话，测试可能就来不及了，发布估计就得往后推了。",
+   "label": "unsafe",
+   "note": "adds 其实, 估计"
+  },
+  {
+   "id": "old:zh2_1",
+   "lang": "zh",
+   "source": "我理解你的意思。不过我有点担心时间，如果现在加这个功能，测试可能来不及，发布就得往后推了。",
+   "output": "嗯，我理解你的意思。不过呢，我有点担心时间，要是现在加这个功能，测试可能就来不及了，发布就得往后推了。",
+   "label": "safe"
+  },
+  {
+   "id": "old:c2_0",
+   "lang": "zh",
+   "source": "这个方案我看了一下，整体没问题，但是成本那块我觉得还需要再算一下，尤其是第三季度的服务器费用。",
+   "output": "这个方案我看了，整体其实没什么问题，不过呢，我觉得成本那块还是得再算算，尤其是第三季度的服务器费用，得再核对一下。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "old:c2_1",
+   "lang": "zh",
+   "source": "这个方案我看了一下，整体没问题，但是成本那块我觉得还需要再算一下，尤其是第三季度的服务器费用。",
+   "output": "这个方案我看了，整体其实没问题，不过呢，那个成本这块我觉得还是得再算一下，尤其是第三季度的服务器费用。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "old:c3_0",
+   "lang": "zh",
+   "source": "不好意思，能再说一遍吗？我好像没听到最后一部分。你说截止日期是20号还是27号？",
+   "output": "不好意思，能不能麻烦你再说一遍？我刚才好像没听清最后那部分。那个……你说的截止日期到底是20号，还是27号啊？",
+   "label": "safe"
+  },
+  {
+   "id": "old:c3_1",
+   "lang": "zh",
+   "source": "不好意思，能再说一遍吗？我好像没听到最后一部分。你说截止日期是20号还是27号？",
+   "output": "不好意思，能再说一遍吗？呃，我刚才好像没听清最后那部分。那个，你说的截止日期到底是20号，还是27号啊？",
+   "label": "safe"
+  },
+  {
+   "id": "old:c5_0",
+   "lang": "zh",
+   "source": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
+   "output": "其实，我觉得咱们可以先上线一个简化版本，呃，先收集一下用户的反馈，然后呢，再决定要不要把完整的功能做出来。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "old:c5_1",
+   "lang": "zh",
+   "source": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
+   "output": "我觉得，我们可以先上线一个简化版本，呃，收集一下用户的反馈，然后再决定要不要做完整的功能。",
+   "label": "safe"
+  },
+  {
+   "id": "old:c6_0",
+   "lang": "zh",
+   "source": "关于上次提到的性能问题，我们排查了一下，主要是数据库查询没有加索引，现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "output": "关于上次说的那个性能问题，我们排查了一下，嗯，其实就是数据库查询没加索引。现在已经修复了，那个响应时间，已经从两秒降到了两百毫秒。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "old:c6_1",
+   "lang": "zh",
+   "source": "关于上次提到的性能问题，我们排查了一下，主要是数据库查询没有加索引，现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "output": "关于上次说的那个性能问题，我们排查过了，呃，主要是因为数据库查询没加索引。现在呢，已经修好了，响应时间已经从两秒降到了两百毫秒。",
+   "label": "safe"
+  },
+  {
+   "id": "old:f1_0",
+   "lang": "zh",
+   "source": "这笔退款是 1,280.50 元，预计周三下午三点前到账。",
+   "output": "这笔退款是 1,280.50 元，嗯，预计周三下午三点前就能到账了。",
+   "label": "safe"
+  },
+  {
+   "id": "old:f1_1",
+   "lang": "zh",
+   "source": "这笔退款是 1,280.50 元，预计周三下午三点前到账。",
+   "output": "嗯，这笔退款是 1,280.50 元，预计周三下午三点前就能到账了。",
+   "label": "safe"
+  },
+  {
+   "id": "old:f2_0",
+   "lang": "zh",
+   "source": "我们承诺 10 月 31 日前上线，如果延期，我会第一时间通知你。",
+   "output": "我们承诺会在 10 月 31 日前上线，要是那个……万一进度延期了，我会第一时间通知你。",
+   "label": "unsafe",
+   "note": "如果 → 万一 (implies unlikely)"
+  },
+  {
+   "id": "old:f2_1",
+   "lang": "zh",
+   "source": "我们承诺 10 月 31 日前上线，如果延期，我会第一时间通知你。",
+   "output": "我们承诺会在 10 月 31 日前上线，要是到时候有什么延期的话，我肯定第一时间通知你。",
+   "label": "unsafe",
+   "note": "adds 肯定"
+  },
+  {
+   "id": "old:f3_0",
+   "lang": "zh",
+   "source": "这个接口的 P99 延迟是 350 毫秒，QPS 峰值在 2 万左右。",
+   "output": "这个接口的 P99 延迟是 350 毫秒，然后 QPS 峰值呢，是在 2 万。",
+   "label": "unsafe",
+   "note": "drops 左右"
+  },
+  {
+   "id": "old:f3_1",
+   "lang": "zh",
+   "source": "这个接口的 P99 延迟是 350 毫秒，QPS 峰值在 2 万左右。",
+   "output": "这个接口的 P99 延迟是 350 毫秒，然后 QPS 峰值呢，是在 2 万。",
+   "label": "unsafe",
+   "note": "drops 左右"
+  },
+  {
+   "id": "old:f4_0",
+   "lang": "zh",
+   "source": "合同金额是 48 万，首付 30%，剩下的验收后一次付清。",
+   "output": "合同金额是 48 万，嗯，首付给 30%，然后剩下的部分，等验收之后再一次付清。",
+   "label": "safe"
+  },
+  {
+   "id": "old:f4_1",
+   "lang": "zh",
+   "source": "合同金额是 48 万，首付 30%，剩下的验收后一次付清。",
+   "output": "合同金额是 48 万，嗯，首付要付 30%，剩下的部分呢……等验收之后一次付清。",
+   "label": "safe"
+  },
+  {
+   "id": "old:f5_0",
+   "lang": "zh",
+   "source": "订单状态现在是 PENDING，不是 FAILED，所以先不要重试。",
+   "output": "现在的订单状态是 PENDING，呃，不是 FAILED，所以啊，先别急着重试。",
+   "label": "safe"
+  },
+  {
+   "id": "old:f5_1",
+   "lang": "zh",
+   "source": "订单状态现在是 PENDING，不是 FAILED，所以先不要重试。",
+   "output": "现在订单状态是 PENDING，嗯，不是 FAILED，所以……先别急着重试。",
+   "label": "safe"
+  },
+  {
+   "id": "old:f6_0",
+   "lang": "zh",
+   "source": "这个 bug 已经修复了，今晚 10 点发版。",
+   "output": "那个 bug 已经修好了，嗯，我们打算在今晚 10 点发版。",
+   "label": "unsafe",
+   "note": "adds 我们, 打算"
+  },
+  {
+   "id": "old:f6_1",
+   "lang": "zh",
+   "source": "这个 bug 已经修复了，今晚 10 点发版。",
+   "output": "那个 bug 已经修好了，嗯，我们今晚 10 点准时发版。",
+   "label": "unsafe",
+   "note": "adds 我们, 准时"
+  },
+  {
+   "id": "old:en1_0",
+   "lang": "en",
+   "source": "Thanks, everyone. So, quick update on the payment migration: we finished the API changes last Friday, and we're now testing with two merchants. Honestly, it's going better than I expected.",
+   "output": "Thanks everyone. So, just a quick update on the payment migration. We finished the API changes last Friday, and, um, we're testing with two merchants right now. Honestly, it's actually going better than I expected.",
+   "label": "unsafe",
+   "note": "adds actually"
+  },
+  {
+   "id": "old:en2_0",
+   "lang": "en",
+   "source": "I see your point. But I'm a bit worried about the timeline. If we add this feature now, QA won't have enough time, and we might have to push the release.",
+   "output": "Yeah, I see your point. But, um, I'm actually a bit worried about the timeline. If we add this feature now, QA won't really have enough time... and we might have to push the release.",
+   "label": "unsafe",
+   "note": "adds actually, really"
+  },
+  {
+   "id": "old:en3_0",
+   "lang": "en",
+   "source": "Sorry, could you repeat that? I think I missed the last part. Did you say the deadline is the twentieth or the twenty-seventh?",
+   "output": "Sorry, could you run that by me again? I think I missed the last part. Did you say the deadline is the 20th... or the 27th?",
+   "label": "safe"
+  },
+  {
+   "id": "old:en4_0",
+   "lang": "en",
+   "source": "Okay, that makes sense. Let me check with the backend team and get back to you by tomorrow afternoon. Does that work for you?",
+   "output": "Yeah, that makes sense. Let me just check in with the backend team and I'll get back to you by tomorrow afternoon. Does that work for you?",
+   "label": "safe"
+  },
+  {
+   "id": "gw:zh1_0",
+   "lang": "zh",
+   "source": "好的，那我简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在在跟两家商户联调，整体比预期顺利。",
+   "output": "好的，那我这边简单说一下。这周我们主要就是在做支付迁移，那个……接口其实已经改完了，然后现在正在跟两家商户联调，整体进度比预期要顺利一些。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "gw:zh1_1",
+   "lang": "zh",
+   "source": "好的，那我简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在在跟两家商户联调，整体比预期顺利。",
+   "output": "好的，那我简单说一下。这周我们其实主要在做支付迁移，那个接口已经改完了，然后现在正在跟两家商户联调，整体……比预期要顺利。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "gw:zh2_0",
+   "lang": "zh",
+   "source": "我理解你的意思。不过我有点担心时间，如果现在加这个功能，测试可能来不及，发布就得往后推了。",
+   "output": "嗯，我理解你的意思。不过呢，我其实有点担心时间……如果现在加这个功能，测试那边可能真来不及，发布就得往后推了。",
+   "label": "unsafe",
+   "note": "adds 其实, 真"
+  },
+  {
+   "id": "gw:zh2_1",
+   "lang": "zh",
+   "source": "我理解你的意思。不过我有点担心时间，如果现在加这个功能，测试可能来不及，发布就得往后推了。",
+   "output": "嗯，我理解你的意思。不过呢，我其实有点担心时间……如果现在加这个功能的话，测试可能就来不及了，那发布就得往后推了。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "gw:c2_0",
+   "lang": "zh",
+   "source": "这个方案我看了一下，整体没问题，但是成本那块我觉得还需要再算一下，尤其是第三季度的服务器费用。",
+   "output": "这个方案我刚才看了一下，嗯，整体上是没什么问题的。不过呢，成本那块我觉得还需要再核算一下，特别是……第三季度的服务器费用。",
+   "label": "unsafe",
+   "note": "adds 刚才 (when the review happened)"
+  },
+  {
+   "id": "gw:c2_1",
+   "lang": "zh",
+   "source": "这个方案我看了一下，整体没问题，但是成本那块我觉得还需要再算一下，尤其是第三季度的服务器费用。",
+   "output": "这个方案我其实看过了，整体上没啥问题。不过就是，成本那块我感觉还得再算一下……尤其是第三季度的服务器费用。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "gw:c3_0",
+   "lang": "zh",
+   "source": "不好意思，能再说一遍吗？我好像没听到最后一部分。你说截止日期是20号还是27号？",
+   "output": "不好意思，那个……能再说一遍吗？我最后那块儿好像没太听清。你刚说是20号截止，还是27号来着？",
+   "label": "safe"
+  },
+  {
+   "id": "gw:c3_1",
+   "lang": "zh",
+   "source": "不好意思，能再说一遍吗？我好像没听到最后一部分。你说截止日期是20号还是27号？",
+   "output": "不好意思，那个……能麻烦你再说一遍吗？我刚才最后那块儿好像漏听了。你说的截止日期，到底是20号还是27号来着？",
+   "label": "safe"
+  },
+  {
+   "id": "gw:c5_0",
+   "lang": "zh",
+   "source": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
+   "output": "其实，我觉得我们可以先上一个简化版本，就是……先收一下用户的反馈，然后再决定要不要把完整的功能做出来。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "gw:c5_1",
+   "lang": "zh",
+   "source": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
+   "output": "其实我觉得吧，咱们可以先上一个简化版，先看看用户的反馈怎么样……然后呢，再决定要不要把完整功能做出来。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "gw:c6_0",
+   "lang": "zh",
+   "source": "关于上次提到的性能问题，我们排查了一下，主要是数据库查询没有加索引，现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "output": "关于上次提到的那个性能问题，我们排查了一下……其实主要是数据库查询没加索引。现在已经修复了，然后响应时间从两秒降到了两百毫秒。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "gw:c6_1",
+   "lang": "zh",
+   "source": "关于上次提到的性能问题，我们排查了一下，主要是数据库查询没有加索引，现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "output": "关于上次提到的性能问题，呃，我们排查了一下。其实主要就是数据库查询那边没加索引，现在呢已经修复了，然后响应时间直接从两秒降到了两百毫秒。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "gw:f1_0",
+   "lang": "zh",
+   "source": "这笔退款是 1,280.50 元，预计周三下午三点前到账。",
+   "output": "那个，这笔退款是 1,280.50 元，然后预计周三下午三点前就能到账。",
+   "label": "safe"
+  },
+  {
+   "id": "gw:f1_1",
+   "lang": "zh",
+   "source": "这笔退款是 1,280.50 元，预计周三下午三点前到账。",
+   "output": "就是这笔退款，金额是 1,280.50 元，然后……预计会在周三下午三点前到账。",
+   "label": "safe"
+  },
+  {
+   "id": "gw:f2_0",
+   "lang": "zh",
+   "source": "我们承诺 10 月 31 日前上线，如果延期，我会第一时间通知你。",
+   "output": "我们保证在 10 月 31 日前上线，那个……要是真延期了，其实我肯定会第一时间通知你的。",
+   "label": "unsafe",
+   "note": "承诺 → 保证, adds 肯定"
+  },
+  {
+   "id": "gw:f2_1",
+   "lang": "zh",
+   "source": "我们承诺 10 月 31 日前上线，如果延期，我会第一时间通知你。",
+   "output": "我们这边保证会在 10 月 31 日前上线，那万一要是延期了，其实我会第一时间通知你的。",
+   "label": "unsafe",
+   "note": "承诺 → 保证, 万一"
+  },
+  {
+   "id": "gw:f3_0",
+   "lang": "zh",
+   "source": "这个接口的 P99 延迟是 350 毫秒，QPS 峰值在 2 万左右。",
+   "output": "其实这个接口的 P99 延迟是 350 毫秒，然后呢，它的 QPS 峰值是在 2 万左右。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "gw:f3_1",
+   "lang": "zh",
+   "source": "这个接口的 P99 延迟是 350 毫秒，QPS 峰值在 2 万左右。",
+   "output": "其实这个接口的 P99 延迟是 350 毫秒，然后，QPS 峰值在 2 万左右。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "gw:f4_0",
+   "lang": "zh",
+   "source": "合同金额是 48 万，首付 30%，剩下的验收后一次付清。",
+   "output": "那个，合同金额是 48 万，首付呢是 30%，然后剩下的部分，等验收之后一次性付清。",
+   "label": "safe"
+  },
+  {
+   "id": "gw:f4_1",
+   "lang": "zh",
+   "source": "合同金额是 48 万，首付 30%，剩下的验收后一次付清。",
+   "output": "嗯，合同金额是 48 万，首付的话是 30%，然后剩下的部分……等验收合格之后一次性结清。",
+   "label": "unsafe",
+   "note": "adds 合格 (payment condition)"
+  },
+  {
+   "id": "gw:f5_0",
+   "lang": "zh",
+   "source": "订单状态现在是 PENDING，不是 FAILED，所以先不要重试。",
+   "output": "那个，订单状态现在其实是 PENDING，并不是 FAILED，所以……先别急着重试。",
+   "label": "unsafe",
+   "note": "adds 其实 (implies correction)"
+  },
+  {
+   "id": "gw:f5_1",
+   "lang": "zh",
+   "source": "订单状态现在是 PENDING，不是 FAILED，所以先不要重试。",
+   "output": "其实订单状态现在是 PENDING，并不是 FAILED，所以……咱们先不要重试。",
+   "label": "unsafe",
+   "note": "adds 咱们, 其实"
+  },
+  {
+   "id": "gw:f6_0",
+   "lang": "zh",
+   "source": "这个 bug 已经修复了，今晚 10 点发版。",
+   "output": "那个，这个 bug 已经修好了，然后呢，今晚 10 点发版。",
+   "label": "safe"
+  },
+  {
+   "id": "gw:f6_1",
+   "lang": "zh",
+   "source": "这个 bug 已经修复了，今晚 10 点发版。",
+   "output": "那个，这个 bug 已经修好了，然后呢，今晚 10 点正式发版。",
+   "label": "unsafe",
+   "note": "adds 正式"
+  },
+  {
+   "id": "gw:en1_0",
+   "lang": "en",
+   "source": "Thanks, everyone. So, quick update on the payment migration: we finished the API changes last Friday, and we're now testing with two merchants. Honestly, it's going better than I expected.",
+   "output": "Thanks, everyone. So, um, quick update on the payment migration—we actually finished the API changes last Friday, and, you know, we're now testing with two merchants. Honestly... it's going better than I expected.",
+   "label": "unsafe",
+   "note": "adds actually"
+  },
+  {
+   "id": "gw:en2_0",
+   "lang": "en",
+   "source": "I see your point. But I'm a bit worried about the timeline. If we add this feature now, QA won't have enough time, and we might have to push the release.",
+   "output": "Yeah, I see your point. But, um, I'm a bit worried about the timeline. Like, if we add this feature now, QA won't have enough time... and we might have to push the release.",
+   "label": "safe"
+  },
+  {
+   "id": "gw:en3_0",
+   "lang": "en",
+   "source": "Sorry, could you repeat that? I think I missed the last part. Did you say the deadline is the twentieth or the twenty-seventh?",
+   "output": "Sorry, could you repeat that? I, um, I think I missed the last part. Did you say the deadline is the twentieth, or the twenty-seventh?",
+   "label": "safe"
+  },
+  {
+   "id": "gw:en4_0",
+   "lang": "en",
+   "source": "Okay, that makes sense. Let me check with the backend team and get back to you by tomorrow afternoon. Does that work for you?",
+   "output": "Okay, yeah, that makes sense. So, let me just check with the backend team, and, um, I'll get back to you by tomorrow afternoon. Does that work for you?",
+   "label": "safe"
+  },
+  {
+   "id": "z1old:zh1_0",
+   "lang": "zh",
+   "source": "好的，那我简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在在跟两家商户联调，整体比预期顺利。",
+   "output": "那行，我简单说一下进度。其实这周我们主要在做支付迁移，接口那边都已经改完了，然后现在正跟两家商户联调，整体上比预期的还要顺利。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "z1old:zh1_1",
+   "lang": "zh",
+   "source": "好的，那我简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在在跟两家商户联调，整体比预期顺利。",
+   "output": "嗯，那我就简单说一下。这周我们主要是忙支付迁移，接口呢其实已经改完了，现在正在跟两家商户做联调，整体进度比预期要顺利。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "z1old:zh2_0",
+   "lang": "zh",
+   "source": "我理解你的意思。不过我有点担心时间，如果现在加这个功能，测试可能来不及，发布就得往后推了。",
+   "output": "嗯，我理解你的意思。不过呢，我有点担心时间，要是现在加这个功能，那个测试可能就来不及了，发布估计得往后推了。",
+   "label": "unsafe",
+   "note": "adds 估计"
+  },
+  {
+   "id": "z1old:zh2_1",
+   "lang": "zh",
+   "source": "我理解你的意思。不过我有点担心时间，如果现在加这个功能，测试可能来不及，发布就得往后推了。",
+   "output": "我挺理解你的意思的，不过呢，我其实有点担心时间。如果现在加这个功能，测试可能就来不及了，那发布就得往后推了。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "z1old:c2_0",
+   "lang": "zh",
+   "source": "这个方案我看了一下，整体没问题，但是成本那块我觉得还需要再算一下，尤其是第三季度的服务器费用。",
+   "output": "这个方案我看过了，其实整体没啥大问题，不过呢，成本那块我觉得还得再核对一下，尤其是第三季度的服务器费用。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "z1old:c2_1",
+   "lang": "zh",
+   "source": "这个方案我看了一下，整体没问题，但是成本那块我觉得还需要再算一下，尤其是第三季度的服务器费用。",
+   "output": "这个方案我看了，整体其实没问题，不过那个成本嘛，我觉得还需要再核算一下，尤其是第三季度的服务器费用，得再看看。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "z1old:c3_0",
+   "lang": "zh",
+   "source": "不好意思，能再说一遍吗？我好像没听到最后一部分。你说截止日期是20号还是27号？",
+   "output": "不好意思，能再说一遍吗？呃，我刚才好像没听清最后那部分。那个，你说的截止日期到底是20号，还是27号？",
+   "label": "safe"
+  },
+  {
+   "id": "z1old:c3_1",
+   "lang": "zh",
+   "source": "不好意思，能再说一遍吗？我好像没听到最后一部分。你说截止日期是20号还是27号？",
+   "output": "不好意思，能再说一遍吗？呃，我刚才好像没听清最后那部分。那个，你说的截止日期到底是20号，还是27号啊？",
+   "label": "safe"
+  },
+  {
+   "id": "z1old:c5_0",
+   "lang": "zh",
+   "source": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
+   "output": "我觉得我们可以先上线一个简化版本，嗯，收集一下用户的反馈，然后再看看要不要做完整的功能。",
+   "label": "unsafe",
+   "note": "决定 → 看看 (weaker decision)",
+   "knownMiss": true
+  },
+  {
+   "id": "z1old:c5_1",
+   "lang": "zh",
+   "source": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
+   "output": "我觉得吧，我们可以先上线一个简化版，呃，收集一下用户的反馈，然后再看看要不要做那个完整的功能。",
+   "label": "unsafe",
+   "note": "决定 → 看看 (weaker decision)",
+   "knownMiss": true
+  },
+  {
+   "id": "z1old:c6_0",
+   "lang": "zh",
+   "source": "关于上次提到的性能问题，我们排查了一下，主要是数据库查询没有加索引，现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "output": "关于上次提到的那个性能问题，我们排查了一下，主要是因为数据库查询没加索引。现在已经修复了，响应时间也从两秒降到了两百毫秒。",
+   "label": "safe"
+  },
+  {
+   "id": "z1old:c6_1",
+   "lang": "zh",
+   "source": "关于上次提到的性能问题，我们排查了一下，主要是数据库查询没有加索引，现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "output": "关于上次说的那个性能问题，我们排查过了，呃，主要是数据库查询忘了加索引。现在已经修复了，响应时间也从两秒降到了两百毫秒。",
+   "label": "unsafe",
+   "note": "没有加 → 忘了加 (adds blame)"
+  },
+  {
+   "id": "z1new:zh1_0",
+   "lang": "zh",
+   "source": "好的，那我简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在在跟两家商户联调，整体比预期顺利。",
+   "output": "行，那我简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在正跟两家商户联调，进度比预期的还要顺利。",
+   "label": "safe"
+  },
+  {
+   "id": "z1new:zh1_1",
+   "lang": "zh",
+   "source": "好的，那我简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在在跟两家商户联调，整体比预期顺利。",
+   "output": "那我就简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在正跟两家商户联调，进度比预期顺利。",
+   "label": "safe"
+  },
+  {
+   "id": "z1new:zh2_0",
+   "lang": "zh",
+   "source": "我理解你的意思。不过我有点担心时间，如果现在加这个功能，测试可能来不及，发布就得往后推了。",
+   "output": "明白你的意思。不过我有点担心时间，要是现在加这个功能的话，测试恐怕来不及，发布就得往后推了。",
+   "label": "unsafe",
+   "note": "可能 → 恐怕"
+  },
+  {
+   "id": "z1new:zh2_1",
+   "lang": "zh",
+   "source": "我理解你的意思。不过我有点担心时间，如果现在加这个功能，测试可能来不及，发布就得往后推了。",
+   "output": "你的意思我明白，不过我有点担心时间。要是现在加这个功能的话，测试恐怕来不及，发布只能往后推了。",
+   "label": "unsafe",
+   "note": "可能 → 恐怕, adds 只能"
+  },
+  {
+   "id": "z1new:c2_0",
+   "lang": "zh",
+   "source": "这个方案我看了一下，整体没问题，但是成本那块我觉得还需要再算一下，尤其是第三季度的服务器费用。",
+   "output": "这个方案我看了，整体没问题，但成本那块我觉得还得再算算，特别是第三季度的服务器费用。",
+   "label": "safe"
+  },
+  {
+   "id": "z1new:c2_1",
+   "lang": "zh",
+   "source": "这个方案我看了一下，整体没问题，但是成本那块我觉得还需要再算一下，尤其是第三季度的服务器费用。",
+   "output": "这个方案我看了，整体没问题，但成本那块还得再算算，特别是第三季度的服务器费用。",
+   "label": "unsafe",
+   "note": "drops 我觉得"
+  },
+  {
+   "id": "z1new:c3_0",
+   "lang": "zh",
+   "source": "不好意思，能再说一遍吗？我好像没听到最后一部分。你说截止日期是20号还是27号？",
+   "output": "不好意思，能再说一遍吗？我刚才没听清最后那部分。你说截止日期是20号，还是27号？",
+   "label": "unsafe",
+   "note": "drops 好像"
+  },
+  {
+   "id": "z1new:c3_1",
+   "lang": "zh",
+   "source": "不好意思，能再说一遍吗？我好像没听到最后一部分。你说截止日期是20号还是27号？",
+   "output": "不好意思，能再重复一遍吗？我没听清最后那部分。截止日期到底是20号还是27号啊？",
+   "label": "unsafe",
+   "note": "drops 好像"
+  },
+  {
+   "id": "z1new:c5_0",
+   "lang": "zh",
+   "source": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
+   "output": "我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
+   "label": "unsafe",
+   "note": "drops 我觉得"
+  },
+  {
+   "id": "z1new:c5_1",
+   "lang": "zh",
+   "source": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
+   "output": "我们可以先上线个简化版，收集下用户反馈，再决定要不要做完整的功能。",
+   "label": "unsafe",
+   "note": "drops 我觉得"
+  },
+  {
+   "id": "z1new:c6_0",
+   "lang": "zh",
+   "source": "关于上次提到的性能问题，我们排查了一下，主要是数据库查询没有加索引，现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "output": "上次提到的性能问题我们查过了，主要是数据库查询没加索引。现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "label": "safe"
+  },
+  {
+   "id": "z1new:c6_1",
+   "lang": "zh",
+   "source": "关于上次提到的性能问题，我们排查了一下，主要是数据库查询没有加索引，现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "output": "上次说的那个性能问题我们排查过了，主要是数据库查询没加索引导致的。现在已经修好了，响应时间从两秒降到了两百毫秒。",
+   "label": "safe"
+  },
+  {
+   "id": "z1bnew:zh1_0",
+   "lang": "zh",
+   "source": "好的，那我简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在在跟两家商户联调，整体比预期顺利。",
+   "output": "那我就简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在正跟两家商户联调，整体比预期顺利。",
+   "label": "safe"
+  },
+  {
+   "id": "z1bnew:zh1_1",
+   "lang": "zh",
+   "source": "好的，那我简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在在跟两家商户联调，整体比预期顺利。",
+   "output": "那我就简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在正跟两家商户联调，整体比预期顺利。",
+   "label": "safe"
+  },
+  {
+   "id": "z1bnew:zh2_0",
+   "lang": "zh",
+   "source": "我理解你的意思。不过我有点担心时间，如果现在加这个功能，测试可能来不及，发布就得往后推了。",
+   "output": "你的意思我明白。不过我有点担心时间，要是现在加这个功能的话，测试可能来不及，发布就得往后推了。",
+   "label": "safe"
+  },
+  {
+   "id": "z1bnew:zh2_1",
+   "lang": "zh",
+   "source": "我理解你的意思。不过我有点担心时间，如果现在加这个功能，测试可能来不及，发布就得往后推了。",
+   "output": "我理解你的意思。不过我有点担心时间，要是现在加这个功能的话，测试可能来不及，发布就得往后推了。",
+   "label": "safe"
+  },
+  {
+   "id": "z1bnew:c2_0",
+   "lang": "zh",
+   "source": "这个方案我看了一下，整体没问题，但是成本那块我觉得还需要再算一下，尤其是第三季度的服务器费用。",
+   "output": "这个方案我看过了，整体没问题，但成本那块我觉得还得再算算，尤其是第三季度的服务器费用。",
+   "label": "safe"
+  },
+  {
+   "id": "z1bnew:c2_1",
+   "lang": "zh",
+   "source": "这个方案我看了一下，整体没问题，但是成本那块我觉得还需要再算一下，尤其是第三季度的服务器费用。",
+   "output": "这个方案我看过了，整体没问题，但成本那块我觉得还得再算一下，尤其是第三季度的服务器费用。",
+   "label": "safe"
+  },
+  {
+   "id": "z1bnew:c3_0",
+   "lang": "zh",
+   "source": "不好意思，能再说一遍吗？我好像没听到最后一部分。你说截止日期是20号还是27号？",
+   "output": "不好意思，能不能再说一遍？我刚才没听清最后那部分。你说的截止日期到底是20号还是27号啊？",
+   "label": "unsafe",
+   "note": "drops 好像"
+  },
+  {
+   "id": "z1bnew:c3_1",
+   "lang": "zh",
+   "source": "不好意思，能再说一遍吗？我好像没听到最后一部分。你说截止日期是20号还是27号？",
+   "output": "不好意思，能再说一遍吗？我刚才没听清最后那部分。你说截止日期是20号还是27号？",
+   "label": "unsafe",
+   "note": "drops 好像"
+  },
+  {
+   "id": "z1bnew:c5_0",
+   "lang": "zh",
+   "source": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
+   "output": "我觉得我们可以先上线一个简化版，先看看用户的反馈怎么样，再决定要不要做完整的功能。",
+   "label": "safe"
+  },
+  {
+   "id": "z1bnew:c5_1",
+   "lang": "zh",
+   "source": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
+   "output": "我觉得可以先上线个简化版，收集下用户反馈，再决定要不要做完整的功能。",
+   "label": "safe"
+  },
+  {
+   "id": "z1bnew:c6_0",
+   "lang": "zh",
+   "source": "关于上次提到的性能问题，我们排查了一下，主要是数据库查询没有加索引，现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "output": "关于上次提到的性能问题，我们排查过了，主要是数据库查询没加索引。现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "label": "safe"
+  },
+  {
+   "id": "z1bnew:c6_1",
+   "lang": "zh",
+   "source": "关于上次提到的性能问题，我们排查了一下，主要是数据库查询没有加索引，现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "output": "上次说的那个性能问题我们排查过了，主要是数据库查询没加索引。现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "label": "safe"
+  },
+  {
+   "id": "z1cnew:zh1_0",
+   "lang": "zh",
+   "source": "好的，那我简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在在跟两家商户联调，整体比预期顺利。",
+   "output": "那我简单说一下啊。这周我们主要是做支付迁移，接口都已经改完了，现在正跟两家商户联调呢，整体比预想的还要顺利。",
+   "label": "safe"
+  },
+  {
+   "id": "z1cnew:zh2_0",
+   "lang": "zh",
+   "source": "我理解你的意思。不过我有点担心时间，如果现在加这个功能，测试可能来不及，发布就得往后推了。",
+   "output": "嗯，你的意思我明白。不过我有点担心时间，要是现在加这个功能的话，测试可能就来不及了，那发布得往后推。",
+   "label": "safe"
+  },
+  {
+   "id": "z1cnew:c2_0",
+   "lang": "zh",
+   "source": "这个方案我看了一下，整体没问题，但是成本那块我觉得还需要再算一下，尤其是第三季度的服务器费用。",
+   "output": "这个方案我看了，整体没啥问题。不过成本那块，我觉得还得再算算，尤其是第三季度的服务器费用。",
+   "label": "safe"
+  },
+  {
+   "id": "z1cnew:c3_0",
+   "lang": "zh",
+   "source": "不好意思，能再说一遍吗？我好像没听到最后一部分。你说截止日期是20号还是27号？",
+   "output": "不好意思，能再说一遍吗？我没听清最后那部分。那个截止日期到底是20号还是27号啊？",
+   "label": "unsafe",
+   "note": "drops 好像"
+  },
+  {
+   "id": "z1cnew:c5_0",
+   "lang": "zh",
+   "source": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
+   "output": "我觉得咱们可以先上线个简化版，看看用户的反馈怎么样，再来决定要不要做完整的功能。",
+   "label": "safe"
+  },
+  {
+   "id": "z1cnew:c6_0",
+   "lang": "zh",
+   "source": "关于上次提到的性能问题，我们排查了一下，主要是数据库查询没有加索引，现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "output": "关于上次说的那个性能问题，我们排查过了，主要是数据库查询没加索引。现在已经修复了，响应时间从两秒降到了两百毫秒。",
+   "label": "safe"
+  },
+  {
+   "id": "holdout:h1",
+   "lang": "zh",
+   "source": "我这边下周二之前会把测试报告发给你，有问题随时找我。",
+   "output": "那个，我下周二之前会把测试报告发给你，如果有问题的话，随时找我就行。",
+   "label": "safe"
+  },
+  {
+   "id": "holdout:h2",
+   "lang": "zh",
+   "source": "这个需求我们评估了一下，大概需要三周，如果资源够的话可以提前。",
+   "output": "这个需求我们评估过了，嗯，大概需要三周时间。不过，如果资源到位的话……其实也是可以提前的。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "holdout:h3",
+   "lang": "zh",
+   "source": "上个月的转化率是 3.2%，比前一个月高了 0.5 个百分点。",
+   "output": "上个月的转化率是 3.2%，嗯，其实比前一个月高了 0.5 个百分点。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "holdout:h4",
+   "lang": "zh",
+   "source": "客户那边说预算只有 20 万，我觉得可以先做第一期。",
+   "output": "客户那边说了，预算其实只有 20 万。嗯，我觉得吧，咱们可以先做第一期。",
+   "label": "unsafe",
+   "note": "adds 其实, 咱们"
+  },
+  {
+   "id": "holdout:h5",
+   "lang": "zh",
+   "source": "服务器明天凌晨两点到四点维护，期间支付功能不可用。",
+   "output": "那个，服务器明天凌晨两点到四点要进行维护，期间支付功能是不可用的。",
+   "label": "safe"
+  },
+  {
+   "id": "holdout:h6",
+   "lang": "zh",
+   "source": "我不太确定这个接口能不能支持批量查询，我回头确认一下。",
+   "output": "那个，我不太确定这个接口能不能支持批量查询，我回头去确认一下。",
+   "label": "safe"
+  },
+  {
+   "id": "holdout:h7",
+   "lang": "zh",
+   "source": "发票已经开好了，金额是 8,600 元，今天下午寄出。",
+   "output": "发票其实已经开好了，金额是 8,600 元，然后今天下午就会寄出。",
+   "label": "unsafe",
+   "note": "adds 其实"
+  },
+  {
+   "id": "holdout:h8",
+   "lang": "zh",
+   "source": "这次延期主要是因为第三方接口不稳定，不是我们这边的问题。",
+   "output": "这次延期呢，其实主要是因为第三方接口不太稳定，并不是我们这边出了什么问题。",
+   "label": "unsafe",
+   "note": "adds 其实, 不稳定 → 不太稳定"
+  },
+  {
+   "id": "holdout:h9",
+   "lang": "zh",
+   "source": "我们先按原计划推进，周五再一起过一下风险。",
+   "output": "我们就先按原计划推进吧，呃，等周五的时候，咱们再一起过一下风险。",
+   "label": "safe"
+  },
+  {
+   "id": "holdout:h10",
+   "lang": "zh",
+   "source": "退款需要三到五个工作日，具体以银行到账时间为准。",
+   "output": "退款的话，大概需要三到五个工作日，嗯，具体什么时候能到账，还是要看银行那边的处理速度。",
+   "label": "unsafe",
+   "note": "adds 大概; 以银行到账时间为准 → 看银行处理速度"
+  },
+  {
+   "id": "holdout:h11",
+   "lang": "zh",
+   "source": "那个 bug 我还没复现出来，可能跟用户的网络环境有关。",
+   "output": "那个 bug 我还没复现出来，呃，估计是跟用户的网络环境有关系。",
+   "label": "unsafe",
+   "note": "可能 → 估计"
+  },
+  {
+   "id": "holdout:h12",
+   "lang": "zh",
+   "source": "合同我们这边没问题，法务审核通过后就可以签。",
+   "output": "合同我们这边看过了，没问题。等法务审核一通过，嗯，直接就能签了。",
+   "label": "unsafe",
+   "note": "adds 看过了 (new fact)"
+  }
+ ]
+}

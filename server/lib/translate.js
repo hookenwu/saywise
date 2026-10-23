@@ -14,6 +14,7 @@
 import { GoogleGenAI } from '@google/genai';
 
 import { humanizeBackend, streamChatCompletions } from './humanize-backend.js';
+import { gateRewrite } from './fidelity-gate.js';
 
 const MODEL = 'gemini-3.1-flash-lite';
 
@@ -260,13 +261,35 @@ function isTransientError(err) {
   return status === 503 || status === 429 || /overloaded|unavailable|resource_exhausted/i.test(err?.message || '');
 }
 
+/** Fidelity Gate switch (humanize-fidelity-gate spec.md R6): on unless HUMANIZE_FIDELITY_GATE=off. */
+export function fidelityGateEnabled(env = process.env) {
+  return (env.HUMANIZE_FIDELITY_GATE || 'on').trim().toLowerCase() !== 'off';
+}
+
 /**
  * @param {string} chineseText
  * @param {{ apiKey: string, signal?: AbortSignal, stylePreset?: string, myStyle?: object, delivery?: string, mode?: string }} options
  *   delivery/mode: natural-delivery spec.md §3 — already normalized by the adapter.
  * @yields {{ content: string }}
  */
-export async function* streamTranslate(chineseText, { apiKey, signal, stylePreset, myStyle, delivery, mode }) {
+export async function* streamTranslate(chineseText, options) {
+  if (options.mode !== 'rewrite' || !fidelityGateEnabled()) {
+    yield* streamModel(chineseText, options);
+    return;
+  }
+  // Humanize Fidelity Gate (humanize-fidelity-gate spec.md): buffer the whole rewrite (its
+  // tail after the first token is ~100 ms), check it against the original deterministically,
+  // then emit the rewrite, a minimally repaired rewrite, or the original verbatim.
+  const t0 = Date.now();
+  let rewrite = '';
+  for await (const { content } of streamModel(chineseText, options)) rewrite += content;
+  const tGate = Date.now();
+  const { verdict, text, reasons } = gateRewrite(chineseText, rewrite, detectLanguage(chineseText));
+  console.log(`[humanize-gate] verdict=${verdict} reasons=${reasons.join(',') || '-'} llm_ms=${tGate - t0} gate_ms=${Date.now() - tGate}`);
+  yield { content: text };
+}
+
+async function* streamModel(chineseText, { apiKey, signal, stylePreset, myStyle, delivery, mode }) {
   // Smaller than app.js's geminiChatStream deliberately (plan.md §8.2): translation has
   // no multi-turn session to protect, so at most one silent retry, and only before any
   // content has been yielded to the caller for this call.

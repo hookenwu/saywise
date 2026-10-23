@@ -84,7 +84,7 @@ test('streamChatCompletions: HTTP error carries status', async () => {
 test('streamTranslate rewrite → gateway with the same system instruction; translate never touches it', async () => {
   const gw = await mockGateway((req, body, res) => sse(res, [delta({ content: 'Yeah, sure.' })]));
   try {
-    await withEnv({ HUMANIZE_LLM_BASE_URL: gw.baseUrl, HUMANIZE_LLM_API_KEY: 'k' }, async () => {
+    await withEnv({ HUMANIZE_LLM_BASE_URL: gw.baseUrl, HUMANIZE_LLM_API_KEY: 'k', HUMANIZE_FIDELITY_GATE: 'off' }, async () => {
       const text = 'Sure.';
       const out = await collect(T.streamTranslate(text, { delivery: 'natural', mode: 'rewrite', stylePreset: 'natural' }));
       assert.equal(out, 'Yeah, sure.');
@@ -101,7 +101,7 @@ test('streamTranslate rewrite → gateway with the same system instruction; tran
 test('streamTranslate: retries a transient gateway error once before any content', async () => {
   const gw = await mockGateway((req, body, res, n) => (n === 1 ? (res.writeHead(503), res.end()) : sse(res, [delta({ content: 'ok' })])));
   try {
-    await withEnv({ HUMANIZE_LLM_BASE_URL: gw.baseUrl }, async () => {
+    await withEnv({ HUMANIZE_LLM_BASE_URL: gw.baseUrl, HUMANIZE_FIDELITY_GATE: 'off' }, async () => {
       assert.equal(await collect(T.streamTranslate('ok', { mode: 'rewrite' })), 'ok');
       assert.equal(gw.calls.length, 2);
     });
@@ -111,7 +111,7 @@ test('streamTranslate: retries a transient gateway error once before any content
 test('streamTranslate: abort cancels the gateway request', async () => {
   const gw = await mockGateway((req, body, res) => { res.writeHead(200, { 'Content-Type': 'text/event-stream' }); res.write(`data: ${JSON.stringify(delta({ content: 'a' }))}\n\n`); /* never ends */ });
   try {
-    await withEnv({ HUMANIZE_LLM_BASE_URL: gw.baseUrl }, async () => {
+    await withEnv({ HUMANIZE_LLM_BASE_URL: gw.baseUrl, HUMANIZE_FIDELITY_GATE: 'off' }, async () => {
       const ac = new AbortController();
       const gen = T.streamTranslate('a', { mode: 'rewrite', signal: ac.signal });
       assert.equal((await gen.next()).value.content, 'a');
