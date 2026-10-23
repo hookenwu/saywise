@@ -252,3 +252,16 @@ and **66 Gemini calls** (free-tier key). Raw data: `test/naturalness/results/zh/
 - Still the biggest Chinese lever, outside code: **re-clone from spontaneous Chinese speech**
   (§6). The clone's narrow F0 range and its uniform ~500 ms comma pauses are properties of
   the voice, not of the text.
+
+### 7.5 Owner decision (2026-10-23)
+
+- The shipped Humanize stays, and the restrained prompt is **not** applied. The patch and the listening
+  pairs are kept for reference.
+- The Chinese review round is closed. There will be no further paid tests or code changes in it.
+- **Standing priority for future work: semantic accuracy comes first, then human naturalness.** A change
+  that gains naturalness by adding semantic drift is not acceptable. That includes added certainty or
+  attitude words such as 估计/非得, and dropped hedges. Any future naturalness experiment must report
+  fidelity metrics next to preference: Z1's added-certainty, dropped-hedge and stacked-filler counts at
+  minimum. A drift regression rules a candidate out, whatever its preference score.
+- Known fidelity gap in what ships today, left open by this decision: about half of the Chinese Humanize
+  rewrites add a certainty or attitude word (Z1: 6/12).
