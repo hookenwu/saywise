@@ -1,0 +1,44 @@
+diff --git a/server/lib/translate.js b/server/lib/translate.js
+index d1e82a8..3f86e3c 100644
+--- a/server/lib/translate.js
++++ b/server/lib/translate.js
+@@ -144,7 +144,39 @@ const DELIVERY_VOCAB = {
+   },
+ };
+ 
++// Chinese output gets its own block, written in Chinese (research.md §7). What carries
++// naturalness in Chinese is spoken particles and spoken sentence shape (topic + 呢, 那块,
++// 要是……的话) — a particle-only script won 4/4, the same as a filler script (E3), while a
++// near-verbatim "fewer commas" script lost 0/5 (Z2). So particles are encouraged, hesitation
++// sounds are capped at one, and certainty words the source didn't have (估计/非得) are banned:
++// the generic block let flash-lite stack 嗯/呃/那个 and drift on certainty (Z1).
++const ZH_DELIVERY = {
++  written: '我理解你的观点。但是我有点担心时间线，如果现在加这个功能，测试时间会不够，我们可能需要推迟发布。',
++  light: '你的意思我明白。不过呢，我有点担心时间——要是现在加这个功能的话，测试就来不及了，那发布可能就得往后推了。',
++  natural: '嗯，你的意思我明白。不过呢，我有点担心时间——要是现在加这个功能的话，测试就来不及了，那发布可能就得往后推了。',
++};
++
++function buildZhDeliveryBlock(delivery) {
++  const fillers =
++    delivery === 'natural'
++      ? '- 犹豫声要克制：整段最多一个“嗯”或“呃”，放在开头或换话题、想词的地方。不要把“那个”“就是”“然后”当口头禅，不要连着用。\n'
++      : '- 不要加“嗯”“呃”“那个”这类犹豫声。\n';
++  return (
++    '口语化表达（重要）。你的输出会直接交给语音合成，在会议里实时播放。书面腔会让声音像在朗读，所以请改写成一个' +
++    '放松、表达流利的人真正开口说出来的样子，不要只是照抄原文：\n' +
++    '- 用口语句式：把书面连接词换成口语（但是→不过，如果→要是……的话，需要→得），话题放前面再说（“成本那块呢，……”），' +
++    '多用日常说法（再算算、没啥问题、那……就）。\n' +
++    '- 句中和句末的语气助词（呢、吧、啊、嘛、哈）是中文口语自然感的主要来源，每句可以有一个，但不要每个分句都加。\n' +
++    '- 标点是节奏：逗号是小停顿，破折号（——）表示转折或改口，省略号（……）表示想一下，整段各最多一次。\n' +
++    fillers +
++    '- 不要添加原文没有的信息、问候或结束语。保持原文的确定程度：不要加“估计”“非得”“肯定”“一定”“大概”“左右”“差不多”' +
++    '这类原文没有的判断词；原文自带的“我觉得”“好像”“可能”要保留。数字、日期、名称保持原样。只输出纯文本，不要括号、动作描述或表情。\n\n' +
++    `示例\n书面：${ZH_DELIVERY.written}\n口语：${ZH_DELIVERY[delivery]}`
++  );
++}
++
+ function buildDeliveryBlock(delivery, lang) {
++  if (lang === 'zh') return buildZhDeliveryBlock(delivery);
+   const v = DELIVERY_VOCAB[lang] || DELIVERY_VOCAB.en;
+   const pauses =
+     delivery === 'natural'

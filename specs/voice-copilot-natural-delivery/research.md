@@ -200,3 +200,55 @@ a sound-alike mishearing ("Sorry" → "Laurie").
   Every measurement here can be rerun against a new `S_*` ID with `test/naturalness/`.
 - Typing in spoken style ("So, uh, …") already gets the full benefit in Direct Speak
   without Humanize.
+
+## 7. Chinese review (2026-10-23): restrained Chinese Humanize prompt — measured, not shipped
+
+Goal: Chinese delivery without stacked 嗯/呃/那个 and without meaning drift, at least as
+natural as what ships. Budget for the round: ≤ 2,000 TTS characters and ≤ 70 Gemini calls.
+Spent: **926 TTS characters** (≤ ¥0.93 at a deliberately high ¥10 / 10k-character ceiling)
+and **66 Gemini calls** (free-tier key). Raw data: `test/naturalness/results/zh/`.
+
+### 7.1 Re-reading existing data (no API calls)
+
+- Chinese-only slice of E3: the particle/punctuation script with **no fillers** won 4/4, the
+  same as the filler script (4/4). Fillers are not what carries Chinese naturalness.
+- The clone pauses at almost every Chinese comma for about 500 ms (zh2: 4 internal
+  punctuation marks, 4 pauses, mean 462–542 ms). The official 2.0 voice pauses about 370 ms
+  and has a wider F0 range (11.5 vs. 7.8 st).
+- Offline pause compression on Chinese: −0.25 (n = 4). Rejected again.
+- The shipped Humanize rewrites add certainty and attitude words ("估计得往后推", "非得加").
+
+### 7.2 Z1 — text-only check of the shipped prompt (flash-lite, 6 Chinese inputs)
+
+| Prompt | n | 嗯/呃 | Outputs with ≥ 2 hesitation sounds | Added certainty words (估计/非得/其实…) | Dropped source hedges | Length vs. source |
+|---|---|---|---|---|---|---|
+| shipped (generic block, zh vocab) | 12 | 7 | 5 | 6 | 0 | 1.17× |
+| restrained zh block (final, `restrained-prompt.patch`) | 6 | 1 | 0 | 0 | 1 (好像) | 1.03× |
+
+### 7.3 Z2/Z3 — audio, same baseline clips (judge `gemini-3.7-flash`, both orders)
+
+| Condition vs. shipped Humanize | Hypothesis | W/L/T | Human | Pauses | Spk-sim |
+|---|---|---|---|---|---|
+| Z2: "fewer commas", restrained, near-verbatim | fewer pauses means less recitation | 0/5/1 | 5.42 vs. 6.83 | 3.8 vs. 4.7 | 0.954 vs. 0.960 |
+| Z3: particles encouraged, at most one 嗯/呃, no added certainty | keeps naturalness, fixes fidelity | 0/6/0 | 5.58 vs. 6.67 | 4.3 vs. 4.7 | 0.945 vs. 0.960 |
+
+- **Fewer commas does not help.** It removed pauses but was judged stiffer, which agrees with E5.
+- Both variants lost to the shipped prompt, even on c6, where the two texts differ by a word or
+  two. Two explanations remain open:
+  1. The judge rewards fillers. Its prompt names fillers as acceptable, and its reasons cite
+     "casual fillers".
+  2. The 6 baseline clips were good takes. Both rounds reused the same 6 shipped-prompt
+     clips, so take-to-take variance is not controlled.
+- Separating the two would need more audio and judge calls. That was not spent.
+
+### 7.4 Decision
+
+- **Kept the shipped prompt.** There is no audio evidence that the restrained version is more
+  natural, and two measurements say it is less natural to the judge.
+- The restrained prompt is archived as `test/naturalness/results/zh/restrained-prompt.patch`.
+  It is the better choice if fidelity (no added 估计/非得, no stacked fillers) matters more
+  than judge-rated naturalness. That is a product decision. The listening pairs in
+  `test/naturalness/results/samples/zh/` let a human decide it at zero API cost.
+- Still the biggest Chinese lever, outside code: **re-clone from spontaneous Chinese speech**
+  (§6). The clone's narrow F0 range and its uniform ~500 ms comma pauses are properties of
+  the voice, not of the text.

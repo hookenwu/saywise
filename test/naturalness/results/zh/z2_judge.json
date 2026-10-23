@@ -1,0 +1,80 @@
+[
+ {
+  "cond": "zh_new",
+  "tid": "c2",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -2,
+  "condHuman": 5,
+  "baseHuman": 7,
+  "reasons": [
+   "Clip A sounds far more natural and spontaneous with conversational phrasing, while Clip B is somewhat stiff and rushed.",
+   "Clip B features natural conversational rhythm, spontaneous phrasing, and authentic cadence ideal for a live meeting."
+  ]
+ },
+ {
+  "cond": "zh_new",
+  "tid": "zh2",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -2.5,
+  "condHuman": 4.5,
+  "baseHuman": 7,
+  "reasons": [
+   "Clip A features conversational hesitation and natural rhythm that sound authentic for a live meeting, whereas Clip B sounds somewhat read.",
+   "Clip B features natural conversational pacing, casual fillers, and realistic intonation, whereas Clip A sounds robotic and flatly read."
+  ]
+ },
+ {
+  "cond": "zh_new",
+  "tid": "zh2",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 6,
+  "baseHuman": 7,
+  "reasons": [
+   "Clip A sounds more spontaneous and conversational with realistic fillers, pausing, and expressive cadence.",
+   "Clip B features highly natural conversational phrasing, realistic pauses, and casual fillers that sound authentically spontaneous in a meeting setting."
+  ]
+ },
+ {
+  "cond": "zh_new",
+  "tid": "c2",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -1.5,
+  "condHuman": 5.5,
+  "baseHuman": 7,
+  "reasons": [
+   "A demonstrates superior spontaneous conversational rhythm, natural inflection, and authentic meeting-style delivery compared to B.",
+   "Clip B sounds significantly more conversational and spontaneous, featuring natural phrasing, realistic pauses, and appropriate meeting-like inflection."
+  ]
+ },
+ {
+  "cond": "zh_new",
+  "tid": "c6",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 6,
+  "baseHuman": 7,
+  "reasons": [
+   "Clip A sounds more natural and conversational, featuring fluent phrasing and pacing suited for an informal meeting update.",
+   "Clip B features more spontaneous phrasing, natural pause structure, and realistic conversational cadence suitable for a meeting."
+  ]
+ },
+ {
+  "cond": "zh_new",
+  "tid": "c6",
+  "rep": 1,
+  "score": 0,
+  "humanDelta": -0.5,
+  "condHuman": 5.5,
+  "baseHuman": 6,
+  "reasons": [
+   "Clip B exhibits a smoother cadence and fewer robotic pitch transitions compared to Clip A.",
+   "Clip B has a more natural conversational cadence and casual phrasing suitable for a meeting."
+  ]
+ }
+]

@@ -1,0 +1,80 @@
+[
+ {
+  "cond": "zh_new2",
+  "tid": "c2",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 6,
+  "baseHuman": 7,
+  "reasons": [
+   "Clip A sounds distinctly more conversational and spontaneous, with realistic pacing, natural pauses, and fluid intonation.",
+   "Clip B features superior conversational rhythm, natural pauses, and lifelike inflection suited for a spontaneous meeting discussion."
+  ]
+ },
+ {
+  "cond": "zh_new2",
+  "tid": "zh2",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 5.5,
+  "baseHuman": 6.5,
+  "reasons": [
+   "Clip A has more spontaneous pacing and natural discourse particles, sounding more conversational and authentic for a meeting.",
+   "Clip B incorporates more natural conversational phrasing, filler particles, and spontaneous pacing suitable for a real meeting context."
+  ]
+ },
+ {
+  "cond": "zh_new2",
+  "tid": "zh2",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 6,
+  "baseHuman": 7,
+  "reasons": [
+   "Clip A has more natural conversational pacing and filler usage, whereas Clip B ends rather abruptly.",
+   "Clip B features more natural conversational phrasing, realistic pause placement, and spontaneous rhythm fitting for an authentic meeting context."
+  ]
+ },
+ {
+  "cond": "zh_new2",
+  "tid": "c2",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 5.5,
+  "baseHuman": 6.5,
+  "reasons": [
+   "Clip A exhibits more authentic conversational pacing and intonation, whereas Clip B sounds slightly rushed with minor robotic tone transitions.",
+   "Clip B features more spontaneous rhythm, realistic pauses, and natural discourse markers suited for a conversational meeting."
+  ]
+ },
+ {
+  "cond": "zh_new2",
+  "tid": "c6",
+  "rep": 1,
+  "score": -1,
+  "humanDelta": -1.5,
+  "condHuman": 4.5,
+  "baseHuman": 6,
+  "reasons": [
+   "Clip A sounds more natural and conversational, with smoother phrasing and pacing compared to Clip B's slightly rigid cadence.",
+   "Clip B flows more naturally with conversational rhythm and better phrasing, whereas Clip A sounds relatively mechanical."
+  ]
+ },
+ {
+  "cond": "zh_new2",
+  "tid": "c6",
+  "rep": 0,
+  "score": -1,
+  "humanDelta": -1,
+  "condHuman": 6,
+  "baseHuman": 7,
+  "reasons": [
+   "Clip A exhibits smoother conversational pacing and more natural phrasing transitions than Clip B's slightly segmented pauses.",
+   "Clip B sounds slightly more conversational with natural phrasing, pacing, and realistic meeting-style delivery."
+  ]
+ }
+]
