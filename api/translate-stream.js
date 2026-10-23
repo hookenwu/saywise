@@ -25,7 +25,7 @@
  * at all, on purpose: it is not meant to be called cross-origin.
  */
 
-import { streamTranslate, normalizeStylePreset, normalizeMyStyle, normalizeDelivery, normalizeMode } from '../server/lib/translate.js';
+import { streamTranslate, normalizeStylePreset, normalizeMyStyle, normalizeDelivery, normalizeMode, needsGeminiCredential } from '../server/lib/translate.js';
 import { readCredential } from '../server/lib/credential-store.js';
 
 export default async function handler(req, res) {
@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 
   const credential = await readCredential();
   const apiKey = credential?.accessToken;
-  if (!apiKey) {
+  if (!apiKey && needsGeminiCredential(mode)) {
     res.status(500).json({
       error: 'Translation/LLM Provider Credential is not configured — set GEMINI_API_KEY in this Vercel project\'s Environment Variables',
     });

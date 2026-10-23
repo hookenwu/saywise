@@ -11,7 +11,7 @@
 
 import { Router } from 'express';
 
-import { streamTranslate, normalizeStylePreset, normalizeMyStyle, normalizeDelivery, normalizeMode } from '../lib/translate.js';
+import { streamTranslate, normalizeStylePreset, normalizeMyStyle, normalizeDelivery, normalizeMode, needsGeminiCredential } from '../lib/translate.js';
 import { readCredential } from '../lib/credential-store.js';
 
 const router = Router();
@@ -30,7 +30,7 @@ router.post('/translate-stream', async (req, res) => {
 
   const credential = await readCredential();
   const apiKey = credential?.accessToken;
-  if (!apiKey) {
+  if (!apiKey && needsGeminiCredential(mode)) {
     res.status(500).json({ error: 'Translation/LLM Provider Credential is not configured — set it via Settings, or GEMINI_API_KEY in server/.env' });
     return;
   }

@@ -83,6 +83,19 @@ cp .env.example .env
 gitignored. `llm-credential.local.json` — once it exists — takes precedence over the
 `GEMINI_API_KEY` env var.
 
+Start the server **from `server/`** (`cd server && npm start`). `dotenv` reads `.env` from
+the current directory, so `node server/index.js` run from the repo root never sees
+`server/.env`, and Humanize and translation then fail with "Credential is not configured".
+
+**Optional: Humanize through an OpenAI-compatible gateway.** If you set
+`HUMANIZE_LLM_BASE_URL` (for example `http://127.0.0.1:8045/v1`), Humanize rewrites use that
+gateway instead of the Gemini API. The related variables are `HUMANIZE_LLM_API_KEY`
+(server-side only), `HUMANIZE_LLM_MODEL` (default `gemini-3.8-flash`) and
+`HUMANIZE_LLM_REASONING_EFFORT` (default `none`). Chinese → English translation is not
+affected. Leave `HUMANIZE_LLM_BASE_URL` unset to keep the default Gemini path. That default is
+the recommended setting, because the gateway model measured worse on fidelity and latency
+(`specs/voice-copilot-humanize-gateway/research.md`).
+
 ### Server environment variables (`server/.env`)
 
 | Variable | Default | Purpose |

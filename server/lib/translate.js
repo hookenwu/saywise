@@ -13,6 +13,8 @@
 
 import { GoogleGenAI } from '@google/genai';
 
+import { humanizeBackend, streamChatCompletions } from './humanize-backend.js';
+
 const MODEL = 'gemini-3.1-flash-lite';
 
 // Core translation task only — style/register now lives in STYLE_INSTRUCTIONS below
@@ -245,6 +247,14 @@ export function normalizeMyStyle(value) {
   };
 }
 
+/**
+ * Whether a request needs the Gemini credential (humanize-gateway spec.md R4): a rewrite
+ * served by the configured gateway does not; everything else does. Shared by both adapters.
+ */
+export function needsGeminiCredential(mode) {
+  return !(mode === 'rewrite' && humanizeBackend());
+}
+
 function isTransientError(err) {
   const status = err?.status || err?.response?.status;
   return status === 503 || status === 429 || /overloaded|unavailable|resource_exhausted/i.test(err?.message || '');
@@ -262,10 +272,21 @@ export async function* streamTranslate(chineseText, { apiKey, signal, stylePrese
   // content has been yielded to the caller for this call.
   const MAX_ATTEMPTS = 2;
   const systemInstruction = buildSystemInstruction({ stylePreset, myStyle, delivery, mode, inputText: chineseText });
+  // Humanize via the local gateway (humanize-gateway spec.md R1/R2); unset = old Gemini path.
+  const gateway = mode === 'rewrite' ? humanizeBackend() : null;
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     let emitted = false;
     try {
+      if (gateway) {
+        const t0 = Date.now();
+        for await (const { content, model } of streamChatCompletions({ ...gateway, systemInstruction, text: chineseText, signal })) {
+          if (!emitted) console.log(`[humanize] gateway model=${model || gateway.model} first_token_ms=${Date.now() - t0}`);
+          emitted = true;
+          yield { content };
+        }
+        return;
+      }
       const client = new GoogleGenAI({ apiKey });
       // `config.abortSignal` (plan.md §8.3's upstream-abort handling): without this, an
       // abort that arrives while this call is still awaiting its *first* response has

@@ -1,0 +1,447 @@
+[
+ {
+  "backend": "old",
+  "id": "zh1",
+  "t": "好的，那我简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在在跟两家商户联调，整体比预期顺利。",
+  "must": [
+   "支付迁移",
+   "两家",
+   "商户",
+   "联调",
+   "比预期"
+  ],
+  "lang": "zh",
+  "r": 0,
+  "out": "行，那我简单说一下啊。这周我们主要在做支付迁移，呃，接口这边都已经改完了。现在正跟两家商户联调呢，整体进度其实比预期要顺利。",
+  "ttft": 1772,
+  "total": 1904
+ },
+ {
+  "backend": "old",
+  "id": "zh1",
+  "t": "好的，那我简单说一下。这周我们主要在做支付迁移，接口已经改完了，现在在跟两家商户联调，整体比预期顺利。",
+  "must": [
+   "支付迁移",
+   "两家",
+   "商户",
+   "联调",
+   "比预期"
+  ],
+  "lang": "zh",
+  "r": 1,
+  "out": "行，那我简单说一下。这周我们主要在忙支付迁移的事，接口其实已经改完了，现在呢，正在跟两家商户做联调，整体进度比预期还要顺利一些。",
+  "ttft": 1149,
+  "total": 1282
+ },
+ {
+  "backend": "old",
+  "id": "zh2",
+  "t": "我理解你的意思。不过我有点担心时间，如果现在加这个功能，测试可能来不及，发布就得往后推了。",
+  "must": [
+   "可能",
+   "测试",
+   "发布"
+  ],
+  "lang": "zh",
+  "r": 0,
+  "out": "嗯，我理解你的意思。不过呢，我其实有点担心时间，要是现在加这个功能的话，测试可能就来不及了，发布估计就得往后推了。",
+  "ttft": 821,
+  "total": 951
+ },
+ {
+  "backend": "old",
+  "id": "zh2",
+  "t": "我理解你的意思。不过我有点担心时间，如果现在加这个功能，测试可能来不及，发布就得往后推了。",
+  "must": [
+   "可能",
+   "测试",
+   "发布"
+  ],
+  "lang": "zh",
+  "r": 1,
+  "out": "嗯，我理解你的意思。不过呢，我有点担心时间，要是现在加这个功能，测试可能就来不及了，发布就得往后推了。",
+  "ttft": 656,
+  "total": 787
+ },
+ {
+  "backend": "old",
+  "id": "c2",
+  "t": "这个方案我看了一下，整体没问题，但是成本那块我觉得还需要再算一下，尤其是第三季度的服务器费用。",
+  "must": [
+   "我觉得",
+   "第三季度",
+   "服务器费用"
+  ],
+  "lang": "zh",
+  "r": 0,
+  "out": "这个方案我看了，整体其实没什么问题，不过呢，我觉得成本那块还是得再算算，尤其是第三季度的服务器费用，得再核对一下。",
+  "ttft": 594,
+  "total": 717
+ },
+ {
+  "backend": "old",
+  "id": "c2",
+  "t": "这个方案我看了一下，整体没问题，但是成本那块我觉得还需要再算一下，尤其是第三季度的服务器费用。",
+  "must": [
+   "我觉得",
+   "第三季度",
+   "服务器费用"
+  ],
+  "lang": "zh",
+  "r": 1,
+  "out": "这个方案我看了，整体其实没问题，不过呢，那个成本这块我觉得还是得再算一下，尤其是第三季度的服务器费用。",
+  "ttft": 729,
+  "total": 818
+ },
+ {
+  "backend": "old",
+  "id": "c3",
+  "t": "不好意思，能再说一遍吗？我好像没听到最后一部分。你说截止日期是20号还是27号？",
+  "must": [
+   "好像",
+   "20号",
+   "27号",
+   "截止日期"
+  ],
+  "lang": "zh",
+  "r": 0,
+  "out": "不好意思，能不能麻烦你再说一遍？我刚才好像没听清最后那部分。那个……你说的截止日期到底是20号，还是27号啊？",
+  "ttft": 636,
+  "total": 773
+ },
+ {
+  "backend": "old",
+  "id": "c3",
+  "t": "不好意思，能再说一遍吗？我好像没听到最后一部分。你说截止日期是20号还是27号？",
+  "must": [
+   "好像",
+   "20号",
+   "27号",
+   "截止日期"
+  ],
+  "lang": "zh",
+  "r": 1,
+  "out": "不好意思，能再说一遍吗？呃，我刚才好像没听清最后那部分。那个，你说的截止日期到底是20号，还是27号啊？",
+  "ttft": 1001,
+  "total": 1146
+ },
+ {
+  "backend": "old",
+  "id": "c5",
+  "t": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
+  "must": [
+   "我觉得",
+   "简化",
+   "用户反馈"
+  ],
+  "lang": "zh",
+  "r": 0,
+  "out": "其实，我觉得咱们可以先上线一个简化版本，呃，先收集一下用户的反馈，然后呢，再决定要不要把完整的功能做出来。",
+  "ttft": 617,
+  "total": 724
+ },
+ {
+  "backend": "old",
+  "id": "c5",
+  "t": "我觉得我们可以先上线一个简化版本，收集一下用户反馈，再决定要不要做完整的功能。",
+  "must": [
+   "我觉得",
+   "简化",
+   "用户反馈"
+  ],
+  "lang": "zh",
+  "r": 1,
+  "out": "我觉得，我们可以先上线一个简化版本，呃，收集一下用户的反馈，然后再决定要不要做完整的功能。",
+  "ttft": 787,
+  "total": 896
+ },
+ {
+  "backend": "old",
+  "id": "c6",
+  "t": "关于上次提到的性能问题，我们排查了一下，主要是数据库查询没有加索引，现在已经修复了，响应时间从两秒降到了两百毫秒。",
+  "must": [
+   "索引",
+   "已经修复",
+   "两秒",
+   "两百毫秒"
+  ],
+  "lang": "zh",
+  "r": 0,
+  "out": "关于上次说的那个性能问题，我们排查了一下，嗯，其实就是数据库查询没加索引。现在已经修复了，那个响应时间，已经从两秒降到了两百毫秒。",
+  "ttft": 1036,
+  "total": 1144
+ },
+ {
+  "backend": "old",
+  "id": "c6",
+  "t": "关于上次提到的性能问题，我们排查了一下，主要是数据库查询没有加索引，现在已经修复了，响应时间从两秒降到了两百毫秒。",
+  "must": [
+   "索引",
+   "已经修复",
+   "两秒",
+   "两百毫秒"
+  ],
+  "lang": "zh",
+  "r": 1,
+  "out": "关于上次说的那个性能问题，我们排查过了，呃，主要是因为数据库查询没加索引。现在呢，已经修好了，响应时间已经从两秒降到了两百毫秒。",
+  "ttft": 876,
+  "total": 1012
+ },
+ {
+  "backend": "old",
+  "id": "f1",
+  "t": "这笔退款是 1,280.50 元，预计周三下午三点前到账。",
+  "must": [
+   "1,280.50",
+   "元",
+   "预计",
+   "周三",
+   "三点"
+  ],
+  "lang": "zh",
+  "r": 0,
+  "out": "这笔退款是 1,280.50 元，嗯，预计周三下午三点前就能到账了。",
+  "ttft": 660,
+  "total": 745
+ },
+ {
+  "backend": "old",
+  "id": "f1",
+  "t": "这笔退款是 1,280.50 元，预计周三下午三点前到账。",
+  "must": [
+   "1,280.50",
+   "元",
+   "预计",
+   "周三",
+   "三点"
+  ],
+  "lang": "zh",
+  "r": 1,
+  "out": "嗯，这笔退款是 1,280.50 元，预计周三下午三点前就能到账了。",
+  "ttft": 903,
+  "total": 1000
+ },
+ {
+  "backend": "old",
+  "id": "f2",
+  "t": "我们承诺 10 月 31 日前上线，如果延期，我会第一时间通知你。",
+  "must": [
+   "承诺",
+   "10",
+   "31",
+   "第一时间"
+  ],
+  "lang": "zh",
+  "r": 0,
+  "out": "我们承诺会在 10 月 31 日前上线，要是那个……万一进度延期了，我会第一时间通知你。",
+  "ttft": 876,
+  "total": 972
+ },
+ {
+  "backend": "old",
+  "id": "f2",
+  "t": "我们承诺 10 月 31 日前上线，如果延期，我会第一时间通知你。",
+  "must": [
+   "承诺",
+   "10",
+   "31",
+   "第一时间"
+  ],
+  "lang": "zh",
+  "r": 1,
+  "out": "我们承诺会在 10 月 31 日前上线，要是到时候有什么延期的话，我肯定第一时间通知你。",
+  "ttft": 1004,
+  "total": 1093
+ },
+ {
+  "backend": "old",
+  "id": "f3",
+  "t": "这个接口的 P99 延迟是 350 毫秒，QPS 峰值在 2 万左右。",
+  "must": [
+   "P99",
+   "350",
+   "QPS",
+   "2",
+   "万",
+   "左右"
+  ],
+  "lang": "zh",
+  "r": 0,
+  "out": "这个接口的 P99 延迟是 350 毫秒，然后 QPS 峰值呢，是在 2 万。",
+  "ttft": 885,
+  "total": 980
+ },
+ {
+  "backend": "old",
+  "id": "f3",
+  "t": "这个接口的 P99 延迟是 350 毫秒，QPS 峰值在 2 万左右。",
+  "must": [
+   "P99",
+   "350",
+   "QPS",
+   "2",
+   "万",
+   "左右"
+  ],
+  "lang": "zh",
+  "r": 1,
+  "out": "这个接口的 P99 延迟是 350 毫秒，然后 QPS 峰值呢，是在 2 万。",
+  "ttft": 990,
+  "total": 1082
+ },
+ {
+  "backend": "old",
+  "id": "f4",
+  "t": "合同金额是 48 万，首付 30%，剩下的验收后一次付清。",
+  "must": [
+   "48",
+   "万",
+   "30%",
+   "验收",
+   "一次付清"
+  ],
+  "lang": "zh",
+  "r": 0,
+  "out": "合同金额是 48 万，嗯，首付给 30%，然后剩下的部分，等验收之后再一次付清。",
+  "ttft": 779,
+  "total": 874
+ },
+ {
+  "backend": "old",
+  "id": "f4",
+  "t": "合同金额是 48 万，首付 30%，剩下的验收后一次付清。",
+  "must": [
+   "48",
+   "万",
+   "30%",
+   "验收",
+   "一次付清"
+  ],
+  "lang": "zh",
+  "r": 1,
+  "out": "合同金额是 48 万，嗯，首付要付 30%，剩下的部分呢……等验收之后一次付清。",
+  "ttft": 898,
+  "total": 1034
+ },
+ {
+  "backend": "old",
+  "id": "f5",
+  "t": "订单状态现在是 PENDING，不是 FAILED，所以先不要重试。",
+  "must": [
+   "PENDING",
+   "FAILED",
+   "不要重试"
+  ],
+  "lang": "zh",
+  "r": 0,
+  "out": "现在的订单状态是 PENDING，呃，不是 FAILED，所以啊，先别急着重试。",
+  "ttft": 730,
+  "total": 794
+ },
+ {
+  "backend": "old",
+  "id": "f5",
+  "t": "订单状态现在是 PENDING，不是 FAILED，所以先不要重试。",
+  "must": [
+   "PENDING",
+   "FAILED",
+   "不要重试"
+  ],
+  "lang": "zh",
+  "r": 1,
+  "out": "现在订单状态是 PENDING，嗯，不是 FAILED，所以……先别急着重试。",
+  "ttft": 642,
+  "total": 719
+ },
+ {
+  "backend": "old",
+  "id": "f6",
+  "t": "这个 bug 已经修复了，今晚 10 点发版。",
+  "must": [
+   "已经修复",
+   "今晚",
+   "10",
+   "发版"
+  ],
+  "lang": "zh",
+  "r": 0,
+  "out": "那个 bug 已经修好了，嗯，我们打算在今晚 10 点发版。",
+  "ttft": 789,
+  "total": 855
+ },
+ {
+  "backend": "old",
+  "id": "f6",
+  "t": "这个 bug 已经修复了，今晚 10 点发版。",
+  "must": [
+   "已经修复",
+   "今晚",
+   "10",
+   "发版"
+  ],
+  "lang": "zh",
+  "r": 1,
+  "out": "那个 bug 已经修好了，嗯，我们今晚 10 点准时发版。",
+  "ttft": 678,
+  "total": 777
+ },
+ {
+  "backend": "old",
+  "id": "en1",
+  "t": "Thanks, everyone. So, quick update on the payment migration: we finished the API changes last Friday, and we're now testing with two merchants. Honestly, it's going better than I expected.",
+  "must": [
+   "API",
+   "Friday",
+   "two merchants"
+  ],
+  "lang": "en",
+  "r": 0,
+  "out": "Thanks everyone. So, just a quick update on the payment migration. We finished the API changes last Friday, and, um, we're testing with two merchants right now. Honestly, it's actually going better than I expected.",
+  "ttft": 555,
+  "total": 666
+ },
+ {
+  "backend": "old",
+  "id": "en2",
+  "t": "I see your point. But I'm a bit worried about the timeline. If we add this feature now, QA won't have enough time, and we might have to push the release.",
+  "must": [
+   "might",
+   "QA",
+   "release"
+  ],
+  "lang": "en",
+  "r": 0,
+  "out": "Yeah, I see your point. But, um, I'm actually a bit worried about the timeline. If we add this feature now, QA won't really have enough time... and we might have to push the release.",
+  "ttft": 806,
+  "total": 948
+ },
+ {
+  "backend": "old",
+  "id": "en3",
+  "t": "Sorry, could you repeat that? I think I missed the last part. Did you say the deadline is the twentieth or the twenty-seventh?",
+  "must": [
+   "twentieth",
+   "twenty-seventh",
+   "I think"
+  ],
+  "lang": "en",
+  "r": 0,
+  "out": "Sorry, could you run that by me again? I think I missed the last part. Did you say the deadline is the 20th... or the 27th?",
+  "ttft": 619,
+  "total": 706
+ },
+ {
+  "backend": "old",
+  "id": "en4",
+  "t": "Okay, that makes sense. Let me check with the backend team and get back to you by tomorrow afternoon. Does that work for you?",
+  "must": [
+   "backend",
+   "tomorrow afternoon"
+  ],
+  "lang": "en",
+  "r": 0,
+  "out": "Yeah, that makes sense. Let me just check in with the backend team and I'll get back to you by tomorrow afternoon. Does that work for you?",
+  "ttft": 573,
+  "total": 683
+ }
+]
